@@ -1,15 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>tmc.loc.cc</title>
-<style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;background:#0f1115;color:#e8eaf0}main{text-align:center;padding:2rem}h1{font-size:2rem;margin:.5rem 0}p{color:#9aa3b2}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tmc.loc.cc — 建设中</title>
+<meta name="description" content="tmc.loc.cc 正在建设中，敬请期待。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #0b1026;
+    color: #eef1ff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(600px 400px at 20% 20%, rgba(99,102,241,.35), transparent 60%),
+      radial-gradient(700px 500px at 85% 80%, rgba(236,72,153,.25), transparent 60%),
+      radial-gradient(500px 500px at 70% 15%, rgba(34,211,238,.18), transparent 60%),
+      linear-gradient(160deg, #0b1026 0%, #131a3a 55%, #1b1040 100%);
+  }
+  .stars { position: fixed; inset: 0; z-index: 0; }
+  .stars span {
+    position: absolute; border-radius: 50%; background: #fff;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle { 0%,100% { opacity:.15 } 50% { opacity:.8 } }
+  .card {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 56px 64px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 24px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.45);
+    max-width: min(92vw, 560px);
+    animation: rise .8s ease both;
+  }
+  @keyframes rise { from { opacity:0; transform: translateY(16px) } to { opacity:1; transform:none } }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: .12em;
+    color: #a5f3c5;
+    border: 1px solid rgba(74,222,128,.35);
+    background: rgba(74,222,128,.08);
+    padding: 6px 14px; border-radius: 999px;
+    margin-bottom: 26px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,.5) } 50% { box-shadow: 0 0 0 6px rgba(74,222,128,0) } }
+  h1 {
+    font-size: clamp(38px, 8vw, 58px);
+    font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
+    background: linear-gradient(92deg, #fff 10%, #a5b4fc 55%, #f0abfc 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 16px;
+  }
+  .sub { font-size: 17px; color: #c3c9e8; line-height: 1.7; margin-bottom: 8px; }
+  .en { font-size: 12px; letter-spacing: .35em; color: #7c86b8; text-transform: uppercase; margin-bottom: 34px; }
+  .bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,.1); overflow: hidden; margin: 0 auto 12px; max-width: 320px; }
+  .bar i { display: block; height: 100%; width: 68%; border-radius: 999px;
+    background: linear-gradient(90deg, #6366f1, #ec4899);
+    animation: slide 2.6s ease-in-out infinite; }
+  @keyframes slide { 0%,100% { transform: translateX(-12%) } 50% { transform: translateX(46%) } }
+  .bar-note { font-size: 12px; color: #7c86b8; }
+  footer { margin-top: 34px; font-size: 12px; color: #5d6690; }
+  @media (max-width: 520px) { .card { padding: 40px 26px; } }
+</style>
 </head>
 <body>
-<main>
-<h1>tmc.loc.cc</h1>
-<p>Site is live.</p>
+<div class="bg"></div>
+<div class="stars" id="stars"></div>
+<main class="card">
+  <div class="badge"><span class="dot"></span>站点在线 · SITE IS LIVE</div>
+  <h1>tmc.loc.cc</h1>
+  <p class="sub">这里正在悄悄施工 🚧<br>一个小小的网站正在路上，敬请期待。</p>
+  <p class="en">Coming Soon</p>
+  <div class="bar"><i></i></div>
+  <p class="bar-note">建设进度推进中…</p>
+  <footer>© 2026 Gz · Powered by GitHub Pages</footer>
 </main>
+<script>
+  var box = document.getElementById('stars');
+  for (var i = 0; i < 70; i++) {
+    var s = document.createElement('span');
+    var size = (Math.random() * 2 + 1).toFixed(1);
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = (Math.random() * 100) + '%';
+    s.style.top = (Math.random() * 100) + '%';
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    box.appendChild(s);
+  }
+</script>
 </body>
 </html>
