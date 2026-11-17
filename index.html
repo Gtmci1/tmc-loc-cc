@@ -3,103 +3,851 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>tmc.loc.cc — 建设中</title>
-<meta name="description" content="tmc.loc.cc 正在建设中，敬请期待。">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>">
+<title>Poko — 一句话，做出拿得出手的成果</title>
+<meta name="description" content="Poko：一句话生成 PPT、报告、表格、海报、网页和代码的 AI 对话产品。按量付费，没有月费。">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { height: 100%; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    background: #0b1026;
-    color: #eef1ff;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .bg {
-    position: fixed; inset: 0; z-index: 0;
-    background:
-      radial-gradient(600px 400px at 20% 20%, rgba(99,102,241,.35), transparent 60%),
-      radial-gradient(700px 500px at 85% 80%, rgba(236,72,153,.25), transparent 60%),
-      radial-gradient(500px 500px at 70% 15%, rgba(34,211,238,.18), transparent 60%),
-      linear-gradient(160deg, #0b1026 0%, #131a3a 55%, #1b1040 100%);
-  }
-  .stars { position: fixed; inset: 0; z-index: 0; }
-  .stars span {
-    position: absolute; border-radius: 50%; background: #fff;
-    animation: twinkle 3s ease-in-out infinite;
-  }
-  @keyframes twinkle { 0%,100% { opacity:.15 } 50% { opacity:.8 } }
-  .card {
-    position: relative; z-index: 1;
-    text-align: center;
-    padding: 56px 64px;
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 24px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 24px 60px rgba(0,0,0,.45);
-    max-width: min(92vw, 560px);
-    animation: rise .8s ease both;
-  }
-  @keyframes rise { from { opacity:0; transform: translateY(16px) } to { opacity:1; transform:none } }
-  .badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 13px; letter-spacing: .12em;
-    color: #a5f3c5;
-    border: 1px solid rgba(74,222,128,.35);
-    background: rgba(74,222,128,.08);
-    padding: 6px 14px; border-radius: 999px;
-    margin-bottom: 26px;
-  }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: pulse 1.8s ease-in-out infinite; }
-  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,.5) } 50% { box-shadow: 0 0 0 6px rgba(74,222,128,0) } }
-  h1 {
-    font-size: clamp(38px, 8vw, 58px);
-    font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
-    background: linear-gradient(92deg, #fff 10%, #a5b4fc 55%, #f0abfc 90%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    margin-bottom: 16px;
-  }
-  .sub { font-size: 17px; color: #c3c9e8; line-height: 1.7; margin-bottom: 8px; }
-  .en { font-size: 12px; letter-spacing: .35em; color: #7c86b8; text-transform: uppercase; margin-bottom: 34px; }
-  .bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,.1); overflow: hidden; margin: 0 auto 12px; max-width: 320px; }
-  .bar i { display: block; height: 100%; width: 68%; border-radius: 999px;
-    background: linear-gradient(90deg, #6366f1, #ec4899);
-    animation: slide 2.6s ease-in-out infinite; }
-  @keyframes slide { 0%,100% { transform: translateX(-12%) } 50% { transform: translateX(46%) } }
-  .bar-note { font-size: 12px; color: #7c86b8; }
-  footer { margin-top: 34px; font-size: 12px; color: #5d6690; }
-  @media (max-width: 520px) { .card { padding: 40px 26px; } }
+:root{
+  --ink:#141414; --sub:#6f6f6a; --line:#e8e6e1; --bg:#ffffff; --bg2:#F7F7F5;
+  --brand:#FF5C1A; --brand-dark:#e04a0e; --brand-soft:#FFF1E9;
+  --radius:20px; --shadow:0 10px 34px rgba(20,16,8,.08);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans JP","Noto Sans KR",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+section{padding:96px 0}
+.sec-alt{background:var(--bg2)}
+.sec-head{max-width:720px;margin:0 auto 48px;text-align:center}
+.sec-head h2{font-size:38px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.sec-head p{margin-top:14px;color:var(--sub);font-size:17px}
+.mascot{display:inline-block;flex:none;vertical-align:middle}
+.mascot svg{display:block}
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:28px;height:64px}
+.logo{display:flex;align-items:center;gap:9px;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.nav-links{display:flex;gap:26px;margin-left:12px;font-size:15px;color:#33322e}
+.nav-links a:hover{color:var(--brand)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.langsel{position:relative}
+.langsel select{appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 30px 8px 14px;font-size:14px;color:var(--ink);cursor:pointer}
+.langsel::after{content:"▾";position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--sub);pointer-events:none}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:999px;font-size:15px;font-weight:600;padding:10px 20px;border:1px solid transparent;transition:.15s}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-dark)}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:#cfccc4}
+.btn-login{background:none;border:none;font-size:15px;font-weight:600;padding:10px 6px}
+.btn-login:hover{color:var(--brand)}
+.hero{padding:84px 0 90px;text-align:center;position:relative;overflow:hidden}
+.hero h1{font-size:56px;font-weight:850;letter-spacing:-.02em;line-height:1.16;max-width:920px;margin:0 auto}
+.hero h1 .rot{color:var(--brand);display:inline-block;transition:opacity .28s,transform .28s}
+.hero h1 .rot.swap{opacity:0;transform:translateY(8px)}
+.hero .sub{margin:22px auto 0;max-width:660px;color:var(--sub);font-size:18px}
+.stage{position:relative;max-width:860px;margin:56px auto 0;padding:30px 10px 6px}
+.glow{position:absolute;left:50%;top:8px;transform:translateX(-50%);width:110%;height:300px;background:linear-gradient(90deg,rgba(255,205,64,.5),rgba(255,120,90,.45) 45%,rgba(255,92,26,.5));filter:blur(70px);border-radius:50%;pointer-events:none}
+.fan{position:absolute;left:50%;top:-4px;width:760px;height:215px;transform:translateX(-50%);pointer-events:none}
+.fancard{position:absolute;left:50%;bottom:0;width:150px;height:192px;margin-left:-75px;border-radius:16px;border:1px solid rgba(0,0,0,.06);box-shadow:0 14px 30px rgba(30,20,5,.13);padding:12px;font-size:12px;font-weight:700;color:rgba(20,20,20,.75);text-align:left;transform-origin:50% 130%}
+.fancard .thumb{height:120px;border-radius:10px;margin-bottom:9px}
+.fan .f1{transform:rotate(-26deg);background:#eef7ee}.f1 .thumb{background:linear-gradient(135deg,#bfe6c4,#5dbb72)}
+.fan .f2{transform:rotate(-16deg);background:#fdf6e3}.f2 .thumb{background:linear-gradient(135deg,#f7e3a1,#eec95c)}
+.fan .f3{transform:rotate(-5deg);background:#eef2fd}.f3 .thumb{background:linear-gradient(135deg,#b9ccf5,#6f97e8)}
+.fan .f4{transform:rotate(6deg);background:#fdeef4}.f4 .thumb{background:linear-gradient(135deg,#f6c3d9,#e87fae)}
+.fan .f5{transform:rotate(16deg);background:#f0ebfd}.f5 .thumb{background:linear-gradient(135deg,#cdbcf7,#8f6fe8)}
+.fan .f6{transform:rotate(26deg);background:#e9f6f7}.f6 .thumb{background:linear-gradient(135deg,#a8dee2,#4aa8b5)}
+.composer{position:relative;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:20px 20px 14px;text-align:left}
+.composer label{display:block;font-size:13px;color:var(--sub);margin-bottom:8px;font-weight:600}
+.composer textarea{width:100%;border:none;resize:none;font-family:inherit;font-size:17px;line-height:1.5;min-height:52px;outline:none;color:var(--ink);background:transparent}
+.composer textarea::placeholder{color:#a9a69d}
+.composer .tools{display:flex;align-items:center;gap:10px;margin-top:6px}
+.plusbtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:20px;line-height:1;color:#44423c}
+.plusbtn:hover{border-color:var(--brand);color:var(--brand)}
+.modelpick{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#44423c;background:var(--bg2);border-radius:999px;padding:8px 14px;font-weight:600}
+.sendbtn{margin-left:auto;width:42px;height:42px;border-radius:50%;border:none;background:#141414;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;flex:none}
+.sendbtn:hover{background:var(--brand)}
+.modechips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{border:1px solid transparent;background:var(--bg2);color:#3d3b36;border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:600}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip.free{background:#fff;border-color:var(--line)}
+.stats{display:flex;justify-content:center;margin-top:54px;flex-wrap:wrap}
+.stat{padding:6px 38px;text-align:center}
+.stat+.stat{border-left:1px solid var(--line)}
+.stat b{display:block;font-size:30px;font-weight:850;letter-spacing:-.01em}
+.stat span{color:var(--sub);font-size:14px}
+.aud{display:grid;grid-template-columns:250px 1fr;gap:28px;align-items:start}
+.aud-tabs{display:flex;flex-direction:column;gap:10px}
+.aud-tab{text-align:left;border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px 18px;font-size:16px;font-weight:700;color:var(--ink)}
+.aud-tab small{display:block;font-weight:500;color:var(--sub);font-size:13px;margin-top:3px;line-height:1.45}
+.aud-tab.on{border-color:var(--brand);background:var(--brand-soft)}
+.demo{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:26px;min-height:440px;display:flex;flex-direction:column}
+.u-bubble{align-self:flex-end;background:#141414;color:#fff;border-radius:18px 18px 4px 18px;padding:13px 17px;max-width:84%;font-size:15.5px}
+.attach{display:none;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:6px 11px;font-size:13px;font-weight:600;margin-top:10px;align-self:flex-end}
+.attach.show{display:inline-flex}
+.attach i{font-style:normal;background:#2f9e63;color:#fff;border-radius:5px;padding:1px 6px;font-size:11px}
+.steps{margin-top:20px;border:1px solid var(--line);border-radius:14px;padding:6px 16px;max-width:84%}
+.steps .s-head{font-size:13px;color:var(--sub);font-weight:700;padding:8px 0 4px}
+.step{display:flex;gap:9px;align-items:center;padding:7px 0;font-size:14.5px;color:#3d3b36;opacity:0;transform:translateY(4px);transition:.3s}
+.step.show{opacity:1;transform:none}
+.step .tick{width:19px;height:19px;flex:none;border-radius:50%;border:2px solid #d8d5cd;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
+.step.done .tick{background:#2f9e63;border-color:#2f9e63}
+.a-reply{margin-top:18px;font-size:15.5px;max-width:90%;opacity:0;transition:.35s}
+.a-reply.show{opacity:1}
+.filecard{margin-top:14px;display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:14px;padding:13px 16px;max-width:440px;background:#fff;opacity:0;transform:translateY(5px);transition:.35s}
+.filecard.show{opacity:1;transform:none}
+.filecard .fic{width:40px;height:40px;border-radius:10px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;font-size:19px;flex:none}
+.filecard b{font-size:15px;display:block}
+.filecard span{color:var(--sub);font-size:13px}
+.followup{margin-top:auto;padding-top:22px}
+.followup .fu{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:999px;padding:8px 8px 8px 18px;color:#a9a69d;font-size:14.5px;background:#fff}
+.followup .fu .sendbtn{width:34px;height:34px;font-size:15px;margin-left:auto}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.bcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;min-height:168px;position:relative;overflow:hidden}
+.bcard h3{font-size:17px;font-weight:750}
+.bcard.wide{grid-column:span 2}
+.bcard.orange{background:linear-gradient(135deg,#FF7A33,#FF5C1A 55%,#F03D0C);color:#fff;border:none;display:flex;flex-direction:column;justify-content:center}
+.typeline{font-size:21px;font-weight:750;line-height:1.5;min-height:96px}
+.typeline .caret{display:inline-block;width:2px;height:1em;background:#fff;vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.covers{display:flex;gap:8px;margin-top:14px}
+.covers i{flex:1;height:86px;border-radius:9px;font-style:normal}
+.covers i:nth-child(1){background:linear-gradient(140deg,#233043,#4d6fa5)}
+.covers i:nth-child(2){background:linear-gradient(140deg,#f2b04a,#e2693a)}
+.covers i:nth-child(3){background:linear-gradient(140deg,#3f7d5d,#79b98f)}
+.scenery{height:104px;border-radius:12px;margin-top:14px;background:linear-gradient(180deg,#a8cdf0 0%,#d8ecfa 34%,#7fae7d 35%,#4e7d54 70%,#33523a 100%);position:relative}
+.scenery::after{content:"";position:absolute;right:16px;top:12px;width:26px;height:26px;border-radius:50%;background:#ffe9a8}
+.logowall{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.logowall span{border:1px solid var(--line);background:var(--bg2);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700}
+.rocket{font-size:56px;margin-top:14px}
+.bigprice{font-size:54px;font-weight:850;color:var(--brand);margin-top:10px;letter-spacing:-.02em}
+.bigprice small{display:block;font-size:14px;color:var(--sub);font-weight:600;letter-spacing:0}
+.codewin{background:#17181c;border-radius:12px;margin-top:14px;padding:13px 15px;font-family:var(--mono);font-size:12.5px;line-height:1.75;color:#c9d4e3;white-space:pre;overflow:hidden}
+.codewin .k{color:#ff9d6b}.codewin .s{color:#9ed69a}.codewin .c{color:#6d7686}
+.bill{margin-top:14px;border:1px dashed #d8d5cd;border-radius:12px;padding:12px 15px;font-size:13.5px;color:#3d3b36}
+.bill div{display:flex;justify-content:space-between;padding:3px 0}
+.bill div b{color:var(--brand)}
+.mini-fan{position:relative;height:104px;margin-top:8px}
+.mini-fan i{position:absolute;left:50%;bottom:0;width:56px;height:78px;margin-left:-28px;border-radius:8px;transform-origin:50% 120%;font-style:normal}
+.mini-fan i:nth-child(1){transform:rotate(-24deg);background:linear-gradient(150deg,#f0a35e,#d96b2b)}
+.mini-fan i:nth-child(2){transform:rotate(-12deg);background:linear-gradient(150deg,#7fa8e0,#4a74b8)}
+.mini-fan i:nth-child(3){transform:rotate(0deg);background:linear-gradient(150deg,#69b98a,#3c7d57)}
+.mini-fan i:nth-child(4){transform:rotate(12deg);background:linear-gradient(150deg,#d98cb8,#b04d86)}
+.mini-fan i:nth-child(5){transform:rotate(24deg);background:linear-gradient(150deg,#8f7fe0,#5d49b8)}
+.pie{width:96px;height:96px;border-radius:50%;margin-top:16px;background:conic-gradient(var(--brand) 0 38%,#f2b04a 38% 63%,#4a74b8 63% 84%,#69b98a 84% 100%)}
+.srclist{margin-top:14px;font-size:13.5px;color:#3d3b36}
+.srclist div{padding:6px 0;border-bottom:1px solid var(--bg2);display:flex;gap:8px}
+.srclist b{color:var(--brand)}
+.fileicons{display:flex;gap:10px;margin-top:18px}
+.fileicons span{width:52px;height:64px;border-radius:9px;color:#fff;font-weight:800;font-size:12px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px}
+.fileicons .pdf{background:#e0492f}.fileicons .xls{background:#2f9e63}.fileicons .doc{background:#3a6fd8}
+.modelchips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:920px;margin:0 auto}
+.mchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;font-size:15px;font-weight:650}
+.mchip:hover{border-color:var(--brand);color:var(--brand)}
+.more-link{display:inline-block;margin-top:26px;font-weight:700;color:var(--brand)}
+.chart{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:34px 38px;max-width:940px;margin:0 auto}
+.chart h3{font-size:21px;font-weight:800;margin-bottom:24px}
+.chart h3 small{color:var(--sub);font-weight:500;font-size:14px;margin-left:8px}
+.barrow{display:grid;grid-template-columns:200px 1fr 92px;align-items:center;gap:16px;padding:9px 0}
+.barrow .nm{font-weight:700;font-size:15px}
+.barrow .nm span{display:block;color:var(--sub);font-weight:500;font-size:13px}
+.blocks{display:flex;flex-wrap:wrap;gap:3px}
+.blocks i{width:13px;height:13px;border-radius:3.5px;background:#e9e6df;font-style:normal}
+.blocks i.on{background:var(--brand)}
+.barrow .ct{font-weight:800;font-size:16px;text-align:right}
+.chart .foot{margin-top:20px;color:var(--sub);font-size:12.5px;border-top:1px solid var(--bg2);padding-top:14px}
+.casepills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-bottom:34px}
+.cpill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font-size:14px;font-weight:600}
+.cpill:hover{border-color:var(--brand);color:var(--brand)}
+.wall{columns:4;column-gap:16px}
+.casecard{break-inside:avoid;margin-bottom:16px;border-radius:18px;border:1px solid rgba(0,0,0,.05);position:relative;cursor:pointer;overflow:hidden;color:#fff}
+.casecard .tag{position:absolute;top:10px;right:10px;background:rgba(15,15,15,.55);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.casecard .cap{position:absolute;left:14px;bottom:12px;font-weight:750;font-size:15px;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.casecard:hover{filter:brightness(1.06)}
+.faq{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faqitem{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.faqitem>button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;background:none;border:none;text-align:left;padding:19px 22px;font-size:16.5px;font-weight:700;color:var(--ink)}
+.faqitem .fx{font-size:20px;color:var(--sub);transition:.2s;flex:none}
+.faqitem.open .fx{transform:rotate(45deg)}
+.faqitem .fa{display:none;padding:0 22px 20px;color:var(--sub);font-size:15px;line-height:1.7}
+.faqitem.open .fa{display:block}
+.cta{background:#111110;color:#fff;text-align:center;padding:110px 0}
+.cta h2{font-size:46px;font-weight:850;letter-spacing:-.01em;line-height:1.25}
+.cta .btn{margin-top:34px;background:#fff;color:#111;font-size:16px;padding:14px 30px}
+.cta .btn:hover{background:var(--brand);color:#fff}
+footer{padding:64px 0 0;background:#fff}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:28px;padding-bottom:44px}
+.foot-grid h4{font-size:14.5px;font-weight:800;margin-bottom:14px}
+.foot-grid li{list-style:none;margin-bottom:9px}
+.foot-grid li a{color:var(--sub);font-size:14px}
+.foot-grid li a:hover{color:var(--brand)}
+.foot-brand p{color:var(--sub);font-size:14px;margin-top:12px;max-width:250px}
+.foot-bar{border-top:1px solid var(--line);padding:18px 0;display:flex;gap:18px;align-items:center;color:var(--sub);font-size:13px;flex-wrap:wrap}
+.foot-bar .dot{width:8px;height:8px;border-radius:50%;background:#2f9e63;display:inline-block;margin-right:6px}
+.foot-bar .sp{margin-left:auto}
+.modal{position:fixed;inset:0;background:rgba(18,16,12,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal.open{display:flex}
+.modal-box{background:#fff;border-radius:22px;max-width:860px;width:100%;max-height:88vh;overflow:auto;display:grid;grid-template-columns:1.15fr 1fr}
+.modal-art{min-height:340px;position:relative;color:#fff}
+.modal-art .cap{position:absolute;left:20px;bottom:18px;font-size:21px;font-weight:800;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+.modal-art .tag{position:absolute;top:14px;left:14px;background:rgba(15,15,15,.55);border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:700}
+.modal-side{padding:26px}
+.modal-side h3{font-size:19px;margin-bottom:10px}
+.modal-side p{color:var(--sub);font-size:14.5px;line-height:1.7}
+.modal-side .plabel{font-size:12.5px;font-weight:800;color:var(--ink);margin:18px 0 7px}
+.promptbox{background:var(--bg2);border-radius:12px;padding:13px 15px;font-size:14px;color:#3d3b36;line-height:1.65}
+.modal-nav{display:flex;gap:9px;margin-top:22px;align-items:center;flex-wrap:wrap}
+.modal-nav .btn{padding:9px 16px;font-size:14px}
+.modal-close{margin-left:auto;background:none;border:none;font-size:22px;color:var(--sub)}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hero h1{font-size:38px}
+  section{padding:64px 0}
+  .aud{grid-template-columns:1fr}
+  .aud-tabs{flex-direction:row;flex-wrap:wrap}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .wall{columns:2}
+  .barrow{grid-template-columns:120px 1fr 64px}
+  .modal-box{grid-template-columns:1fr}
+  .fan{display:none}
+  .stat{padding:6px 18px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .cta h2{font-size:32px}
+}
 </style>
 </head>
 <body>
-<div class="bg"></div>
-<div class="stars" id="stars"></div>
-<main class="card">
-  <div class="badge"><span class="dot"></span>站点在线 · SITE IS LIVE</div>
-  <h1>tmc.loc.cc</h1>
-  <p class="sub">这里正在悄悄施工 🚧<br>一个小小的网站正在路上，敬请期待。</p>
-  <p class="en">Coming Soon</p>
-  <div class="bar"><i></i></div>
-  <p class="bar-note">建设进度推进中…</p>
-  <footer>© 2026 Gz · Powered by GitHub Pages</footer>
-</main>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#">
+      <span class="mascot"><svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span>
+      Poko
+    </a>
+    <nav class="nav-links">
+      <a href="#features" data-i18n="nav_features">功能</a>
+      <a href="#audience" data-i18n="nav_audience">人群</a>
+      <a href="#pricing" data-i18n="nav_pricing">价格</a>
+      <a href="#cases" data-i18n="nav_cases">案例</a>
+      <a href="#faq" data-i18n="nav_faq">常见问题</a>
+    </nav>
+    <div class="nav-right">
+      <span class="langsel">
+        <select id="langSel" aria-label="Language">
+          <option value="zh">简体中文</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="es">Español</option>
+        </select>
+      </span>
+      <a class="btn-login" href="chat.html" data-i18n="nav_login">登录</a>
+      <a class="btn btn-primary" href="chat.html" data-i18n="nav_start">开始使用</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1><span data-i18n="hero_pre">一句话，做出拿得出手的</span><span class="rot" id="rotWord">PPT</span><span data-i18n="hero_post">。</span></h1>
+    <p class="sub" data-i18n="hero_sub">不用订阅，不用挑模型，也不用学写提示词。把要做的事说清楚，Poko 直接交付能打开就能用的文件——PPT、报告、表格、海报、网页和代码。</p>
+    <div class="stage">
+      <div class="glow"></div>
+      <div class="fan" aria-hidden="true">
+        <div class="fancard f1"><div class="thumb"></div><span data-i18n="fan_sheet">分析表格</span></div>
+        <div class="fancard f2"><div class="thumb"></div><span data-i18n="fan_report">写报告</span></div>
+        <div class="fancard f3"><div class="thumb"></div><span data-i18n="fan_ppt">做PPT</span></div>
+        <div class="fancard f4"><div class="thumb"></div><span data-i18n="fan_image">图像生成</span></div>
+        <div class="fancard f5"><div class="thumb"></div><span data-i18n="fan_video">生成视频</span></div>
+        <div class="fancard f6"><div class="thumb"></div><span data-i18n="fan_code">跑代码</span></div>
+      </div>
+      <div class="composer">
+        <label data-i18n="composer_label">描述你要做的事</label>
+        <textarea id="heroInput" rows="2" data-i18n-ph="composer_ph" placeholder="例：把这份季度销售数据做成 12 页复盘 PPT，重点讲增长最快的区域，再配一张趋势图"></textarea>
+        <div class="tools">
+          <button class="plusbtn" type="button" aria-label="Upload">＋</button>
+          <span class="modelpick">✦ <span data-i18n="model_smart">智能优选</span></span>
+          <button class="sendbtn" type="button" id="heroSend" aria-label="Send">↑</button>
+        </div>
+        <div class="modechips" id="heroModes"></div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>100+</b><span data-i18n="stat_models">可选模型，持续更新</span></div>
+      <div class="stat"><b>$0.05</b><span data-i18n="stat_price">起，一份 10 页 PPT</span></div>
+      <div class="stat"><b data-i18n="stat_time_num">约 3 分钟</b><span data-i18n="stat_time">从一句话到一份 PPT</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="audience" class="sec-alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="aud_title">为你而打造</h2>
+      <p data-i18n="aud_sub">不管你是谁，都能用一句话把手头的工作交给 Poko。</p>
+    </div>
+    <div class="aud">
+      <div class="aud-tabs" id="audTabs"></div>
+      <div class="demo" id="demoBox">
+        <div class="u-bubble" id="dUser"></div>
+        <div class="attach" id="dAttach"><i id="dAttachType">XLSX</i><span id="dAttachName"></span></div>
+        <div class="steps" id="dSteps"></div>
+        <div class="a-reply" id="dReply"></div>
+        <div class="filecard" id="dFile">
+          <div class="fic" id="dFileIcon">📊</div>
+          <div><b id="dFileName"></b><span id="dFileMeta"></span></div>
+        </div>
+        <div class="followup">
+          <div class="fu"><span data-i18n="followup_ph">告诉 Poko 接下来做什么…</span><button class="sendbtn" type="button">↑</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="bento_title">一个对话框，远不止聊天</h2>
+      <p data-i18n="bento_sub">说一句话，剩下的步骤 Poko 自己拆、自己跑，最后把成品文件交到你手里。</p>
+    </div>
+    <div class="bento">
+      <div class="bcard wide"><h3 data-i18n="b_ppt">PPT 和报告</h3><div class="covers"><i></i><i></i><i></i></div></div>
+      <div class="bcard"><h3 data-i18n="b_media">图片和视频</h3><div class="scenery"></div></div>
+      <div class="bcard"><h3 data-i18n="b_models">100+ 模型</h3><div class="logowall"><span>OpenAI</span><span>Claude</span><span>Gemini</span><span>DeepSeek</span><span>Qwen</span><span>Kimi</span><span>GLM</span><span>Grok</span><span>MiniMax</span><span data-i18n="vendor_doubao">豆包</span></div></div>
+      <div class="bcard"><h3 data-i18n="b_publish">网页一键发布</h3><div class="rocket">🚀</div></div>
+      <div class="bcard wide orange"><div class="typeline"><span id="typeText"></span><span class="caret"></span></div></div>
+      <div class="bcard"><h3 data-i18n="b_pay">按量付费</h3><div class="bigprice">$0.05<small data-i18n="b_pay_sub">每份 10 页 PPT</small></div></div>
+      <div class="bcard wide"><h3 data-i18n="b_code">写代码跑数据</h3><div class="codewin"><span class="c"># 分析销售数据</span>
+<span class="k">import</span> pandas <span class="k">as</span> pd
+df = pd.read_csv(<span class="s">"sales.csv"</span>)
+top = df.groupby(<span class="s">"region"</span>).sum()
+<span class="k">print</span>(top.sort_values(<span class="s">"amount"</span>))</div></div>
+      <div class="bcard"><h3 data-i18n="b_cost">每条花费可查</h3><div class="bill"><div><span data-i18n="bill_ppt">生成 PPT</span><b>$0.05</b></div><div><span data-i18n="bill_img">生成海报</span><b>$0.03</b></div><div><span data-i18n="bill_sum">写摘要</span><b>$0.004</b></div></div></div>
+      <div class="bcard"><h3 data-i18n="b_tpl">海量模板</h3><div class="mini-fan"><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="bcard"><h3 data-i18n="b_data">数据分析</h3><div class="pie"></div></div>
+      <div class="bcard"><h3 data-i18n="b_search">联网搜索</h3><div class="srclist"><div><b>1</b><span>imf.org</span></div><div><b>2</b><span>reuters.com</span></div><div><b>3</b><span>eia.gov</span></div></div></div>
+      <div class="bcard"><h3 data-i18n="b_files">读任何文件</h3><div class="fileicons"><span class="pdf">PDF</span><span class="xls">XLS</span><span class="doc">DOC</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec-alt" id="models">
+  <div class="wrap" style="text-align:center">
+    <div class="sec-head">
+      <h2 data-i18n="models_title">能力更强，模型透明</h2>
+      <p data-i18n="models_sub">主流模型都在，按任务自动优选，也随时可以自己指定。</p>
+    </div>
+    <div class="modelchips" id="modelChips"></div>
+    <a class="more-link" href="chat.html" data-i18n="models_more">查看全部模型 →</a>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="price_title">它很快，也很便宜</h2>
+      <p data-i18n="price_sub">没有月费，按量付费。选对模型，一份 10 页 PPT 只要 $0.05。</p>
+    </div>
+    <div class="chart">
+      <h3><span data-i18n="chart_title">$5 能做几份 10 页 PPT？</span><small data-i18n="chart_note">每个方块代表一份</small></h3>
+      <div id="chartRows"></div>
+      <p class="foot" data-i18n="chart_foot">示意数据：按各产品公开价格与额度折算推算，实际以各家官网为准。Poko 按所选模型的实际用量计费，每条回复都会标明花费。</p>
+    </div>
+  </div>
+</section>
+
+<section id="cases" class="sec-alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="cases_title">场景和案例</h2>
+      <p data-i18n="cases_sub">选一个喜欢的风格，点「做同款」，一句话就能复刻。</p>
+    </div>
+    <div class="casepills" id="casePills"></div>
+    <div class="wall" id="caseWall"></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head"><h2 data-i18n="faq_title">常见问题</h2></div>
+    <div class="faq" id="faqList"></div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <h2 data-i18n="cta_title">把繁琐工作，交给 Poko</h2>
+    <a class="btn" href="chat.html" data-i18n="cta_btn">开始使用 →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="#">
+          <span class="mascot"><svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span>
+          Poko
+        </a>
+        <p data-i18n="foot_tag">一句话，做出拿得出手的成果。</p>
+      </div>
+      <div><h4 data-i18n="foot_c1">产品</h4><ul>
+        <li><a href="chat.html" data-i18n="foot_chat">AI 对话</a></li>
+        <li><a href="#features" data-i18n="foot_ppt">PPT 生成</a></li>
+        <li><a href="#features" data-i18n="foot_sheet">表格分析</a></li>
+        <li><a href="#features" data-i18n="foot_img">图像生成</a></li>
+        <li><a href="#pricing" data-i18n="foot_price">定价</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c2">热门模型</h4><ul>
+        <li><a href="#models">GPT</a></li><li><a href="#models">Claude</a></li><li><a href="#models">Gemini</a></li>
+        <li><a href="#models">DeepSeek</a></li><li><a href="#models">Qwen</a></li><li><a href="#models">Kimi</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c3">模型厂商</h4><ul>
+        <li><a href="#models">OpenAI</a></li><li><a href="#models">Anthropic</a></li><li><a href="#models">Google</a></li>
+        <li><a href="#models">DeepSeek</a></li><li><a href="#models" data-i18n="vendor_qwen">阿里通义</a></li><li><a href="#models" data-i18n="vendor_moon">月之暗面</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c4">资源</h4><ul>
+        <li><a href="#faq" data-i18n="foot_guide">使用指南</a></li>
+        <li><a href="#cases" data-i18n="foot_tpl">模板库</a></li>
+        <li><a href="#faq" data-i18n="foot_help">帮助中心</a></li>
+        <li><a href="#" data-i18n="foot_about">关于我们</a></li>
+        <li><a href="#" data-i18n="foot_contact">联系我们</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bar">
+      <span>© 2026 Poko</span><span>v0.1.0</span><span>hello@poko.example</span>
+      <span class="sp"><span class="dot"></span><span data-i18n="foot_status">演示站点</span></span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="caseModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-art" id="mArt"><span class="tag" id="mTag"></span><span class="cap" id="mCap"></span></div>
+    <div class="modal-side">
+      <h3 id="mName"></h3>
+      <p id="mDesc"></p>
+      <div class="plabel" data-i18n="modal_prompt">提示词</div>
+      <div class="promptbox" id="mPrompt"></div>
+      <div class="modal-nav">
+        <button class="btn btn-ghost" id="mPrev" type="button" data-i18n="modal_prev">上一个</button>
+        <button class="btn btn-ghost" id="mNext" type="button" data-i18n="modal_next">下一个</button>
+        <a class="btn btn-primary" id="mSame" href="chat.html" data-i18n="modal_same">做同款</a>
+        <button class="modal-close" id="mClose" type="button" aria-label="Close">✕</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-  var box = document.getElementById('stars');
-  for (var i = 0; i < 70; i++) {
-    var s = document.createElement('span');
-    var size = (Math.random() * 2 + 1).toFixed(1);
-    s.style.width = size + 'px';
-    s.style.height = size + 'px';
-    s.style.left = (Math.random() * 100) + '%';
-    s.style.top = (Math.random() * 100) + '%';
-    s.style.animationDelay = (Math.random() * 3) + 's';
-    box.appendChild(s);
+/* ================= Poko i18n 字典 ================= */
+const I18N = {
+zh:{
+  nav_features:"功能",nav_audience:"人群",nav_pricing:"价格",nav_cases:"案例",nav_faq:"常见问题",nav_login:"登录",nav_start:"开始使用",
+  hero_pre:"一句话，做出拿得出手的",hero_post:"。",hero_sub:"不用订阅，不用挑模型，也不用学写提示词。把要做的事说清楚，Poko 直接交付能打开就能用的文件——PPT、报告、表格、海报、网页和代码。",
+  fan_sheet:"分析表格",fan_report:"写报告",fan_ppt:"做PPT",fan_image:"图像生成",fan_video:"生成视频",fan_code:"跑代码",
+  composer_label:"描述你要做的事",composer_ph:"例：把这份季度销售数据做成 12 页复盘 PPT，重点讲增长最快的区域，再配一张趋势图",model_smart:"智能优选",
+  stat_models:"可选模型，持续更新",stat_price:"起，一份 10 页 PPT",stat_time_num:"约 3 分钟",stat_time:"从一句话到一份 PPT",
+  aud_title:"为你而打造",aud_sub:"不管你是谁，都能用一句话把手头的工作交给 Poko。",followup_ph:"告诉 Poko 接下来做什么…",
+  bento_title:"一个对话框，远不止聊天",bento_sub:"说一句话，剩下的步骤 Poko 自己拆、自己跑，最后把成品文件交到你手里。",
+  b_ppt:"PPT 和报告",b_media:"图片和视频",b_models:"100+ 模型",vendor_doubao:"豆包",b_publish:"网页一键发布",b_pay:"按量付费",b_pay_sub:"每份 10 页 PPT",
+  b_code:"写代码跑数据",b_cost:"每条花费可查",bill_ppt:"生成 PPT",bill_img:"生成海报",bill_sum:"写摘要",b_tpl:"海量模板",b_data:"数据分析",b_search:"联网搜索",b_files:"读任何文件",
+  models_title:"能力更强，模型透明",models_sub:"主流模型都在，按任务自动优选，也随时可以自己指定。",models_more:"查看全部模型 →",
+  price_title:"它很快，也很便宜",price_sub:"没有月费，按量付费。选对模型，一份 10 页 PPT 只要 $0.05。",
+  chart_title:"$5 能做几份 10 页 PPT？",chart_note:"每个方块代表一份",
+  chart_foot:"示意数据：按各产品公开价格与额度折算推算，实际以各家官网为准。Poko 按所选模型的实际用量计费，每条回复都会标明花费。",
+  cases_title:"场景和案例",cases_sub:"选一个喜欢的风格，点「做同款」，一句话就能复刻。",
+  faq_title:"常见问题",cta_title:"把繁琐工作，交给 Poko",cta_btn:"开始使用 →",
+  foot_tag:"一句话，做出拿得出手的成果。",foot_c1:"产品",foot_c2:"热门模型",foot_c3:"模型厂商",foot_c4:"资源",
+  foot_chat:"AI 对话",foot_ppt:"PPT 生成",foot_sheet:"表格分析",foot_img:"图像生成",foot_price:"定价",
+  vendor_qwen:"阿里通义",vendor_moon:"月之暗面",foot_guide:"使用指南",foot_tpl:"模板库",foot_help:"帮助中心",foot_about:"关于我们",foot_contact:"联系我们",foot_status:"演示站点",
+  modal_prompt:"提示词",modal_prev:"上一个",modal_next:"下一个",modal_same:"做同款",
+  steps_done:"完成 3 个步骤",
+  rot:["PPT","报告","表格","海报","视频","网页"],
+  modes:[["免费试用","free"],["写报告","report"],["分析表格","sheet"],["做PPT","ppt"],["生成视频","video"],["图像生成","image"],["跑代码","code"]],
+  typeLines:["让 Poko 帮你把季度数据做成复盘 PPT。","让 Poko 帮你给新品做一张上市海报。","让 Poko 帮你把杂乱的表格整理成看板。"],
+  type_image:"图片",type_video:"视频",type_ppt:"PPT",type_code:"代码",
+  prices:[
+    {n:"Poko（优选模型）",s:"$0.05 / 份",b:100,c:"100 份"},
+    {n:"Poko（旗舰模型）",s:"约 $1.5 / 份",b:3,c:"约 3 份"},
+    {n:"Gamma",s:"约 $2.5 / 份",b:2,c:"2 份"},
+    {n:"Manus",s:"$5 / 份",b:1,c:"1 份"},
+    {n:"ChatGPT",s:"约 $5 / 份",b:1,c:"约 1 份"},
+    {n:"Claude",s:"约 $5 / 份",b:1,c:"约 1 份"}
+  ],
+  faq:[
+    ["如何收费？","Poko 按量付费，没有月费。按所选模型的实际用量计费，余额永不过期；每条回复下方都会写明这次花了多少，花在哪儿，一目了然。"],
+    ["和 ChatGPT、Claude、Manus 有什么区别？","Poko 不绑定任何一家模型厂商，主流模型都能用，对话中途也能换。相比订阅制产品，Poko 不用包月，用多少付多少；而且它交付的不是一段文字，而是能直接打开使用的文件——PPT、表格、网页、图片都行。"],
+    ["支持哪些模型？","已接入 100+ 模型，覆盖 GPT、Claude、Gemini、DeepSeek、Qwen、Kimi、GLM、Grok 等主流家族。你可以让 Poko 按任务自动优选，也可以自己指定模型。"],
+    ["数据安全如何保障？","全程加密传输；你上传的文件只用于完成当前任务。删除对话时，相关文件会一并删除，不会留着占地方，更不会拿去做别的用途。"],
+    ["怎么开始使用？","打开网页、说一句话就行。不需要注册开发者账号，不需要配置 API Key，也不用先学提示词——先从「免费试用」开始。"]
+  ]
+},
+en:{
+  nav_features:"Features",nav_audience:"Who it's for",nav_pricing:"Pricing",nav_cases:"Showcase",nav_faq:"FAQ",nav_login:"Log in",nav_start:"Get started",
+  hero_pre:"One sentence. A polished ",hero_post:", done.",hero_sub:"No subscription, no model picking, no prompt engineering. Say what you need, and Poko hands back files you can actually use — decks, reports, spreadsheets, posters, web pages and code.",
+  fan_sheet:"Analyze sheets",fan_report:"Write reports",fan_ppt:"Make decks",fan_image:"Generate images",fan_video:"Generate videos",fan_code:"Run code",
+  composer_label:"Describe what you want to make",composer_ph:"e.g. Turn this quarter's sales data into a 12-slide review deck, focus on the fastest-growing region, add a trend chart",model_smart:"Smart pick",
+  stat_models:"models to choose from",stat_price:"from, per 10-slide deck",stat_time_num:"~3 min",stat_time:"from one sentence to a deck",
+  aud_title:"Made for you",aud_sub:"Whoever you are, hand your work to Poko in a single sentence.",followup_ph:"Tell Poko what to do next…",
+  bento_title:"One chat box, far more than chat",bento_sub:"Say one sentence. Poko breaks the job into steps, runs them, and hands you the finished file.",
+  b_ppt:"Decks & reports",b_media:"Images & video",b_models:"100+ models",vendor_doubao:"Doubao",b_publish:"Publish web pages in one click",b_pay:"Pay as you go",b_pay_sub:"per 10-slide deck",
+  b_code:"Write & run code",b_cost:"Every cost, visible",bill_ppt:"Deck generation",bill_img:"Poster generation",bill_sum:"Summary",b_tpl:"Template library",b_data:"Data analysis",b_search:"Web search",b_files:"Reads any file",
+  models_title:"Stronger models, zero mystery",models_sub:"All the major models, auto-picked per task — or choose one yourself.",models_more:"See all models →",
+  price_title:"Fast, and surprisingly cheap",price_sub:"No monthly fee. Pay per use. Pick the right model and a 10-slide deck costs $0.05.",
+  chart_title:"How many 10-slide decks does $5 buy?",chart_note:"Each block = one deck",
+  chart_foot:"Illustrative figures estimated from each product's public pricing and quotas; check each official site for current prices. Poko bills by actual model usage, and every reply shows what it cost.",
+  cases_title:"Showcase",cases_sub:"Like a style? Hit “Make one like this” and recreate it with one sentence.",
+  faq_title:"FAQ",cta_title:"Hand the busywork to Poko",cta_btn:"Get started →",
+  foot_tag:"One sentence. Work you're proud to show.",foot_c1:"Product",foot_c2:"Popular models",foot_c3:"Providers",foot_c4:"Resources",
+  foot_chat:"AI chat",foot_ppt:"Deck generation",foot_sheet:"Sheet analysis",foot_img:"Image generation",foot_price:"Pricing",
+  vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",foot_guide:"User guide",foot_tpl:"Templates",foot_help:"Help center",foot_about:"About us",foot_contact:"Contact",foot_status:"Demo site",
+  modal_prompt:"Prompt",modal_prev:"Previous",modal_next:"Next",modal_same:"Make one like this",
+  steps_done:"3 steps completed",
+  rot:["PPT","reports","spreadsheets","posters","videos","web pages"],
+  modes:[["Free trial","free"],["Write a report","report"],["Analyze sheets","sheet"],["Make a deck","ppt"],["Make a video","video"],["Generate images","image"],["Run code","code"]],
+  typeLines:["Ask Poko to turn quarterly data into a review deck.","Ask Poko to design a launch poster for your new product.","Ask Poko to turn a messy sheet into a clean dashboard."],
+  type_image:"Image",type_video:"Video",type_ppt:"Deck",type_code:"Code",
+  prices:[
+    {n:"Poko (Smart pick)",s:"$0.05 / deck",b:100,c:"100 decks"},
+    {n:"Poko (Flagship)",s:"~$1.5 / deck",b:3,c:"~3 decks"},
+    {n:"Gamma",s:"~$2.5 / deck",b:2,c:"2 decks"},
+    {n:"Manus",s:"$5 / deck",b:1,c:"1 deck"},
+    {n:"ChatGPT",s:"~$5 / deck",b:1,c:"~1 deck"},
+    {n:"Claude",s:"~$5 / deck",b:1,c:"~1 deck"}
+  ],
+  faq:[
+    ["How does pricing work?","Poko is pay-as-you-go with no monthly fee. You're billed for the actual usage of the model you pick, your balance never expires, and every reply shows exactly what it cost."],
+    ["How is Poko different from ChatGPT, Claude or Manus?","Poko isn't tied to a single model provider — all major models are available and you can switch mid-chat. Unlike subscription products, you only pay for what you use. And instead of a wall of text, Poko delivers ready-to-use files: decks, spreadsheets, web pages and images."],
+    ["Which models are supported?","100+ models across GPT, Claude, Gemini, DeepSeek, Qwen, Kimi, GLM, Grok and more. Let Poko auto-pick per task, or specify a model yourself."],
+    ["How is my data handled?","Everything is encrypted in transit, and files you upload are only used to complete your task. Delete a conversation and its files are deleted with it — never kept around or used for anything else."],
+    ["How do I start?","Open the page and say one sentence. No developer account, no API key, no prompt-engineering homework — start with the free trial."]
+  ]
+}
+};
+
+I18N.ja={
+  nav_features:"機能",nav_audience:"こんな方に",nav_pricing:"料金",nav_cases:"事例",nav_faq:"よくある質問",nav_login:"ログイン",nav_start:"使ってみる",
+  hero_pre:"一言で、見せられるクオリティの",hero_post:"が完成。",hero_sub:"サブスク不要、モデル選びもプロンプトの勉強も不要。作りたいものを伝えるだけで、Poko がそのまま使えるファイルを届けます——スライド、レポート、表、ポスター、Webページ、コードまで。",
+  fan_sheet:"表を分析",fan_report:"レポート作成",fan_ppt:"スライド作成",fan_image:"画像生成",fan_video:"動画生成",fan_code:"コード実行",
+  composer_label:"作りたいものを入力してください",composer_ph:"例：今四半期の売上データを12ページの振り返りスライドにして。伸びが一番大きい地域を中心に、推移グラフも入れて",model_smart:"スマート選択",
+  stat_models:"選べるモデル",stat_price:"から、10ページのスライド1件",stat_time_num:"約3分",stat_time:"一言からスライド完成まで",
+  aud_title:"あなたのために",aud_sub:"どなたでも、一言で目の前の仕事を Poko に任せられます。",followup_ph:"次にやることを Poko に伝える…",
+  bento_title:"チャット欄ひとつ、できることはずっと多い",bento_sub:"一言伝えれば、あとは Poko が手順を分けて実行し、完成したファイルをお渡しします。",
+  b_ppt:"スライドとレポート",b_media:"画像と動画",b_models:"100+モデル",vendor_doubao:"Doubao",b_publish:"Webページをワンクリック公開",b_pay:"使った分だけ",b_pay_sub:"10ページのスライド1件あたり",
+  b_code:"コードを書いて実行",b_cost:"料金はすべて明細つき",bill_ppt:"スライド生成",bill_img:"ポスター生成",bill_sum:"要約作成",b_tpl:"豊富なテンプレート",b_data:"データ分析",b_search:"Web検索",b_files:"どんなファイルも読める",
+  models_title:"強いモデルを、透明に",models_sub:"主要モデルを網羅。タスクごとに自動で最適なものを選び、自分で指定もできます。",models_more:"すべてのモデルを見る →",
+  price_title:"速くて、しかも安い",price_sub:"月額料金なし、使った分だけ。モデルを選べば、10ページのスライドが $0.05。",
+  chart_title:"$5 で10ページのスライドは何件作れる？",chart_note:"ブロック1つ＝1件",
+  chart_foot:"参考値：各製品の公開料金と枠から換算した目安です。最新情報は各公式サイトをご確認ください。Poko は選んだモデルの実使用量で課金し、返信ごとに料金を表示します。",
+  cases_title:"シーンと事例",cases_sub:"気に入ったスタイルを選んで「同じものを作る」を押せば、一言で再現できます。",
+  faq_title:"よくある質問",cta_title:"面倒な作業は、Poko に任せよう",cta_btn:"使ってみる →",
+  foot_tag:"一言で、見せられる成果を。",foot_c1:"製品",foot_c2:"人気モデル",foot_c3:"モデル提供元",foot_c4:"リソース",
+  foot_chat:"AIチャット",foot_ppt:"スライド生成",foot_sheet:"表の分析",foot_img:"画像生成",foot_price:"料金",
+  vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",foot_guide:"使い方ガイド",foot_tpl:"テンプレート",foot_help:"ヘルプセンター",foot_about:"私たちについて",foot_contact:"お問い合わせ",foot_status:"デモサイト",
+  modal_prompt:"プロンプト",modal_prev:"前へ",modal_next:"次へ",modal_same:"同じものを作る",
+  steps_done:"3ステップ完了",
+  rot:["PPT","レポート","表計算","ポスター","動画","Webページ"],
+  modes:[["無料で試す","free"],["レポート作成","report"],["表を分析","sheet"],["スライド作成","ppt"],["動画生成","video"],["画像生成","image"],["コード実行","code"]],
+  typeLines:["Poko に四半期データを振り返りスライドにしてもらおう。","Poko に新商品の発売ポスターを作ってもらおう。","Poko にごちゃごちゃした表をダッシュボードに整えてもらおう。"],
+  type_image:"画像",type_video:"動画",type_ppt:"スライド",type_code:"コード",
+  prices:[
+    {n:"Poko（スマート選択）",s:"$0.05 / 件",b:100,c:"100 件"},
+    {n:"Poko（フラッグシップ）",s:"約 $1.5 / 件",b:3,c:"約 3 件"},
+    {n:"Gamma",s:"約 $2.5 / 件",b:2,c:"2 件"},
+    {n:"Manus",s:"$5 / 件",b:1,c:"1 件"},
+    {n:"ChatGPT",s:"約 $5 / 件",b:1,c:"約 1 件"},
+    {n:"Claude",s:"約 $5 / 件",b:1,c:"約 1 件"}
+  ],
+  faq:[
+    ["料金はどうなっていますか？","Poko は従量課金で、月額料金はありません。選んだモデルの実使用量に応じて課金され、残高に有効期限はありません。返信ごとに今回いくらかかったかを表示します。"],
+    ["ChatGPT、Claude、Manus との違いは？","Poko は特定のモデル提供元に縛られず、主要モデルをすべて使え、会話の途中でも切り替えられます。サブスク型と違い、使った分だけのお支払い。さらに、文章だけでなく、そのまま開いて使えるファイル——スライド、表、Webページ、画像——をお渡しします。"],
+    ["対応モデルは？","GPT、Claude、Gemini、DeepSeek、Qwen、Kimi、GLM、Grok など主要ファミリーを含む100以上のモデルに対応。タスクに合わせて自動選択も、自分で指定もできます。"],
+    ["データの安全性は？","通信はすべて暗号化され、アップロードしたファイルはそのタスクの処理にだけ使われます。会話を削除すると関連ファイルも一緒に削除され、他の用途に使われることはありません。"],
+    ["どうやって始めますか？","ページを開いて一言伝えるだけ。開発者アカウントも API キーも、プロンプトの予習もいりません。まずは無料トライアルからどうぞ。"]
+  ]
+};
+I18N.ko={
+  nav_features:"기능",nav_audience:"이런 분께",nav_pricing:"요금",nav_cases:"사례",nav_faq:"자주 묻는 질문",nav_login:"로그인",nav_start:"시작하기",
+  hero_pre:"한 문장이면 충분합니다. 자신 있게 내놓을 수 있는 ",hero_post:" 완성.",hero_sub:"구독도, 모델 고르기도, 프롬프트 공부도 필요 없습니다. 원하는 것을 말하면 Poko가 바로 열어 쓸 수 있는 파일로 돌려줍니다 — PPT, 보고서, 표, 포스터, 웹페이지와 코드까지.",
+  fan_sheet:"표 분석",fan_report:"보고서 작성",fan_ppt:"PPT 만들기",fan_image:"이미지 생성",fan_video:"동영상 생성",fan_code:"코드 실행",
+  composer_label:"만들고 싶은 것을 적어 주세요",composer_ph:"예: 이번 분기 매출 데이터를 12페이지 회고 PPT로 만들어 줘. 가장 빠르게 성장한 지역을 중심으로, 추세 차트도 넣어 줘",model_smart:"스마트 선택",
+  stat_models:"선택 가능한 모델",stat_price:"부터, 10페이지 PPT 1건",stat_time_num:"약 3분",stat_time:"한 문장에서 PPT 완성까지",
+  aud_title:"당신을 위해 만들었습니다",aud_sub:"누구든 한 문장으로 눈앞의 일을 Poko에 맡길 수 있습니다.",followup_ph:"다음에 할 일을 Poko에 알려 주세요…",
+  bento_title:"대화창 하나, 할 수 있는 일은 훨씬 많습니다",bento_sub:"한 문장만 말하면 나머지는 Poko가 단계를 나눠 실행하고, 완성된 파일을 건네줍니다.",
+  b_ppt:"PPT와 보고서",b_media:"이미지와 동영상",b_models:"100+ 모델",vendor_doubao:"Doubao",b_publish:"웹페이지 원클릭 게시",b_pay:"쓴 만큼만 결제",b_pay_sub:"10페이지 PPT 1건 기준",
+  b_code:"코드를 짜고 실행",b_cost:"모든 비용 공개",bill_ppt:"PPT 생성",bill_img:"포스터 생성",bill_sum:"요약 작성",b_tpl:"풍부한 템플릿",b_data:"데이터 분석",b_search:"웹 검색",b_files:"어떤 파일이든 읽기",
+  models_title:"더 강한 모델, 투명하게",models_sub:"주요 모델을 모두 갖추고 작업마다 자동으로 골라 드립니다. 직접 지정할 수도 있습니다.",models_more:"전체 모델 보기 →",
+  price_title:"빠르고, 놀랍도록 저렴합니다",price_sub:"월 요금 없이 쓴 만큼만. 모델을 잘 고르면 10페이지 PPT가 $0.05.",
+  chart_title:"$5로 10페이지 PPT를 몇 건 만들 수 있을까?",chart_note:"블록 1개 = 1건",
+  chart_foot:"예시 수치: 각 제품의 공개 요금과 제공량을 기준으로 환산한 추정치이며, 정확한 정보는 각 공식 사이트를 확인하세요. Poko는 선택한 모델의 실제 사용량으로 과금하고, 답변마다 비용을 표시합니다.",
+  cases_title:"활용 장면과 사례",cases_sub:"마음에 드는 스타일을 골라 '같은 스타일로 만들기'를 누르면 한 문장으로 재현할 수 있습니다.",
+  faq_title:"자주 묻는 질문",cta_title:"번거로운 일은 Poko에 맡기세요",cta_btn:"시작하기 →",
+  foot_tag:"한 문장으로, 자신 있게 내놓을 수 있는 결과물을.",foot_c1:"제품",foot_c2:"인기 모델",foot_c3:"모델 제공사",foot_c4:"리소스",
+  foot_chat:"AI 대화",foot_ppt:"PPT 생성",foot_sheet:"표 분석",foot_img:"이미지 생성",foot_price:"요금",
+  vendor_qwen:"알리바바 Tongyi",vendor_moon:"Moonshot AI",foot_guide:"사용 가이드",foot_tpl:"템플릿",foot_help:"도움말 센터",foot_about:"회사 소개",foot_contact:"문의하기",foot_status:"데모 사이트",
+  modal_prompt:"프롬프트",modal_prev:"이전",modal_next:"다음",modal_same:"같은 스타일로 만들기",
+  steps_done:"3단계 완료",
+  rot:["PPT","보고서","스프레드시트","포스터","동영상","웹페이지"],
+  modes:[["무료 체험","free"],["보고서 작성","report"],["표 분석","sheet"],["PPT 만들기","ppt"],["동영상 생성","video"],["이미지 생성","image"],["코드 실행","code"]],
+  typeLines:["Poko에 분기 데이터를 회고 PPT로 만들어 달라고 해 보세요.","Poko에 신제품 출시 포스터를 디자인해 달라고 해 보세요.","Poko에 어지러운 표를 깔끔한 대시보드로 정리해 달라고 해 보세요."],
+  type_image:"이미지",type_video:"동영상",type_ppt:"PPT",type_code:"코드",
+  prices:[
+    {n:"Poko (스마트 선택)",s:"$0.05 / 건",b:100,c:"100건"},
+    {n:"Poko (플래그십)",s:"약 $1.5 / 건",b:3,c:"약 3건"},
+    {n:"Gamma",s:"약 $2.5 / 건",b:2,c:"2건"},
+    {n:"Manus",s:"$5 / 건",b:1,c:"1건"},
+    {n:"ChatGPT",s:"약 $5 / 건",b:1,c:"약 1건"},
+    {n:"Claude",s:"약 $5 / 건",b:1,c:"약 1건"}
+  ],
+  faq:[
+    ["요금은 어떻게 되나요?","Poko는 월 요금 없이 쓴 만큼만 내는 방식입니다. 선택한 모델의 실제 사용량으로 과금되고, 잔액은 만료되지 않으며, 답변마다 이번에 얼마가 들었는지 표시됩니다."],
+    ["ChatGPT, Claude, Manus와 무엇이 다른가요?","Poko는 특정 모델 회사에 묶이지 않아 주요 모델을 모두 쓸 수 있고, 대화 중간에도 바꿀 수 있습니다. 구독형과 달리 쓴 만큼만 결제합니다. 또 글만 주는 게 아니라 PPT, 표, 웹페이지, 이미지처럼 바로 열어 쓸 수 있는 파일을 드립니다."],
+    ["어떤 모델을 지원하나요?","GPT, Claude, Gemini, DeepSeek, Qwen, Kimi, GLM, Grok 등 주요 제품군을 포함해 100개 이상의 모델을 지원합니다. 작업에 맞게 자동으로 골라 드리거나, 직접 지정할 수 있습니다."],
+    ["데이터는 안전한가요?","전송 구간은 모두 암호화되고, 올린 파일은 해당 작업을 처리하는 데만 쓰입니다. 대화를 삭제하면 관련 파일도 함께 삭제되며, 다른 용도로 쓰이지 않습니다."],
+    ["어떻게 시작하나요?","페이지를 열고 한 문장만 말하면 됩니다. 개발자 계정도, API 키도, 프롬프트 예습도 필요 없습니다. 무료 체험부터 시작해 보세요."]
+  ]
+};
+
+I18N.es={
+  nav_features:"Funciones",nav_audience:"Para quién",nav_pricing:"Precios",nav_cases:"Ejemplos",nav_faq:"Preguntas frecuentes",nav_login:"Iniciar sesión",nav_start:"Empezar",
+  hero_pre:"Una frase y tendrás ",hero_post:" de nivel profesional.",hero_sub:"Sin suscripción, sin elegir modelos y sin aprender prompts. Di lo que necesitas y Poko te entrega archivos listos para usar: presentaciones, informes, hojas de cálculo, pósteres, páginas web y código.",
+  fan_sheet:"Analizar hojas",fan_report:"Escribir informes",fan_ppt:"Crear presentaciones",fan_image:"Generar imágenes",fan_video:"Generar vídeos",fan_code:"Ejecutar código",
+  composer_label:"Describe lo que quieres crear",composer_ph:"Ej.: Convierte los datos de ventas de este trimestre en una presentación de revisión de 12 diapositivas, centrada en la región que más crece, con un gráfico de tendencia",model_smart:"Elección inteligente",
+  stat_models:"modelos para elegir",stat_price:"desde, por presentación de 10 diapositivas",stat_time_num:"~3 min",stat_time:"de una frase a una presentación",
+  aud_title:"Hecho para ti",aud_sub:"Seas quien seas, delega tu trabajo en Poko con una sola frase.",followup_ph:"Dile a Poko qué hacer a continuación…",
+  bento_title:"Un solo cuadro de chat, mucho más que chatear",bento_sub:"Di una frase. Poko divide el trabajo en pasos, los ejecuta y te entrega el archivo terminado.",
+  b_ppt:"Presentaciones e informes",b_media:"Imágenes y vídeo",b_models:"100+ modelos",vendor_doubao:"Doubao",b_publish:"Publica páginas web con un clic",b_pay:"Paga por uso",b_pay_sub:"por presentación de 10 diapositivas",
+  b_code:"Escribe y ejecuta código",b_cost:"Cada coste, a la vista",bill_ppt:"Generar presentación",bill_img:"Generar póster",bill_sum:"Escribir resumen",b_tpl:"Plantillas a montones",b_data:"Análisis de datos",b_search:"Búsqueda web",b_files:"Lee cualquier archivo",
+  models_title:"Modelos potentes, sin misterio",models_sub:"Todos los modelos principales, elegidos automáticamente según la tarea, o elige tú.",models_more:"Ver todos los modelos →",
+  price_title:"Rápido y sorprendentemente barato",price_sub:"Sin cuota mensual. Paga por uso: con el modelo adecuado, una presentación de 10 diapositivas cuesta $0.05.",
+  chart_title:"¿Cuántas presentaciones de 10 diapositivas compras con $5?",chart_note:"Cada bloque = una presentación",
+  chart_foot:"Cifras ilustrativas estimadas a partir de los precios y cupos públicos de cada producto; consulta cada sitio oficial para ver los precios vigentes. Poko cobra por el uso real del modelo elegido y cada respuesta muestra su coste.",
+  cases_title:"Escenarios y ejemplos",cases_sub:"Elige un estilo que te guste, pulsa «Hacer uno igual» y recréalo con una frase.",
+  faq_title:"Preguntas frecuentes",cta_title:"Deja el trabajo tedioso a Poko",cta_btn:"Empezar →",
+  foot_tag:"Una frase. Resultados de los que presumir.",foot_c1:"Producto",foot_c2:"Modelos populares",foot_c3:"Proveedores",foot_c4:"Recursos",
+  foot_chat:"Chat con IA",foot_ppt:"Generación de presentaciones",foot_sheet:"Análisis de hojas",foot_img:"Generación de imágenes",foot_price:"Precios",
+  vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",foot_guide:"Guía de uso",foot_tpl:"Plantillas",foot_help:"Centro de ayuda",foot_about:"Nosotros",foot_contact:"Contacto",foot_status:"Sitio de demostración",
+  modal_prompt:"Prompt",modal_prev:"Anterior",modal_next:"Siguiente",modal_same:"Hacer uno igual",
+  steps_done:"3 pasos completados",
+  rot:["presentaciones","informes","hojas de cálculo","pósteres","vídeos","páginas web"],
+  modes:[["Prueba gratis","free"],["Escribir informe","report"],["Analizar hojas","sheet"],["Crear presentación","ppt"],["Crear vídeo","video"],["Generar imágenes","image"],["Ejecutar código","code"]],
+  typeLines:["Pide a Poko que convierta los datos del trimestre en una presentación de revisión.","Pide a Poko que diseñe el póster de lanzamiento de tu nuevo producto.","Pide a Poko que convierta una hoja desordenada en un panel limpio."],
+  type_image:"Imagen",type_video:"Vídeo",type_ppt:"Presentación",type_code:"Código",
+  prices:[
+    {n:"Poko (Elección inteligente)",s:"$0.05 / presentación",b:100,c:"100"},
+    {n:"Poko (Buque insignia)",s:"~$1.5 / presentación",b:3,c:"~3"},
+    {n:"Gamma",s:"~$2.5 / presentación",b:2,c:"2"},
+    {n:"Manus",s:"$5 / presentación",b:1,c:"1"},
+    {n:"ChatGPT",s:"~$5 / presentación",b:1,c:"~1"},
+    {n:"Claude",s:"~$5 / presentación",b:1,c:"~1"}
+  ],
+  faq:[
+    ["¿Cómo funciona el precio?","Poko es de pago por uso, sin cuota mensual. Pagas por el consumo real del modelo que elijas, tu saldo nunca caduca y cada respuesta muestra exactamente cuánto ha costado."],
+    ["¿En qué se diferencia de ChatGPT, Claude o Manus?","Poko no está atado a un único proveedor: puedes usar todos los modelos principales y cambiar a mitad de conversación. A diferencia de los productos por suscripción, solo pagas lo que usas. Y en lugar de un texto largo, Poko entrega archivos listos para usar: presentaciones, hojas de cálculo, páginas web e imágenes."],
+    ["¿Qué modelos son compatibles?","Más de 100 modelos de las familias GPT, Claude, Gemini, DeepSeek, Qwen, Kimi, GLM, Grok y más. Deja que Poko elija según la tarea o especifica tú el modelo."],
+    ["¿Cómo se tratan mis datos?","Todo se transmite cifrado y los archivos que subes solo se usan para completar tu tarea. Si borras una conversación, sus archivos se borran con ella: no se guardan ni se usan para nada más."],
+    ["¿Cómo empiezo?","Abre la página y di una frase. Sin cuenta de desarrollador, sin clave API y sin deberes de prompts: empieza con la prueba gratuita."]
+  ]
+};
+
+/* ============ 人群演示脚本（zh / en 全量；ja/ko/es 界面下回退英文脚本） ============ */
+const DEMOS={
+zh:[
+ {tab:"职场人",sub:"把数据变成能直接汇报的 PPT 和报告",user:"把这份 Q3 销售明细做成一份季度复盘 PPT，重点讲华东区的增长，再点一下三个掉队的品类",attach:["XLSX","Q3销售明细.xlsx"],steps:["读取销售明细，核对统计口径","提炼增长亮点与掉队品类","排版并生成演示文稿"],reply:"做好了，14 页。华东区的增长单独成章，三个掉队品类各配了原因分析和下个季度的改进动作，每个数字都能对回原表。",file:["📊","Q3季度销售复盘.pptx","演示文稿 · 14 页"]},
+ {tab:"学生与研究者",sub:"读数据、做统计、赶截止日期都能交",user:"帮我分析这份课程问卷数据，做一张统计表，再写一段 300 字左右的结果描述",attach:["CSV","课程满意度问卷.csv"],steps:["清洗问卷数据，剔除无效作答","计算均值、标准差与满意度占比","生成统计表并撰写结果描述"],reply:"完成了：统计表包含 12 个题项的均值、标准差和满意度占比，结果描述也按论文写法写好了，粘贴进正文就能用。",file:["📈","问卷统计分析.xlsx","表格 · 3 张工作表"]},
+ {tab:"内容创作者与商家",sub:"海报、短视频脚本、商品图一站搞定",user:"给我们新出的桂花乌龙茶做一张上市海报，再配一份 15 秒短视频脚本",attach:null,steps:["提炼卖点与视觉风格","设计海报文案与版式","编写 15 秒分镜脚本"],reply:"都好了：海报主打「秋天的第一杯桂花香」，画面留了产品特写位；脚本共 4 个镜头，结尾带购买引导，照着拍就行。",file:["🖼️","桂花乌龙上市海报.png","图片 · 附短视频脚本"]},
+ {tab:"求职者",sub:"简历、面试准备一次到位",user:"帮我优化这份简历，再针对运营岗出一套模拟面试题",attach:["PDF","我的简历.pdf"],steps:["梳理经历与岗位的匹配点","重写简历要点并量化成果","生成模拟面试题与参考答法"],reply:"简历改好了：项目经历都换成了带数字的表达，技能部分也对齐了岗位要求。另外附 20 道模拟面试题和参考答法，Word 版可直接打印。",file:["📄","简历优化版与面试题.docx","文档 · 9 页"]},
+ {tab:"运营与市场",sub:"活动数据变成能分享的看板",user:"把双十一活动数据做成一个看板网页，我要看各渠道的转化对比",attach:["CSV","双十一活动数据.csv"],steps:["读取活动数据并清洗","计算各渠道转化漏斗","生成可分享的看板网页"],reply:"看板做好了：顶部是 GMV 和订单量，中间是各渠道的转化漏斗对比，链接发到群里就能打开看。",file:["🌐","双十一活动看板.html","网页 · 可直接分享"]},
+ {tab:"开发者",sub:"写脚本、跑日志、做小工具",user:"写个脚本分析这份服务器日志，找出报错最多的接口和时段",attach:["LOG","server.log"],steps:["解析日志格式与字段","统计错误分布与高峰时段","生成分析脚本并汇总结论"],reply:"脚本和结论都好了：报错集中在 /api/order 接口，晚高峰 20–22 点最明显，原始统计表也一并附上，脚本以后能反复用。",file:["🐍","日志分析.py","脚本 · 附统计结果"]}
+],
+en:[
+ {tab:"Professionals",sub:"Turn data into boardroom-ready decks and reports",user:"Turn this Q3 sales data into a quarterly review deck — spotlight the East region's growth and flag the three categories that slipped",attach:["XLSX","Q3-sales-detail.xlsx"],steps:["Read the sales data and verify the metrics","Extract growth highlights and slipping categories","Lay out and generate the deck"],reply:"Done — 14 slides. The East region's growth gets its own chapter, and each slipping category comes with a cause analysis and next-quarter actions. Every number traces back to the source sheet.",file:["📊","Q3-sales-review.pptx","Deck · 14 slides"]},
+ {tab:"Students & researchers",sub:"Data, statistics and deadlines, handled",user:"Analyze this course survey data for me — make a statistics table and write a ~300-word results summary",attach:["CSV","course-survey.csv"],steps:["Clean the survey data, drop invalid responses","Compute means, deviations and satisfaction rates","Build the table and draft the summary"],reply:"All set: the table covers means, standard deviations and satisfaction rates for all 12 items, and the summary is written in academic style, ready to paste into your paper.",file:["📈","survey-statistics.xlsx","Spreadsheet · 3 sheets"]},
+ {tab:"Creators & sellers",sub:"Posters, short-video scripts and product shots",user:"Make a launch poster for our new osmanthus oolong tea, plus a 15-second short-video script",attach:null,steps:["Distill selling points and visual style","Design the poster copy and layout","Write the 15-second shot-by-shot script"],reply:"Both are ready: the poster leads with “autumn's first cup of osmanthus” with space for a product close-up; the script has 4 shots and ends with a clear call to action.",file:["🖼️","osmanthus-oolong-poster.png","Image · script included"]},
+ {tab:"Job seekers",sub:"Résumés and interview prep in one go",user:"Polish my résumé and build me a set of mock interview questions for an operations role",attach:["PDF","my-resume.pdf"],steps:["Map your experience to the role's requirements","Rewrite bullets with quantified results","Generate mock questions with sample answers"],reply:"Résumé polished: every project bullet now leads with numbers, and the skills section matches the job post. You'll also find 20 mock interview questions with sample answers in a printable Word doc.",file:["📄","resume-and-interview.docx","Document · 9 pages"]},
+ {tab:"Marketing & ops",sub:"Campaign data as a shareable dashboard",user:"Turn our Singles' Day campaign data into a dashboard web page — I want to compare conversion by channel",attach:["CSV","singles-day-campaign.csv"],steps:["Read and clean the campaign data","Compute conversion funnels per channel","Generate a shareable dashboard page"],reply:"Dashboard's live: GMV and orders up top, channel conversion funnels in the middle. Just drop the link in your group chat.",file:["🌐","campaign-dashboard.html","Web page · shareable link"]},
+ {tab:"Developers",sub:"Scripts, log analysis and small tools",user:"Write a script to analyze this server log and find the endpoints and hours with the most errors",attach:["LOG","server.log"],steps:["Parse the log format and fields","Aggregate error distribution and peak hours","Generate the script and summarize findings"],reply:"Script and findings are ready: errors concentrate on the /api/order endpoint, worst between 20:00–22:00. The raw stats table is attached, and the script is reusable.",file:["🐍","log-analysis.py","Script · stats included"]}
+]};
+/* ============ 案例数据（名称/介绍/提示词 zh/en；其余语言回退 en） ============ */
+const GRADS=["linear-gradient(140deg,#f2709c,#ff9472)","linear-gradient(140deg,#233043,#4d6fa5)","linear-gradient(140deg,#f2b04a,#e2693a)","linear-gradient(140deg,#3f7d5d,#79b98f)","linear-gradient(140deg,#654ea3,#eaafc8)","linear-gradient(140deg,#0f2027,#2c5364)","linear-gradient(140deg,#c33764,#1d2671)","linear-gradient(140deg,#11998e,#38ef7d)","linear-gradient(140deg,#8e2de2,#4a00e0)","linear-gradient(140deg,#f953c6,#b91d73)","linear-gradient(140deg,#4e54c8,#8f94fb)","linear-gradient(140deg,#f7971e,#ffd200)","linear-gradient(140deg,#134e5e,#71b280)","linear-gradient(140deg,#232526,#414345)","linear-gradient(140deg,#ee9ca7,#ffdde1)","linear-gradient(140deg,#2193b0,#6dd5ed)"];
+const HEIGHTS=[230,300,190,260,210,290,200,250,280,195,240,270,205,295,225,255];
+const CASES=[
+ {nz:"极简产品海报",ne:"Minimal product poster",cz:"电商",ce:"E-commerce",t:"image",dz:"大面积留白加一件产品居中，适合新品首发和详情页头图。",de:"Generous white space with one hero product — perfect for launches and store headers.",pz:"给一款白色无线耳机做一张极简海报，浅灰背景，产品居中，底部一行小字写产品名",pe:"Make a minimal poster for white wireless earbuds: light grey background, product centered, small product name at the bottom"},
+ {nz:"城市夜游延时",ne:"City night timelapse",cz:"旅行",ce:"Travel",t:"video",dz:"车流光轨与霓虹交织的 6 秒延时，适合做旅行 vlog 的转场。",de:"Six seconds of light trails and neon — a ready-made transition for travel vlogs.",pz:"生成一段城市十字路口的夜景延时视频，车流形成光轨，镜头缓慢推进",pe:"Generate a night timelapse of a city crossroads, car lights forming trails, slow push-in"},
+ {nz:"融资路演 Deck",ne:"Fundraising pitch deck",cz:"创业",ce:"Startup",t:"ppt",dz:"深色底加亮色数字，10 页讲清市场、产品和融资计划。",de:"Dark slides with bright numbers — market, product and the ask in 10 slides.",pz:"为一家做宠物智能用品的公司做 10 页融资路演 PPT，深色风格，数据页要醒目",pe:"Make a 10-slide fundraising deck for a smart pet products company, dark style, data pages that pop"},
+ {nz:"咖啡馆菜单页",ne:"Café menu page",cz:"网页",ce:"Web",t:"code",dz:"暖色调单页菜单，带分类锚点和今日推荐，手机上也好看。",de:"A warm one-page menu with category anchors and today's picks, great on mobile.",pz:"给一家社区咖啡馆做一个菜单网页，暖色调，分饮品和甜点两类，顶部放今日推荐",pe:"Build a menu web page for a neighborhood café, warm tones, drinks and desserts sections, today's pick on top"},
+ {nz:"复古音乐节海报",ne:"Retro music fest poster",cz:"海报",ce:"Poster",t:"image",dz:"七十年代配色与粗字排版，一眼回到模拟时代。",de:"Seventies colors and chunky type — straight back to the analog era.",pz:"做一张复古风音乐节海报，橙红配色，粗体大字标题，带乐队剪影",pe:"Design a retro music festival poster, orange-red palette, bold display type, band silhouettes"},
+ {nz:"新品开箱短片",ne:"Unboxing short",cz:"电商",ce:"E-commerce",t:"video",dz:"第一视角开箱加特写推镜，适合商品详情页和短视频平台。",de:"First-person unboxing with close-up push-ins for product pages and short-video apps.",pz:"做一段第一视角的新品开箱短片，从拆封到产品特写，节奏轻快",pe:"Make a first-person unboxing short, from opening the box to a product close-up, upbeat pace"},
+ {nz:"年度工作汇报",ne:"Annual work report",cz:"职场",ce:"Workplace",t:"ppt",dz:"浅色商务风，业绩、复盘、计划三段式，页数不多但很完整。",de:"Light business style in three acts — results, review, plans. Compact but complete.",pz:"把我的年度工作总结做成 12 页汇报 PPT，浅色商务风，分业绩、复盘和明年计划三部分",pe:"Turn my annual summary into a 12-slide report deck, light business style: results, review, next-year plans"},
+ {nz:"插画风头像",ne:"Illustrated avatar",cz:"人像",ce:"Portrait",t:"image",dz:"把照片变成干净的扁平插画头像，社交平台通用。",de:"Turn a photo into a clean flat-illustration avatar for any social platform.",pz:"把这张照片转成扁平插画风头像，保留发型和眼镜，背景用纯色",pe:"Convert this photo into a flat illustration avatar, keep the hairstyle and glasses, solid-color background"},
+ {nz:"数据报告看板",ne:"Data report dashboard",cz:"网页",ce:"Web",t:"code",dz:"指标卡加三张图表的经营看板，数据一换就能复用。",de:"KPI cards plus three charts — swap the data and reuse it every month.",pz:"用这份月度经营数据做一个看板网页，顶部放核心指标，下面放趋势图和渠道占比",pe:"Build a dashboard page from this monthly business data: KPI cards on top, trend chart and channel share below"},
+ {nz:"节日促销主图",ne:"Holiday sale hero image",cz:"电商",ce:"E-commerce",t:"image",dz:"喜庆但不俗气的主图，折扣信息一眼看清。",de:"Festive without being gaudy — the discount reads at a glance.",pz:"给春节促销做一张电商主图，红色喜庆风，突出满 300 减 50，产品摆中间",pe:"Make a Lunar New Year sale hero image, festive red style, highlight the spend-300-save-50 offer, product centered"},
+ {nz:"课程结课展示",ne:"Course finale deck",cz:"教育",ce:"Education",t:"ppt",dz:"把一学期的项目成果讲成一个故事，评委爱看。",de:"Turns a semester of project work into a story judges enjoy.",pz:"把我们小组的课程项目做成 8 页结课展示 PPT，要有问题、方案、成果和分工",pe:"Make an 8-slide course finale deck for our group project: problem, solution, results, who did what"},
+ {nz:"宠物写真海报",ne:"Pet portrait poster",cz:"生活",ce:"Lifestyle",t:"image",dz:"把毛孩子拍成杂志大片，还能配一句文案。",de:"Your pet, shot like a magazine cover — with a caption to match.",pz:"用这张猫的照片做一张宠物写真海报，杂志风，配一句俏皮文案",pe:"Turn this cat photo into a magazine-style pet poster with a playful caption"},
+ {nz:"旅行 vlog 片头",ne:"Travel vlog intro",cz:"旅行",ce:"Travel",t:"video",dz:"航拍加地名大字，5 秒把观众拉进旅程。",de:"Aerial shots plus big location type — five seconds and viewers are on the trip.",pz:"做一段 5 秒旅行 vlog 片头，航拍海岸线，中间出现大字地名",pe:"Make a 5-second travel vlog intro: aerial coastline, big location name in the middle"},
+ {nz:"SaaS 落地页",ne:"SaaS landing page",cz:"网页",ce:"Web",t:"code",dz:"首屏卖点加定价表的标准 SaaS 落地页，改文案就能上线。",de:"A classic SaaS landing page — hero pitch plus pricing table, ready to ship.",pz:"给一款团队协作工具做一个落地页，首屏讲清卖点，底部放三档定价表",pe:"Build a landing page for a team collaboration tool: clear hero pitch, three-tier pricing table at the bottom"},
+ {nz:"书籍封面设计",ne:"Book cover design",cz:"设计",ce:"Design",t:"image",dz:"克制的留白与衬线字，适合散文集和小说。",de:"Restrained whitespace and serif type — fits essays and novels alike.",pz:"给一本城市题材的散文集设计封面，留白多一点，衬线字体，带一点夜色",pe:"Design a cover for a city-themed essay collection: lots of whitespace, serif type, a hint of night"},
+ {nz:"品牌提案 Deck",ne:"Brand proposal deck",cz:"市场",ce:"Marketing",t:"ppt",dz:"从洞察到创意到排期，一套能直接拿去提案的 PPT。",de:"From insight to idea to timeline — a deck you can pitch with as-is.",pz:"给一个茶饮品牌做 15 页年度营销提案 PPT，包含市场洞察、创意方向和季度排期",pe:"Make a 15-slide annual marketing proposal for a tea brand: market insight, creative direction, quarterly timeline"}
+];
+const MODEL_NAMES=["GPT","Claude","Gemini","DeepSeek","Qwen","Kimi","GLM","Grok","MiniMax","Llama","Mistral","豆包","文心","通义","讯飞星火","混元"];
+
+/* ================= 页面逻辑 ================= */
+let lang = localStorage.getItem("poko_lang") || "zh";
+if(!I18N[lang]) lang = "zh";
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const t = k => (I18N[lang] && I18N[lang][k]) || I18N.zh[k] || k;
+const demoLang = () => (lang === "zh" || lang === "en") ? lang : "en"; // ja/ko/es: demo scripts fall back to English
+
+/* ---------- 轮换词 ---------- */
+let rotIdx = 0, rotTimer = null;
+function startRot(){
+  clearInterval(rotTimer);
+  const words = t("rot"); const el = $("#rotWord");
+  el.textContent = words[0]; rotIdx = 0;
+  rotTimer = setInterval(()=>{
+    el.classList.add("swap");
+    setTimeout(()=>{ rotIdx = (rotIdx+1) % words.length; el.textContent = words[rotIdx]; el.classList.remove("swap"); }, 290);
+  }, 2500);
+}
+/* ---------- 打字机 ---------- */
+let typeTimer = null;
+function startType(){
+  clearTimeout(typeTimer);
+  const lines = t("typeLines"); const el = $("#typeText");
+  let li = 0, ci = 0, del = false;
+  function tick(){
+    const line = lines[li];
+    if(!del){ ci++; el.textContent = line.slice(0, ci);
+      if(ci === line.length){ del = true; typeTimer = setTimeout(tick, 1700); return; }
+      typeTimer = setTimeout(tick, 75);
+    } else { ci--; el.textContent = line.slice(0, ci);
+      if(ci === 0){ del = false; li = (li+1) % lines.length; typeTimer = setTimeout(tick, 350); return; }
+      typeTimer = setTimeout(tick, 34);
+    }
   }
+  el.textContent = ""; tick();
+}
+/* ---------- 模式胶囊 ---------- */
+function goChat(q, mode){
+  const p = new URLSearchParams();
+  if(q) p.set("q", q);
+  if(mode) p.set("mode", mode);
+  location.href = "chat.html" + (p.toString() ? "?" + p.toString() : "");
+}
+function renderModes(){
+  $("#heroModes").innerHTML = t("modes").map(([label, m], i)=>
+    `<button type="button" class="chip${i===0 ? " free" : ""}" data-mode="${m}">${label}</button>`).join("");
+  $$("#heroModes .chip").forEach(c => c.addEventListener("click", ()=>{
+    const q = $("#heroInput").value.trim();
+    goChat(q, c.dataset.mode);
+  }));
+}
+/* ---------- 人群演示 ---------- */
+let demoTimers = [];
+function clearDemoTimers(){ demoTimers.forEach(clearTimeout); demoTimers = []; }
+function playDemo(i){
+  clearDemoTimers();
+  const d = DEMOS[demoLang()][i];
+  $$("#audTabs .aud-tab").forEach((el, j)=> el.classList.toggle("on", j===i));
+  $("#dUser").textContent = d.user;
+  const at = $("#dAttach");
+  if(d.attach){ $("#dAttachType").textContent = d.attach[0]; $("#dAttachName").textContent = d.attach[1]; at.classList.add("show"); }
+  else at.classList.remove("show");
+  const box = $("#dSteps");
+  box.innerHTML = `<div class="s-head">${t("steps_done")}</div>` + d.steps.map(s =>
+    `<div class="step"><span class="tick">✓</span><span>${s}</span></div>`).join("");
+  const reply = $("#dReply"), file = $("#dFile");
+  reply.classList.remove("show"); file.classList.remove("show");
+  reply.textContent = d.reply;
+  $("#dFileIcon").textContent = d.file[0];
+  $("#dFileName").textContent = d.file[1];
+  $("#dFileMeta").textContent = d.file[2];
+  const steps = Array.from(box.querySelectorAll(".step"));
+  steps.forEach((s, j)=>{
+    demoTimers.push(setTimeout(()=> s.classList.add("show"), 450 + j*650));
+    demoTimers.push(setTimeout(()=> s.classList.add("done"), 1000 + j*650));
+  });
+  const base = 450 + steps.length*650 + 350;
+  demoTimers.push(setTimeout(()=> reply.classList.add("show"), base));
+  demoTimers.push(setTimeout(()=> file.classList.add("show"), base + 420));
+}
+function renderAudTabs(){
+  const list = DEMOS[demoLang()];
+  $("#audTabs").innerHTML = list.map((d, i)=>
+    `<button type="button" class="aud-tab" data-i="${i}">${d.tab}<small>${d.sub}</small></button>`).join("");
+  $$("#audTabs .aud-tab").forEach(el => el.addEventListener("click", ()=> playDemo(+el.dataset.i)));
+}
+/* ---------- 价格图 ---------- */
+function renderChart(){
+  $("#chartRows").innerHTML = t("prices").map(r=>{
+    let blocks = "";
+    for(let i = 0; i < 100; i++) blocks += `<i class="${i < r.b ? "on" : ""}"></i>`;
+    return `<div class="barrow"><div class="nm">${r.n}<span>${r.s}</span></div><div class="blocks">${blocks}</div><div class="ct">${r.c}</div></div>`;
+  }).join("");
+}
+/* ---------- 案例 ---------- */
+let curCase = 0;
+function caseName(c){ return lang === "zh" ? c.nz : c.ne; }
+function caseCat(c){ return lang === "zh" ? c.cz : c.ce; }
+function caseDesc(c){ return lang === "zh" ? c.dz : c.de; }
+function casePrompt(c){ return lang === "zh" ? c.pz : c.pe; }
+function renderCases(){
+  $("#casePills").innerHTML = CASES.map((c, i)=>
+    `<button type="button" class="cpill" data-i="${i}">${caseName(c)} · ${t("type_"+c.t)} · ${caseCat(c)}</button>`).join("");
+  $("#caseWall").innerHTML = CASES.map((c, i)=>
+    `<div class="casecard" data-i="${i}" style="height:${HEIGHTS[i]}px;background:${GRADS[i]}"><span class="tag">${t("type_"+c.t)}</span><span class="cap">${caseName(c)}</span></div>`).join("");
+  $$("#casePills .cpill").forEach(el => el.addEventListener("click", ()=> openCase(+el.dataset.i)));
+  $$("#caseWall .casecard").forEach(el => el.addEventListener("click", ()=> openCase(+el.dataset.i)));
+}
+function openCase(i){
+  curCase = (i + CASES.length) % CASES.length;
+  const c = CASES[curCase];
+  $("#mArt").style.background = GRADS[curCase];
+  $("#mTag").textContent = t("type_"+c.t) + " · " + caseCat(c);
+  $("#mCap").textContent = caseName(c);
+  $("#mName").textContent = caseName(c);
+  $("#mDesc").textContent = caseDesc(c);
+  $("#mPrompt").textContent = casePrompt(c);
+  $("#mSame").href = "chat.html?q=" + encodeURIComponent(casePrompt(c));
+  $("#caseModal").classList.add("open");
+}
+function closeCase(){ $("#caseModal").classList.remove("open"); }
+/* ---------- FAQ ---------- */
+function renderFaq(){
+  $("#faqList").innerHTML = t("faq").map(([q, a])=>
+    `<div class="faqitem"><button type="button"><span>${q}</span><span class="fx">+</span></button><div class="fa">${a}</div></div>`).join("");
+  $$("#faqList .faqitem > button").forEach(b => b.addEventListener("click", ()=> b.parentElement.classList.toggle("open")));
+}
+/* ---------- 语言应用 ---------- */
+function applyLang(){
+  document.documentElement.lang = {zh:"zh-CN", en:"en", ja:"ja", ko:"ko", es:"es"}[lang];
+  $$("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  $$("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  $("#langSel").value = lang;
+  renderModes(); renderAudTabs(); playDemo(0);
+  renderChart(); renderCases(); renderFaq();
+  startRot(); startType();
+}
+/* ---------- 初始化 ---------- */
+$("#modelChips").innerHTML = MODEL_NAMES.map(n => `<span class="mchip">${n}</span>`).join("");
+$("#langSel").addEventListener("change", e => {
+  lang = e.target.value;
+  localStorage.setItem("poko_lang", lang);
+  applyLang();
+});
+$("#heroSend").addEventListener("click", ()=> goChat($("#heroInput").value.trim(), ""));
+$("#heroInput").addEventListener("keydown", e => {
+  if(e.key === "Enter" && (e.metaKey || e.ctrlKey)) goChat($("#heroInput").value.trim(), "");
+});
+$("#mPrev").addEventListener("click", ()=> openCase(curCase - 1));
+$("#mNext").addEventListener("click", ()=> openCase(curCase + 1));
+$("#mClose").addEventListener("click", closeCase);
+$("#caseModal").addEventListener("click", e => { if(e.target.id === "caseModal") closeCase(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeCase(); });
+applyLang();
 </script>
 </body>
 </html>
