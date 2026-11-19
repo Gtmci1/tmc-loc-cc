@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poko 文档 — 使用指南与帮助中心</title>
+<meta name="description" content="Poko 使用文档：快速开始、做 PPT 与报告、表格分析、海报与图片、网页与代码、模型与计费说明，以及常见问题。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Poko 文档 — 使用指南与帮助中心">
+<meta property="og:description" content="快速开始、六类产出指南、模型与计费说明和常见问题，都在这里。">
+<meta property="og:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<link rel="canonical" href="https://tmc.loc.cc/docs.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z' fill='%233C9A5F'/%3E%3Ccircle cx='24' cy='26' r='19' fill='%23FF5C1A'/%3E%3Ccircle cx='17.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Ccircle cx='30.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Cpath d='M20 30.5q4 3.2 8 0' stroke='%237A2A08' stroke-width='2.1' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#17130c; --sub:#6d675c; --line:#e9e4d8; --line2:#dcd4c3; --bg:#ffffff; --bg2:#f7f6f1; --bg3:#f0eee6;
+  --brand:#FF5C1A; --brand-dark:#e8480c; --brand-soft:#fff1e8; --amber:#ffb03a;
+  --brand-grad:linear-gradient(135deg,#ff7d2e 0%,#ff5c1a 52%,#f43d0a 100%);
+  --radius:20px; --r-lg:24px; --r-md:16px; --r-sm:12px;
+  --shadow-sm:0 1px 2px rgba(23,18,8,.05),0 2px 8px -2px rgba(23,18,8,.06);
+  --shadow:0 2px 4px rgba(23,18,8,.04),0 18px 44px -14px rgba(23,18,8,.16);
+  --shadow-lg:0 4px 10px rgba(23,18,8,.05),0 36px 72px -20px rgba(23,18,8,.26);
+  --shadow-brand:0 10px 22px -8px rgba(255,92,26,.5);
+  --ring:0 0 0 4px rgba(255,92,26,.16);
+  --ease:cubic-bezier(.22,.68,.26,1);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans JP","Noto Sans KR",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.mascot{display:inline-block;flex:none;vertical-align:middle}
+.mascot svg{display:block}
+header.site{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:24px;height:64px}
+.logo{display:flex;align-items:center;gap:9px;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.nav-links{display:flex;gap:22px;margin-left:8px;font-size:15px;color:#33322e}
+.nav-links a:hover{color:var(--brand)}
+.nav-links a.on{color:var(--brand);font-weight:600}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.langsel{position:relative}
+.langsel select{appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 30px 8px 14px;font-size:14px;color:var(--ink);cursor:pointer}
+.langsel::after{content:"▾";position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--sub);pointer-events:none}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:999px;font-size:15px;font-weight:600;padding:10px 20px;border:1px solid transparent;transition:.15s}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-dark)}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+.btn-login{background:none;border:none;font-size:15px;font-weight:600;padding:10px 6px}
+.btn-login:hover{color:var(--brand)}
+.page-head{padding:60px 0 10px;text-align:center}
+.page-head h1{font-size:40px;font-weight:850;letter-spacing:-.02em}
+.page-head p{margin:14px auto 0;max-width:600px;color:var(--sub);font-size:17px}
+.docsearch{max-width:560px;margin:28px auto 0;display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:16px;padding:0 16px;background:#fff;box-shadow:var(--shadow)}
+.docsearch:focus-within{border-color:var(--brand)}
+.docsearch input{flex:1;border:none;outline:none;font-size:16px;padding:15px 0;font-family:inherit;background:transparent}
+.docsearch kbd{font-family:var(--mono);font-size:12px;color:var(--sub);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:2px 7px;background:var(--bg2)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:44px 0 8px}
+.dcard{border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff;transition:.15s;display:block}
+.dcard:hover{border-color:#f3c3ab;box-shadow:var(--shadow);transform:translateY(-2px)}
+.dcard .ic{font-size:26px;margin-bottom:10px}
+.dcard h3{font-size:17px;margin-bottom:6px}
+.dcard p{font-size:14px;color:var(--sub);line-height:1.65}
+.findq{margin:52px 0 0}
+.findq h2,.faqsec h2{font-size:26px;font-weight:800;text-align:center}
+.findq .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.findq .col{border:1px solid var(--line);border-radius:18px;padding:20px;background:var(--bg2)}
+.findq .col h4{font-size:14px;color:var(--sub);margin-bottom:12px}
+.findq .col a{display:block;padding:7px 0;font-size:15px;font-weight:550}
+.findq .col a:hover{color:var(--brand)}
+.doclayout{display:grid;grid-template-columns:230px 1fr;gap:36px;margin:64px 0 0;align-items:start}
+aside.side{position:sticky;top:88px}
+aside.side h5{font-size:12px;color:var(--sub);letter-spacing:.08em;margin:0 0 10px;text-transform:uppercase}
+aside.side a{display:block;padding:8px 12px;border-radius:10px;font-size:14.5px;color:#33322e}
+aside.side a:hover{background:var(--bg2);color:var(--brand)}
+article.doc{border-top:1px solid var(--line);padding:34px 0 8px;scroll-margin-top:90px}
+article.doc:first-child{border-top:none;padding-top:6px}
+article.doc h2{font-size:24px;font-weight:800;margin-bottom:6px}
+article.doc .lede{color:var(--sub);font-size:15.5px;margin-bottom:14px}
+article.doc p{font-size:15.5px;line-height:1.85;margin-bottom:12px;color:#2c2b27}
+article.doc ul{margin:0 0 14px 20px}
+article.doc li{font-size:15.5px;line-height:1.8;margin-bottom:5px;color:#2c2b27}
+article.doc .tip{background:var(--brand-soft);border-radius:14px;padding:14px 18px;font-size:14.5px;line-height:1.75;color:#6b3a1e}
+article.doc code{font-family:var(--mono);font-size:.92em;background:var(--bg2);border:1px solid var(--line);padding:1px 6px;border-radius:6px}
+.noresult{display:none;text-align:center;color:var(--sub);padding:44px 0}
+.faqsec{margin:70px 0 0}
+.faqwrap{max-width:820px;margin:26px auto 0}
+.faqitem{border:1px solid var(--line);border-radius:16px;margin-bottom:10px;background:#fff;overflow:hidden}
+.faqitem>button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;background:none;border:none;text-align:left;font-size:16px;font-weight:600;padding:18px 20px}
+.faqitem .fx{color:var(--brand);font-size:20px;transition:.2s}
+.faqitem .fa{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faqitem .fa p{padding:0 20px 18px;color:var(--sub);font-size:15px;line-height:1.75}
+.faqitem.open .fa{max-height:300px}
+.faqitem.open .fx{transform:rotate(45deg)}
+.cta{margin:70px 0 0;background:linear-gradient(120deg,#ff7a3c,#FF5C1A);border-radius:28px;padding:56px 30px;text-align:center;color:#fff}
+.cta h2{font-size:32px;font-weight:800}
+.cta p{margin:12px auto 24px;max-width:520px;opacity:.92}
+.cta .btn{background:#fff;color:var(--brand-dark)}
+section.bottompad{padding-bottom:80px}
+footer{border-top:1px solid var(--line);padding:56px 0 30px;background:#fff;margin-top:80px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:28px}
+.foot-brand p{color:var(--sub);font-size:14px;margin-top:12px}
+footer h4{font-size:14px;margin-bottom:14px}
+footer ul{list-style:none}
+footer li{margin-bottom:9px}
+footer li a{color:var(--sub);font-size:14px}
+footer li a:hover{color:var(--brand)}
+.foot-bar{display:flex;gap:22px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);margin-top:38px;padding-top:22px;color:var(--sub);font-size:13px}
+.foot-bar .sp{margin-left:auto;display:flex;align-items:center;gap:7px}
+.foot-bar .dot{width:8px;height:8px;border-radius:50%;background:#2f9e63;display:inline-block}
+.cookiebar{position:fixed;left:16px;right:16px;bottom:16px;z-index:90;max-width:560px;margin:0 auto;background:#1d1a16;color:#f3efe9;border-radius:16px;padding:16px 18px;display:none;align-items:center;gap:14px;box-shadow:0 16px 40px rgba(0,0,0,.25);font-size:14px}
+.cookiebar.show{display:flex}
+.cookiebar button{flex:none;background:var(--brand);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-weight:600;font-size:14px}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .page-head h1{font-size:31px}
+  .cards{grid-template-columns:1fr}
+  .findq .cols{grid-template-columns:1fr}
+  .doclayout{grid-template-columns:1fr}
+  aside.side{position:static;display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}
+  aside.side h5{display:none}
+  aside.side a{white-space:nowrap;border:1px solid var(--line)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ============ Poko Design System v2 · 视觉升级层 ============ */
+::selection{background:#ffd7c2;color:#7a2400}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+body{text-rendering:optimizeLegibility;overflow-x:clip}
+header,header.site{background:rgba(255,255,255,.85);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);box-shadow:0 14px 34px -26px rgba(23,18,8,.4)}
+.nav-links a{position:relative;transition:color .18s}
+.nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:2px;border-radius:2px;background:var(--brand-grad);transition:right .28s var(--ease)}
+.nav-links a:hover::after{right:0}
+.btn{transition:transform .18s var(--ease),box-shadow .18s var(--ease),background-color .18s,color .18s,border-color .18s,filter .18s}
+.btn-primary{background:var(--brand-grad);box-shadow:var(--shadow-brand),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-primary:hover{background:var(--brand-grad);filter:brightness(1.05);transform:translateY(-1px);box-shadow:0 15px 30px -9px rgba(255,92,26,.55),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-primary:active{transform:translateY(0) scale(.98)}
+.btn-ghost{box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:var(--line2)}
+.btn-login{transition:color .18s}
+.langsel select{transition:border-color .18s,box-shadow .18s}
+.langsel select:hover{border-color:var(--line2)}
+.langsel select:focus{border-color:var(--brand);box-shadow:var(--ring);outline:none}
+.sec-head h2{letter-spacing:-.02em}
+footer{background:linear-gradient(180deg,#fff 0%,#fbf9f4 100%)}
+.foot-grid li a{transition:color .18s}
+.cookiebar{box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,.09)}
+.cookiebar button{transition:transform .18s var(--ease),filter .18s}
+.cookiebar button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.pills button,.mfilter button{transition:all .18s var(--ease)}
+.pills button.on,.mfilter button.on{box-shadow:var(--shadow-sm)}
+.chip,.cpill,.mchip{transition:all .18s var(--ease)}
+.chip:hover,.cpill:hover,.mchip:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+/* 滚动渐入（JS 加 .jsrv 后才隐藏，无 JS 时内容直接可见） */
+.jsrv .rv{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--rvd,0s)}
+.jsrv .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .jsrv .rv{opacity:1;transform:none}
+}
+
+.cta{position:relative;overflow:hidden;background:linear-gradient(125deg,#ff8a3d 0%,#ff5c1a 52%,#f0440a 100%);box-shadow:0 30px 60px -24px rgba(244,61,10,.5)}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(520px 240px at 12% -10%,rgba(255,255,255,.35),transparent 60%),radial-gradient(560px 260px at 88% 115%,rgba(255,176,58,.4),transparent 60%);pointer-events:none}
+.cta>*{position:relative}
+.cta .btn{box-shadow:0 12px 24px -10px rgba(90,20,0,.45);transition:transform .18s var(--ease),box-shadow .18s var(--ease),background-color .18s,color .18s}
+.cta .btn:hover{transform:translateY(-2px)}
+.page-head{position:relative}
+.page-head::before{content:"";position:absolute;left:50%;top:-72px;transform:translateX(-50%);width:min(880px,100vw);height:340px;background:radial-gradient(closest-side,rgba(255,92,26,.13),rgba(255,176,58,.07) 55%,transparent 72%);pointer-events:none}
+.page-head>*{position:relative}
+
+.docsearch{transition:border-color .18s,box-shadow .18s}
+.docsearch:focus-within{box-shadow:var(--shadow),var(--ring)}
+.dcard{box-shadow:var(--shadow-sm)}
+.dcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#f0cdb2}
+.findq .col{box-shadow:var(--shadow-sm)}
+article.doc .tip{background:linear-gradient(135deg,#fff4ec,#ffeee1);border:1px solid #ffdcc4;border-left:4px solid var(--brand)}
+article.doc code{background:#f6f3ec}
+aside.side a{transition:all .15s}
+.faqitem{transition:border-color .2s,box-shadow .2s}
+.faqitem.open{border-color:#f0cdb2;box-shadow:var(--shadow-sm)}
+
+/* DS v2 补丁：移动端页眉防拥挤（按钮不换行、登录键让位） */
+.btn{white-space:nowrap}
+@media(max-width:900px){
+  .btn-login{display:none}
+  .nav{gap:12px}
+  .nav-right{gap:8px}
+  .logo{font-size:20px}
+  .langsel select{padding:7px 22px 7px 10px;font-size:13px}
+  .nav-right .btn{padding:9px 15px;font-size:14px}
+}
+</style>
+<style>
+/* ===== 第五轮细节：全局滚动条 + 回到顶部 + ⌘K 页面跳转 ===== */
+html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#ddd5c3;border-radius:8px;border:2px solid #fff}
+::-webkit-scrollbar-thumb:hover{background:#cfc4ab}
+::-webkit-scrollbar-track{background:transparent}
+#toTop{position:fixed;right:22px;bottom:22px;z-index:80;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(8px);box-shadow:var(--shadow);color:var(--ink);font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s var(--ease)}
+#toTop.show{opacity:1;pointer-events:auto;transform:none}
+#toTop:hover{border-color:#f0cdb2;color:var(--brand)}
+.pal{position:fixed;inset:0;z-index:200;display:none;align-items:flex-start;justify-content:center;background:rgba(23,18,8,.38);backdrop-filter:blur(3px)}
+.pal.open{display:flex}
+.pal-box{margin-top:12vh;width:min(520px,92vw);background:#fff;border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid var(--line)}
+.pal-box input{width:100%;border:none;outline:none;font-size:17px;padding:16px 18px;font-family:inherit;border-bottom:1px solid var(--line);background:#fff;color:var(--ink)}
+.pal-list{max-height:320px;overflow:auto;padding:6px}
+.pal-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;padding:11px 12px;border-radius:12px;font-size:15px;color:var(--ink);cursor:pointer;font-family:inherit}
+.pal-item .hint{margin-left:auto;color:var(--sub);font-size:12.5px}
+.pal-item.sel{background:var(--brand-soft)}
+.pal-empty{padding:14px;color:var(--sub);font-size:14px}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Poko 和直接用聊天机器人有什么区别？", "acceptedAnswer": {"@type": "Answer", "text": "普通聊天给你文字，Poko 直接交付文件：能打开的 PPT、能编辑的表格、能部署的网页。任务会被拆成步骤执行，过程看得见，成品能下载。"}}, {"@type": "Question", "name": "不会写提示词能用吗？", "acceptedAnswer": {"@type": "Answer", "text": "能。把事情说清楚就行：做什么、给谁看、重点是什么。实在没头绪，先看文档里的示例句式，或者让 Poko 先反问你几个问题再动手。"}}, {"@type": "Question", "name": "支持哪些语言？", "acceptedAnswer": {"@type": "Answer", "text": "界面和对话都支持简体中文、English、日本語、한국어、Español 五种语言，右上角随时切换。你用什么语言提问，就用什么语言交付。"}}, {"@type": "Question", "name": "生成的质量不满意怎么办？", "acceptedAnswer": {"@type": "Answer", "text": "直接在对话里说要改哪里，Poko 在原文件上继续改，不用重做。换风格、改结构、加内容都可以；实在不对路，换个模型重跑也行。"}}, {"@type": "Question", "name": "企业能用吗？有团队版吗？", "acceptedAnswer": {"@type": "Answer", "text": "可以。企业版提供团队工作区、品牌模板、用量与权限管理，见企业服务页；有具体需求也可以直接邮件联系我们。"}}]}</script>
+</head>
+<body>
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html">
+      <span class="mascot"><svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span>
+      Poko
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features" data-i18n="nav_features">功能</a>
+      <a href="index.html#pricing" data-i18n="nav_pricing">价格</a>
+      <a href="index.html#cases" data-i18n="nav_cases">案例</a>
+      <a href="models.html" data-i18n="nav_models">模型广场</a>
+      <a href="docs.html" class="on" data-i18n="nav_docs">文档</a>
+      <a href="blog.html" data-i18n="nav_blog">博客</a>
+      <a href="business.html" data-i18n="nav_biz">企业</a>
+    </nav>
+    <div class="nav-right">
+      <span class="langsel">
+        <select id="langSel" aria-label="Language">
+          <option value="zh">简体中文</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="es">Español</option>
+        </select>
+      </span>
+      <a class="btn-login" href="auth.html" data-i18n="nav_login">登录</a>
+      <a class="btn btn-primary" href="auth.html?mode=signup" data-i18n="nav_start">开始使用</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="page-head">
+    <h1 data-i18n="dc_title">Poko 文档</h1>
+    <p data-i18n="dc_sub">从第一句话到交付一份能用的文件，全部用法都在这里。按产出类型组织，照着做就行。</p>
+    <label class="docsearch"><span aria-hidden="true">⌕</span><input id="docQ" type="search" data-i18n-ph="dc_search_ph" placeholder="搜索文档…"><kbd>⌘K</kbd></label>
+  </div>
+
+  <div class="cards" id="docCards"></div>
+
+  <div class="findq">
+    <h2 data-i18n="dc_find">按问题查找</h2>
+    <div class="cols" id="findCols"></div>
+  </div>
+
+  <div class="doclayout">
+    <aside class="side"><h5 data-i18n="dc_side">指南目录</h5><nav id="sideNav"></nav></aside>
+    <div>
+      <div id="docArticles"></div>
+      <div class="noresult" id="noResult"><p data-i18n="dc_noresult">没有找到相关内容，换个关键词试试。</p></div>
+    </div>
+  </div>
+
+  <div class="faqsec" id="faq">
+    <h2 data-i18n="dc_faq_t">帮助中心 · 常见问题</h2>
+    <div class="faqwrap" id="faqList"></div>
+  </div>
+
+  <div class="cta">
+    <h2 data-i18n="dc_cta_t">看文档不如直接上手</h2>
+    <p data-i18n="dc_cta_p">打开对话，说一句话，第一份成果几分钟就好。</p>
+    <a class="btn" href="chat.html" data-i18n="dc_cta_b">打开 Poko 对话 →</a>
+  </div>
+</div>
+<section class="bottompad"></section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="index.html">
+          <span class="mascot"><svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span>
+          Poko
+        </a>
+        <p data-i18n="foot_tag">一句话，做出拿得出手的成果。</p>
+      </div>
+      <div><h4 data-i18n="foot_c1">产品</h4><ul>
+        <li><a href="chat.html" data-i18n="foot_chat">AI 对话</a></li>
+        <li><a href="index.html#features" data-i18n="foot_ppt">PPT 生成</a></li>
+        <li><a href="models.html" data-i18n="nav_models">模型广场</a></li>
+        <li><a href="business.html" data-i18n="nav_biz">企业</a></li>
+        <li><a href="pricing.html" data-i18n="foot_price">定价</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c2">热门模型</h4><ul>
+        <li><a href="models.html">GPT</a></li><li><a href="models.html">Claude</a></li><li><a href="models.html">Gemini</a></li>
+        <li><a href="models.html">DeepSeek</a></li><li><a href="models.html">Qwen</a></li><li><a href="models.html">Kimi</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c3">模型厂商</h4><ul>
+        <li><a href="models.html">OpenAI</a></li><li><a href="models.html">Anthropic</a></li><li><a href="models.html">Google</a></li>
+        <li><a href="models.html">DeepSeek</a></li><li><a href="models.html" data-i18n="vendor_qwen">阿里通义</a></li><li><a href="models.html" data-i18n="vendor_moon">月之暗面</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c4">资源</h4><ul>
+        <li><a href="docs.html" data-i18n="foot_guide">使用指南</a></li>
+        <li><a href="index.html#cases" data-i18n="foot_tpl">模板库</a></li>
+        <li><a href="blog.html" data-i18n="nav_blog">博客</a></li>
+        <li><a href="docs.html#faq" data-i18n="foot_help">帮助中心</a></li>
+        <li><a href="business.html#about" data-i18n="foot_about">关于我们</a></li>
+        <li><a href="mailto:hello@poko.example" data-i18n="foot_contact">联系我们</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bar">
+      <span>© 2026 Poko</span><span>v0.1.0</span><span>hello@poko.example</span><a href="terms.html" data-i18n="foot_terms">服务条款</a><a href="privacy.html" data-i18n="foot_privacy">隐私政策</a>
+      <span class="sp"><span class="dot"></span><span data-i18n="foot_status">演示站点</span></span>
+    </div>
+  </div>
+</footer>
+
+<div class="cookiebar" id="cookieBar" role="dialog" aria-live="polite">
+  <span data-i18n="cookie_txt">Poko 只在你的浏览器本地保存语言偏好，不用追踪型 Cookie。</span>
+  <button type="button" id="cookieOk" data-i18n="cookie_ok">知道了</button>
+</div>
+
+<script>
+/* ================= i18n ================= */
+const I18N = {
+zh:{
+  nav_features:"功能",nav_pricing:"价格",nav_cases:"案例",nav_models:"模型广场",nav_docs:"文档",nav_blog:"博客",nav_biz:"企业",nav_login:"登录",nav_start:"开始使用",
+  foot_tag:"一句话，做出拿得出手的成果。",foot_c1:"产品",foot_c2:"热门模型",foot_c3:"模型厂商",foot_c4:"资源",
+  foot_chat:"AI 对话",foot_ppt:"PPT 生成",foot_price:"定价",vendor_qwen:"阿里通义",vendor_moon:"月之暗面",
+  foot_guide:"使用指南",foot_tpl:"模板库",foot_help:"帮助中心",foot_about:"关于我们",foot_contact:"联系我们",foot_status:"演示站点",
+  cookie_txt:"Poko 只在你的浏览器本地保存语言偏好，不用追踪型 Cookie。",cookie_ok:"知道了",
+  dc_title:"Poko 文档",dc_sub:"从第一句话到交付一份能用的文件，全部用法都在这里。按产出类型组织，照着做就行。",
+  dc_search_ph:"搜索文档…",dc_find:"按问题查找",dc_side:"指南目录",dc_noresult:"没有找到相关内容，换个关键词试试。",
+  dc_faq_t:"帮助中心 · 常见问题",dc_cta_t:"看文档不如直接上手",dc_cta_p:"打开对话，说一句话，第一份成果几分钟就好。",dc_cta_b:"打开 Poko 对话 →"
+},
+en:{
+  nav_features:"Features",nav_pricing:"Pricing",nav_cases:"Cases",nav_models:"Models",nav_docs:"Docs",nav_blog:"Blog",nav_biz:"Business",nav_login:"Log in",nav_start:"Get started",
+  foot_tag:"One sentence. Results worth showing.",foot_c1:"Product",foot_c2:"Popular models",foot_c3:"Providers",foot_c4:"Resources",
+  foot_chat:"AI Chat",foot_ppt:"Deck generation",foot_price:"Pricing",vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",
+  foot_guide:"User guide",foot_tpl:"Templates",foot_help:"Help center",foot_about:"About us",foot_contact:"Contact",foot_status:"Demo site",
+  cookie_txt:"Poko only stores your language preference locally in your browser — no tracking cookies.",cookie_ok:"Got it",
+  dc_title:"Poko Docs",dc_sub:"Everything from your first sentence to a finished, usable file. Organized by output type — just follow along.",
+  dc_search_ph:"Search the docs…",dc_find:"Find by question",dc_side:"Guides",dc_noresult:"Nothing matched. Try a different keyword.",
+  dc_faq_t:"Help center · FAQ",dc_cta_t:"Reading is slower than doing",dc_cta_p:"Open the chat, say one sentence, and your first result is minutes away.",dc_cta_b:"Open Poko Chat →"
+}};
+I18N.ja={nav_features:"機能",nav_pricing:"料金",nav_cases:"事例",nav_models:"モデル一覧",nav_docs:"ドキュメント",nav_blog:"ブログ",nav_biz:"法人向け",nav_login:"ログイン",nav_start:"使ってみる",
+  foot_tag:"一言で、見せられる成果を。",foot_c1:"製品",foot_c2:"人気モデル",foot_c3:"モデル提供元",foot_c4:"リソース",foot_chat:"AIチャット",foot_ppt:"スライド生成",foot_price:"料金",
+  vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",foot_guide:"使い方ガイド",foot_tpl:"テンプレート",foot_help:"ヘルプセンター",foot_about:"私たちについて",foot_contact:"お問い合わせ",foot_status:"デモサイト",
+  cookie_txt:"Poko は言語設定をブラウザに保存するだけで、追跡 Cookie は使いません。",cookie_ok:"了解",dc_title:"Poko ドキュメント",dc_faq_t:"ヘルプセンター · よくある質問"};
+I18N.ko={nav_features:"기능",nav_pricing:"요금",nav_cases:"사례",nav_models:"모델 광장",nav_docs:"문서",nav_blog:"블로그",nav_biz:"기업용",nav_login:"로그인",nav_start:"시작하기",
+  foot_tag:"한 문장으로, 자신 있게 내놓을 수 있는 결과물을.",foot_c1:"제품",foot_c2:"인기 모델",foot_c3:"모델 제공사",foot_c4:"리소스",foot_chat:"AI 대화",foot_ppt:"PPT 생성",foot_price:"요금",
+  vendor_qwen:"알리바바 Tongyi",vendor_moon:"Moonshot AI",foot_guide:"사용 가이드",foot_tpl:"템플릿",foot_help:"도움말 센터",foot_about:"회사 소개",foot_contact:"문의하기",foot_status:"데모 사이트",
+  cookie_txt:"Poko는 언어 설정을 브라우저에 저장할 뿐, 추적 쿠키를 쓰지 않습니다.",cookie_ok:"확인",dc_title:"Poko 문서",dc_faq_t:"도움말 센터 · 자주 묻는 질문"};
+I18N.es={nav_features:"Funciones",nav_pricing:"Precios",nav_cases:"Casos",nav_models:"Modelos",nav_docs:"Documentos",nav_blog:"Blog",nav_biz:"Empresas",nav_login:"Iniciar sesión",nav_start:"Empezar",
+  foot_tag:"Una frase. Resultados de los que presumir.",foot_c1:"Producto",foot_c2:"Modelos populares",foot_c3:"Proveedores",foot_c4:"Recursos",foot_chat:"Chat con IA",foot_ppt:"Generación de presentaciones",foot_price:"Precios",
+  vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",foot_guide:"Guía de uso",foot_tpl:"Plantillas",foot_help:"Centro de ayuda",foot_about:"Nosotros",foot_contact:"Contacto",foot_status:"Sitio de demostración",
+  cookie_txt:"Poko solo guarda tu idioma en tu navegador, sin cookies de rastreo.",cookie_ok:"Entendido",dc_title:"Documentos de Poko",dc_faq_t:"Centro de ayuda · Preguntas frecuentes"};
+Object.assign(I18N.ja,{"dc_sub": "最初の一言から、使えるファイルが完成するまでの使い方を、成果物の種類ごとにまとめました。そのまま進めるだけで大丈夫です。", "dc_search_ph": "ドキュメントを検索…", "dc_find": "質問から探す", "dc_side": "ガイド目次", "dc_noresult": "見つかりませんでした。キーワードを変えてみてください。", "dc_cta_t": "読むより、まず触ってみる", "dc_cta_p": "チャットを開いて一言伝えるだけで、最初の成果は数分で完成します。", "dc_cta_b": "Poko チャットを開く →"});
+Object.assign(I18N.ko,{"dc_sub": "첫 문장부터 바로 쓸 수 있는 파일이 완성될 때까지. 결과물 종류별로 정리했으니 그대로 따라오면 됩니다.", "dc_search_ph": "문서 검색…", "dc_find": "질문으로 찾기", "dc_side": "가이드 목차", "dc_noresult": "관련 내용을 찾지 못했습니다. 다른 키워드로 검색해 보세요.", "dc_cta_t": "읽는 것보다 직접 해보는 게 빠릅니다", "dc_cta_p": "대화를 열고 한 문장만 말하면 첫 결과물이 몇 분 만에 완성됩니다.", "dc_cta_b": "Poko 대화 열기 →"});
+Object.assign(I18N.es,{"dc_sub": "Desde tu primera frase hasta un archivo terminado y listo para usar. Organizado por tipo de resultado: solo sigue los pasos.", "dc_search_ph": "Buscar en la documentación…", "dc_find": "Buscar por pregunta", "dc_side": "Guías", "dc_noresult": "Sin resultados. Prueba con otra palabra clave.", "dc_cta_t": "Leer es más lento que hacer", "dc_cta_p": "Abre el chat, di una frase y tu primer resultado estará listo en minutos.", "dc_cta_b": "Abrir el chat de Poko →"});
+
+let lang = localStorage.getItem("poko_lang") || "zh";
+if(!I18N[lang]) lang = "zh";
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const t = k => (I18N[lang] && I18N[lang][k]) || I18N.en[k] || I18N.zh[k] || k;
+const L = o => o[lang] || o.en || o.zh;
+
+/* ================= 文档内容（Poko 原创） ================= */
+const DOCS=[
+ {id:"start",icon:"🚀",
+  title:{zh:"快速开始：三分钟做出第一份成果",en:"Quick start: your first result in three minutes"},
+  lede:{zh:"不需要注册开发者账号，不用准备 API Key。打开对话，说一句话，就这么简单。",en:"No developer account, no API key. Open the chat, say one sentence — that's it."},
+  body:{zh:["第一步，打开 Poko 对话页。第二步，把你要做的事用一句话说清楚：做什么、给谁看、有什么材料。第三步，Poko 会拆出执行步骤，依次完成并把成品文件发给你，下载后就能直接打开使用。",
+    "一句话里说清三件事，成品质量会明显更好：<b>产出类型</b>（PPT、表格、海报、网页……）、<b>受众</b>（给老板看还是给客户看）、<b>重点</b>（最想讲清的那一两件事）。不确定也没关系，先做出来再改，比空想提示词快得多。",
+    "做完不满意，直接在对话里说要改哪里——换页序、改配色、加一页数据，Poko 会在原文件上继续改，不用从头再来。"],
+   en:["Step one: open the Poko chat page. Step two: describe what you need in one sentence — what it is, who it's for, what materials you have. Step three: Poko breaks the job into steps, finishes them in order, and sends you the file, ready to open and use.",
+    "Three things in your sentence make a visible difference: the <b>output type</b> (deck, sheet, poster, web page…), the <b>audience</b> (your boss, a client, students…), and the <b>point</b> (the one or two things that matter most). Not sure? Get a first version out and iterate — it's faster than perfecting a prompt.",
+    "Not happy with the result? Just say what to change in the chat — reorder pages, switch colors, add a data page. Poko keeps editing the same file instead of starting over."]},
+  tip:{zh:"小技巧：在一句话最后加上「先给我大纲，我确认后再做」，可以先看结构再等成品，返工最少。",en:"Tip: end your sentence with “show me an outline first” to check the structure before the full build — fewest reworks that way."}},
+ {id:"deck",icon:"📊",
+  title:{zh:"做 PPT 与报告：从一句话到一份演示",en:"Decks & reports: from one sentence to a presentable file"},
+  lede:{zh:"页数、结构、配图、数据图，Poko 一次做完，交付 .pptx 和 .docx，下载后还能继续编辑。",en:"Page count, structure, visuals and charts in one pass. You get .pptx and .docx files you can keep editing."},
+  body:{zh:["把主题、页数和重点告诉 Poko，例如「把这份季度销售数据做成 12 页复盘 PPT，重点讲增长最快的区域，再配一张趋势图」。有现成材料时，把文件直接拖进对话，Poko 会先读懂再动手。",
+    "生成过程中你会看到步骤一步步完成：列大纲、写每页内容、配图与图表、排版成稿。中途想调整，发送后随时在对话里补充说明即可。",
+    "交付的是标准 Office 文件：PPT 是 .pptx，报告是 .docx，在 PowerPoint、WPS、Keynote 里都能继续改，不会被锁在 Poko 里。"],
+   en:["Tell Poko the topic, length and focus — e.g. “turn this quarterly sales data into a 12-slide review deck, focus on the fastest-growing region, add a trend chart.” Have source material? Drop the file into the chat; Poko reads it before it starts.",
+    "You'll watch the steps complete: outline, per-slide content, visuals and charts, then layout. Want a change mid-way? Just add a note in the chat.",
+    "Deliverables are standard Office files — .pptx for decks, .docx for reports — so you can keep editing in PowerPoint, WPS or Keynote. Nothing is locked inside Poko."]},
+  tip:{zh:"小技巧：指定风格参照效果很好，比如「照着苹果发布会的极简风」或「用我们品牌色 #FF5C1A」。",en:"Tip: naming a style reference works well — “minimal, keynote-style” or “use our brand color #FF5C1A”."}},
+ {id:"sheet",icon:"🧮",
+  title:{zh:"表格与数据：清洗、分析、出图一次完成",en:"Sheets & data: clean, analyze and chart in one go"},
+  lede:{zh:"上传 Excel 或 CSV，Poko 帮你清洗数据、做汇总分析、生成图表，并交付新的表格文件。",en:"Upload an Excel or CSV file. Poko cleans it, runs the analysis, builds charts and hands back a new sheet."},
+  body:{zh:["支持 .xlsx、.xls、.csv。你可以直接提要求：「按区域汇总销售额，找出同比下降超过 10% 的门店，再给一张柱状图」，Poko 会在对话里给出结论摘要，并附上处理好的表格文件。",
+    "常见用法包括：多表合并、去重与格式统一、透视汇总、异常值标记、把流水账变成带图表的月度报表。数据量大时先给样本也能做，Poko 会说明它按什么口径处理。",
+    "原始文件不会被改动，交付的是新文件；不满意口径，说一句就能换一种算法重跑。"],
+   en:["Works with .xlsx, .xls and .csv. Ask directly: “sum sales by region, flag stores down more than 10% year over year, and add a bar chart.” Poko replies with a summary of findings plus the processed file.",
+    "Common jobs: merging sheets, de-duplication and format cleanup, pivot summaries, outlier flagging, and turning raw exports into a charted monthly report. Big file? A sample works too — Poko will state the rules it applied.",
+    "Your original file is never modified; you get a new one. Disagree with a rule? Say so and it re-runs with a different one."]},
+  tip:{zh:"小技巧：先让 Poko「只看前 20 行，告诉我这表能分析什么」，再决定让它做什么，省钱又省时。",en:"Tip: ask Poko to “look at the first 20 rows and tell me what can be analyzed” before committing to a full run."}},
+ {id:"media",icon:"🎨",
+  title:{zh:"海报与图片：说清画面，剩下的交给模型",en:"Posters & images: describe the picture, the model does the rest"},
+  lede:{zh:"活动海报、产品图、配图、封面——描述用途和风格，Poko 选图像模型直接生成 .png。",en:"Event posters, product shots, illustrations, covers — describe the use and style, Poko picks an image model and returns .png files."},
+  body:{zh:["描述时带上四要素出图最稳：<b>主体</b>（什么东西）、<b>场景</b>（在哪）、<b>风格</b>（摄影、插画、极简……）、<b>用途尺寸</b>（朋友圈竖版、PPT 横版配图）。需要文字上图时，把文案原文写出来，Poko 会尽量原样排进画面。",
+    "一次会给多个版本供挑选；选中一张后可以继续说「背景换成夜晚」「把标题放大」，在同一张图上迭代。视频需求同理：一句话描述镜头，交付短视频文件（演示模式下为示意）。"
+   ],
+   en:["Four elements make images reliable: the <b>subject</b>, the <b>setting</b>, the <b>style</b> (photo, illustration, minimal…) and the <b>size/purpose</b> (vertical for social, wide for slides). Need text in the image? Write the exact copy and Poko will typeset it as given.",
+    "You get several versions to choose from. Pick one and keep refining — “make the background nighttime”, “enlarge the headline” — edits build on the same image. Video works the same way: describe the shot in a sentence and get a short clip back (illustrative in demo mode)."]},
+  tip:{zh:"小技巧：风格词越具体越好——「吉卜力风」比「好看」有效十倍。",en:"Tip: specific style words beat vague ones — “Ghibli-style” works ten times better than “pretty”."}},
+ {id:"web",icon:"🌐",
+  title:{zh:"网页与代码：生成、运行、交付源码",en:"Web pages & code: generate, run, ship the source"},
+  lede:{zh:"落地页、小工具、脚本——Poko 直接写代码并在沙箱里跑通，交付可下载的源码文件。",en:"Landing pages, small tools, scripts — Poko writes the code, runs it in a sandbox, and delivers downloadable source files."},
+  body:{zh:["网页类产出是一个完整的 .html 文件（样式和脚本都内嵌），下载后双击就能打开，也能直接部署到任何静态托管。活动页、报名页、产品介绍页是最常见的用法。",
+    "代码类需求可以放心提：数据处理脚本、小爬虫、格式转换、批量重命名这类活，Poko 会先写再实际运行验证，把运行结果和源码一起给你。报错了把信息贴回来，它会自己修。",
+    "改版直接说：「把按钮换成圆角」「加一个深色模式」，Poko 在原文件上改，不用重新描述一遍需求。"],
+   en:["Web outputs come as a single complete .html file with styles and scripts inline — double-click to open, or deploy to any static host. Event pages, signup pages and product intros are the most common asks.",
+    "For code, just ask: data scripts, small scrapers, format converters, batch renamers. Poko writes the code, actually runs it to verify, and sends you the output together with the source. Hit an error? Paste it back and it fixes itself.",
+    "Revisions are one sentence away — “round the buttons”, “add dark mode” — Poko edits the existing file instead of starting from a blank page."]},
+  tip:{zh:"小技巧：网页要上线，先在这份 .html 上改到满意，再拿去部署，能省掉很多来回。",en:"Tip: polish the single .html file first, then deploy — it saves a lot of back-and-forth."}},
+ {id:"billing",icon:"💳",
+  title:{zh:"模型与计费：智能优选怎么选、钱花在哪",en:"Models & billing: how Smart Pick works and where money goes"},
+  lede:{zh:"按量付费、没有月费。每条回复下方都有一行花费注脚，花了多少、用哪个模型，清清楚楚。",en:"Pay as you go, no monthly fee. Every reply carries a cost footnote — how much, and which model did the work."},
+  body:{zh:["默认的「智能优选」会按任务挑模型：要质量的活（重要演示、复杂分析）用旗舰模型，批量和简单的活用高性价比模型。想自己定，在对话框的模型选择器里指定即可，指定后全程用它。",
+    "计费按模型的实际用量算：对话按 Token、图像按张、视频按秒，费率见模型广场（首期为计划口径）。每条回复的花费注脚会写明本次消耗，不会出现月底账单吓一跳的情况。",
+    "数据方面：传输全程加密，你上传的文件只用于完成当前任务；删掉对话，文件随之删除，不留存、不挪作他用。"],
+   en:["Smart Pick, the default, matches models to jobs: flagship models for work that needs quality (key decks, hard analysis), value models for bulk and simple tasks. Prefer control? Pick a model in the composer's selector and it sticks for the whole job.",
+    "Billing follows actual usage: chat by token, images per image, video per second — rates are listed in the Model Gallery (planned figures for wave one). The cost footnote under every reply shows exactly what that reply consumed, so there are no end-of-month surprises.",
+    "On data: everything is encrypted in transit, and files you upload are only used to finish your task. Delete a conversation and its files are deleted with it — never kept, never reused."]},
+  tip:{zh:"小技巧：长文档先让 Poko 出摘要再决定深读，能省下大半 Token。",en:"Tip: for long documents, ask for a summary first and deep-read only what matters — it saves most of the tokens."}}
+];
+const FINDQ=[
+ {h:{zh:"开始使用",en:"Getting started"},items:[
+   {q:{zh:"第一次用，从哪开始？",en:"First time — where do I start?"},to:"start"},
+   {q:{zh:"一句话要说清哪几件事？",en:"What should my one sentence include?"},to:"start"},
+   {q:{zh:"需要 API Key 吗？",en:"Do I need an API key?"},to:"start"}]},
+ {h:{zh:"产出与文件",en:"Outputs & files"},items:[
+   {q:{zh:"PPT 做完还能改吗？",en:"Can I keep editing the deck?"},to:"deck"},
+   {q:{zh:"表格能分析多大的文件？",en:"How big a sheet can be analyzed?"},to:"sheet"},
+   {q:{zh:"海报上的文字能指定吗？",en:"Can I dictate the text on a poster?"},to:"media"},
+   {q:{zh:"网页交付的是什么文件？",en:"What file does a web page come as?"},to:"web"}]},
+ {h:{zh:"计费与数据",en:"Billing & data"},items:[
+   {q:{zh:"怎么收费？有月费吗？",en:"How does billing work? Any monthly fee?"},to:"billing"},
+   {q:{zh:"能自己指定模型吗？",en:"Can I choose the model myself?"},to:"billing"},
+   {q:{zh:"我上传的文件会被留存吗？",en:"Are my uploaded files kept?"},to:"billing"}]}
+];
+const FAQ=[
+ {q:{zh:"Poko 和直接用聊天机器人有什么区别？",en:"How is Poko different from a plain chatbot?"},
+  a:{zh:"普通聊天给你文字，Poko 直接交付文件：能打开的 PPT、能编辑的表格、能部署的网页。任务会被拆成步骤执行，过程看得见，成品能下载。",en:"A plain chatbot gives you text; Poko delivers files — decks you can open, sheets you can edit, pages you can deploy. Jobs run as visible steps and results are downloadable."}},
+ {q:{zh:"不会写提示词能用吗？",en:"I can't write prompts. Can I still use it?"},
+  a:{zh:"能。把事情说清楚就行：做什么、给谁看、重点是什么。实在没头绪，先看文档里的示例句式，或者让 Poko 先反问你几个问题再动手。",en:"Yes. Just say what you need, who it's for, and what matters most. No ideas? Copy a sentence pattern from these docs, or let Poko ask you a few questions first."}},
+ {q:{zh:"支持哪些语言？",en:"Which languages are supported?"},
+  a:{zh:"界面和对话都支持简体中文、English、日本語、한국어、Español 五种语言，右上角随时切换。你用什么语言提问，就用什么语言交付。",en:"Interface and chat both work in Simplified Chinese, English, Japanese, Korean and Spanish — switch anytime at the top. Ask in one language, get results in the same one."}},
+ {q:{zh:"生成的质量不满意怎么办？",en:"What if I don't like the result?"},
+  a:{zh:"直接在对话里说要改哪里，Poko 在原文件上继续改，不用重做。换风格、改结构、加内容都可以；实在不对路，换个模型重跑也行。",en:"Say what to change in the chat and Poko edits the same file — new style, new structure, more content. Still off? Re-run with a different model."}},
+ {q:{zh:"企业能用吗？有团队版吗？",en:"Can companies use Poko? Is there a team plan?"},
+  a:{zh:"可以。企业版提供团队工作区、品牌模板、用量与权限管理，见企业服务页；有具体需求也可以直接邮件联系我们。",en:"Yes. The business plan adds team workspaces, brand templates, and usage & permission controls — see the Business page, or email us for specifics."}}
+];
+
+/* 三语补齐（第五轮）：DOCS / FINDQ / FAQ 的 ja/ko/es 正文 */
+DOCS_TR_ja=[["クイックスタート：3分で最初の成果", "開発者アカウントも API キーも不要。チャットを開いて一言伝えるだけです。", ["ステップ1：Poko のチャットページを開きます。ステップ2：やりたいことを一言で伝えます。何を、誰に見せるのか、手元にどんな資料があるか。ステップ3：Poko が作業をステップに分けて順に仕上げ、完成したファイルを送ります。ダウンロードすればそのまま使えます。", "一言に次の3つを入れると、仕上がりがぐっと良くなります：<b>成果物の種類</b>（スライド、表、ポスター、Webページ…）、<b>読み手</b>（上司に見せるのか、顧客に見せるのか）、<b>要点</b>（一番伝えたい1〜2つのこと）。迷ったら、まず作ってから直す方が、プロンプトを練るより速いです。", "仕上がりに不満があれば、チャットで直したいところを伝えるだけ。ページの並び替え、配色変更、データページの追加も、同じファイルのまま続けて直せます。最初からやり直す必要はありません。"], "ヒント：文の最後に「まずアウトラインを見せて、確認してから作って」と付けると、構造を先に確認できて手戻りが最小になります。"], ["スライドとレポート：一言から発表できるファイルへ", "ページ数、構成、画像、データグラフまで一括で作成。編集を続けられる .pptx と .docx でお渡しします。", ["テーマ、ページ数、要点を伝えてください。例：「この四半期の売上データを12枚の振り返りスライドにして、伸びが一番大きい地域を中心に、推移グラフも付けて」。資料がある場合はファイルをチャットにドラッグすれば、Poko が中身を読んでから着手します。", "生成中はステップの進行が見えます：アウトライン作成、各ページの内容、画像とグラフ、レイアウト仕上げ。途中で変更したくなったら、チャットに一言追加するだけです。", "成果物は標準の Office ファイルです。スライドは .pptx、レポートは .docx。PowerPoint、WPS、Keynote でそのまま編集を続けられます。Poko の中に閉じ込められることはありません。"], "ヒント：スタイルの参照を伝えると効きます。「基調講演のようなミニマルで」「ブランドカラー #FF5C1A を使って」など。"], ["表とデータ：整形・分析・グラフ化を一度に", "Excel や CSV をアップロードすれば、Poko がデータ整形、集計分析、グラフ作成を行い、新しい表ファイルをお渡しします。", [".xlsx、.xls、.csv に対応しています。直接頼むだけです：「地域別に売上を集計して、前年比10%以上落ちた店舗を洗い出し、棒グラフも付けて」。Poko は結論の要約と、処理済みの表ファイルを一緒に返します。", "よくある作業：複数表の結合、重複除去と書式統一、ピボット集計、異常値のフラグ付け、明細データからグラフ付き月次レポートへの変換。大きなファイルならサンプルでも大丈夫です。Poko は適用したルールを明示します。", "元のファイルは変更されません。お渡しするのは新しいファイルです。ルールに納得いかなければ、一言で別の方法に切り替えて再実行できます。"], "ヒント：まず「最初の20行だけ見て、この表で何が分析できるか教えて」と頼むと、本実行の前に判断できて節約になります。"], ["ポスターと画像：画面を言葉で伝えれば、あとはモデル任せ", "イベントポスター、商品写真、イラスト、表紙——用途とスタイルを伝えれば、Poko が画像モデルを選んで .png を生成します。", ["安定した画像には4つの要素が効きます：<b>主体</b>（何が）、<b>場面</b>（どこで）、<b>スタイル</b>（写真、イラスト、ミニマル…）、<b>サイズと用途</b>（SNS 向け縦長、スライド向け横長）。画像に文字を入れる場合は、文案を正確に書いてください。Poko がその通りにレイアウトします。", "一度に複数案を出します。1つ選んだら「背景を夜に」「見出しを大きく」と続けられて、同じ画像のまま磨けます。動画も同じ要領です：ショットを一言で説明すれば短いクリップが返ってきます（デモモードではイメージ表示です）。"], "ヒント：スタイルの言葉は具体的なほど効きます。「きれいに」より「ジブリ風」の方が10倍伝わります。"], ["Webページとコード：生成して、動かして、ソースで納品", "ランディングページ、小さなツール、スクリプト——Poko がコードを書いてサンドボックスで実行確認し、ダウンロードできるソースファイルをお渡しします。", ["Web の成果物は、スタイルとスクリプトを内包した完全な .html ファイル1つです。ダブルクリックで開けるほか、任意の静的ホスティングにそのままデプロイできます。イベントページ、申込ページ、製品紹介ページが定番です。", "コードの依頼も安心してどうぞ：データ処理スクリプト、小さなスクレイパー、形式変換、ファイルの一括リネーム。Poko はコードを書き、実際に実行して検証し、実行結果とソースを一緒にお渡しします。エラーが出たら貼り戻せば自分で直します。", "改訂は一言で：「ボタンを丸くして」「ダークモードを追加して」。Poko は既存ファイルを編集するので、要望を最初から説明し直す必要はありません。"], "ヒント：公開する前に、この .html の中で満足いくまで磨いてからデプロイすると、往復がぐっと減ります。"], ["モデルと課金：スマートピックの選び方とお金の行き先", "従量課金で月額料金はありません。すべての返信の下に費用の注記があり、いくらか、どのモデルが担当したかが分かります。", ["デフォルトの「スマートピック」はタスクに合わせてモデルを選びます：品質が要る仕事（重要なプレゼン、難しい分析）にはフラッグシップ、量産や簡単な仕事にはコスパの良いモデル。自分で決めたい場合は、入力欄のモデルセレクターで指定すれば、その仕事の間ずっとそのモデルを使います。", "課金は実際の使用量に基づきます：チャットはトークン単位、画像は1枚単位、動画は1秒単位。料金はモデル一覧に掲載しています（初回は予定価格）。返信ごとの費用注記に今回の消費が明示されるので、月末に驚くことはありません。", "データについて：通信はすべて暗号化され、アップロードしたファイルは現在のタスクを完了するためだけに使われます。会話を削除すればファイルも一緒に削除されます。保持も転用もしません。"], "ヒント：長い文書は、まず要約を頼んでから必要な部分だけ深読みすると、トークンの大半を節約できます。"]];
+DOCS_TR_ja.forEach((tr,i)=>{DOCS[i].title.ja=tr[0];DOCS[i].lede.ja=tr[1];DOCS[i].body.ja=tr[2];DOCS[i].tip.ja=tr[3];});
+DOCS_TR_ko=[["빠른 시작: 3분 만에 첫 결과물 만들기", "개발자 계정도, API 키도 필요 없습니다. 대화를 열고 한 문장만 말하면 됩니다.", ["1단계: Poko 대화 페이지를 엽니다. 2단계: 하고 싶은 일을 한 문장으로 말합니다. 무엇을, 누구에게 보여줄지, 어떤 자료가 있는지. 3단계: Poko가 작업을 단계로 나눠 순서대로 완성하고 파일을 보내 줍니다. 다운로드하면 바로 사용할 수 있습니다.", "한 문장에 다음 세 가지를 담으면 완성도가 눈에 띄게 좋아집니다: <b>결과물 종류</b>(PPT, 표, 포스터, 웹페이지…), <b>대상</b>(상사에게 보여줄지, 고객에게 보여줄지), <b>핵심</b>(가장 전하고 싶은 한두 가지). 잘 모르겠다면, 일단 만들어 보고 고치는 편이 프롬프트를 다듬는 것보다 훨씬 빠릅니다.", "결과가 마음에 들지 않으면 대화에서 고칠 부분을 말하세요. 페이지 순서 변경, 색상 교체, 데이터 페이지 추가까지 같은 파일에서 이어서 수정합니다. 처음부터 다시 할 필요가 없습니다."], "팁: 문장 끝에 '개요를 먼저 보여주고, 확인한 뒤에 만들어 줘'를 붙이면 구조를 먼저 확인할 수 있어 재작업이 가장 적습니다."], ["PPT와 보고서: 한 문장에서 발표 가능한 파일로", "페이지 수, 구성, 이미지, 데이터 차트까지 한 번에 완성합니다. 계속 편집할 수 있는 .pptx와 .docx 파일로 전달합니다.", ["주제, 페이지 수, 핵심을 알려 주세요. 예: '이 분기 매출 데이터를 12장짜리 복기 PPT로 만들어 줘. 가장 빠르게 성장한 지역을 중심으로 하고 추세 차트도 넣어 줘'. 기존 자료가 있으면 파일을 대화에 끌어다 놓으세요. Poko가 먼저 읽고 시작합니다.", "생성 과정의 단계가 하나씩 완료되는 모습을 볼 수 있습니다: 개요, 페이지별 내용, 이미지와 차트, 레이아웃 마무리. 중간에 바꾸고 싶으면 대화에 한마디만 추가하세요.", "전달 파일은 표준 Office 형식입니다. PPT는 .pptx, 보고서는 .docx라서 PowerPoint, WPS, Keynote에서 계속 편집할 수 있습니다. Poko 안에 갇히지 않습니다."], "팁: 스타일 기준을 알려 주면 효과가 좋습니다. '키노트처럼 미니멀하게', '브랜드 색상 #FF5C1A 사용'처럼요."], ["표와 데이터: 정리, 분석, 차트까지 한 번에", "Excel이나 CSV를 올리면 Poko가 데이터를 정리하고 분석과 차트를 만들어 새 표 파일로 돌려줍니다.", [".xlsx, .xls, .csv를 지원합니다. 바로 요청하세요: '지역별로 매출을 합산하고, 전년 대비 10% 넘게 떨어진 매장을 찾아서 막대 차트도 넣어 줘'. Poko는 결론 요약과 함께 처리된 표 파일을 돌려줍니다.", "자주 하는 작업: 여러 표 병합, 중복 제거와 서식 통일, 피벗 요약, 이상값 표시, 원시 데이터를 차트 있는 월간 보고서로 변환. 파일이 크면 샘플만으로도 됩니다. Poko는 적용한 규칙을 명시합니다.", "원본 파일은 절대 수정되지 않고 새 파일을 받습니다. 규칙이 마음에 들지 않으면 한마디로 다른 방식으로 다시 실행할 수 있습니다."], "팁: 전체 실행 전에 '처음 20행만 보고 이 표로 무엇을 분석할 수 있는지 알려 줘'라고 하면 시간과 비용을 아낄 수 있습니다."], ["포스터와 이미지: 장면을 설명하면 나머지는 모델이", "행사 포스터, 제품 사진, 일러스트, 표지까지. 용도와 스타일을 말하면 Poko가 이미지 모델을 골라 .png로 만들어 줍니다.", ["이미지가 안정적으로 나오려면 네 가지 요소가 중요합니다: <b>주체</b>(무엇을), <b>장면</b>(어디서), <b>스타일</b>(사진, 일러스트, 미니멀…), <b>크기와 용도</b>(SNS용 세로, 슬라이드용 가로). 이미지에 글자가 필요하면 문구를 정확히 적어 주세요. Poko가 그대로 조판합니다.", "한 번에 여러 버전을 제시합니다. 하나를 고른 뒤 '배경을 밤으로', '제목을 더 크게'처럼 이어서 다듬을 수 있고, 같은 이미지에서 계속 발전시킵니다. 동영상도 마찬가지입니다: 장면을 한 문장으로 설명하면 짧은 클립을 받을 수 있습니다(데모 모드에서는 예시로 표시)."], "팁: 스타일 단어는 구체적일수록 좋습니다. '예쁘게'보다 '지브리 스타일'이 열 배는 잘 통합니다."], ["웹페이지와 코드: 생성하고, 실행하고, 소스로 전달", "랜딩 페이지, 작은 도구, 스크립트까지. Poko가 코드를 작성하고 샌드박스에서 실행해 확인한 뒤, 다운로드할 수 있는 소스 파일로 전달합니다.", ["웹 결과물은 스타일과 스크립트가 모두 들어간 완전한 .html 파일 하나입니다. 더블클릭으로 열거나 어떤 정적 호스팅에도 바로 배포할 수 있습니다. 행사 페이지, 신청 페이지, 제품 소개 페이지가 가장 흔한 용도입니다.", "코드 작업도 안심하고 맡기세요: 데이터 처리 스크립트, 작은 스크레이퍼, 형식 변환, 파일 일괄 이름 변경. Poko는 코드를 작성하고 실제로 실행해 검증한 뒤, 실행 결과와 소스를 함께 전달합니다. 오류가 나면 붙여넣어 보내면 스스로 고칩니다.", "수정은 한 문장이면 됩니다: '버튼을 둥글게', '다크 모드 추가'. Poko는 기존 파일을 편집하므로 요구사항을 처음부터 다시 설명할 필요가 없습니다."], "팁: 배포하기 전에 이 .html 파일에서 만족할 때까지 다듬으면 오가는 횟수가 크게 줄어듭니다."], ["모델과 요금: 스마트 선택의 방식과 비용의 흐름", "월정액 없이 쓴 만큼만 지불합니다. 모든 답변 아래에 비용 각주가 있어 얼마가, 어떤 모델로 쓰였는지 알 수 있습니다.", ["기본값인 '스마트 선택'은 작업에 맞춰 모델을 고릅니다: 품질이 중요한 일(중요한 발표, 어려운 분석)에는 플래그십 모델을, 대량·단순 작업에는 가성비 모델을 씁니다. 직접 정하고 싶으면 입력창의 모델 선택기에서 지정하세요. 그 작업 내내 유지됩니다.", "요금은 실제 사용량을 따릅니다: 대화는 토큰당, 이미지는 장당, 동영상은 초당이며, 요율은 모델 광장에 공개되어 있습니다(1차는 예정 가격). 답변마다 붙는 비용 각주가 이번 소비를 정확히 보여 주므로 월말에 놀랄 일이 없습니다.", "데이터: 전송 구간은 모두 암호화되고, 업로드한 파일은 현재 작업을 끝내는 데만 사용됩니다. 대화를 삭제하면 파일도 함께 삭제됩니다. 보관하지도, 다른 용도로 쓰지도 않습니다."], "팁: 긴 문서는 먼저 요약을 요청하고 필요한 부분만 깊이 읽으면 토큰의 대부분을 아낄 수 있습니다."]];
+DOCS_TR_ko.forEach((tr,i)=>{DOCS[i].title.ko=tr[0];DOCS[i].lede.ko=tr[1];DOCS[i].body.ko=tr[2];DOCS[i].tip.ko=tr[3];});
+DOCS_TR_es=[["Inicio rápido: tu primer resultado en tres minutos", "Sin cuenta de desarrollador ni clave API. Abre el chat y di una frase: así de simple.", ["Paso uno: abre la página de chat de Poko. Paso dos: describe lo que necesitas en una frase: qué es, para quién es y qué materiales tienes. Paso tres: Poko divide el trabajo en pasos, los completa en orden y te envía el archivo, listo para abrir y usar.", "Tres cosas en tu frase marcan una diferencia visible: el <b>tipo de resultado</b> (presentación, hoja, póster, página web…), la <b>audiencia</b> (tu jefe, un cliente, estudiantes…) y el <b>punto clave</b> (las una o dos cosas más importantes). ¿No lo tienes claro? Saca una primera versión y itera: es más rápido que perfeccionar un prompt.", "¿No te convence el resultado? Di qué cambiar en el chat — reordenar páginas, cambiar colores, añadir una página de datos — y Poko seguirá editando el mismo archivo en lugar de empezar de cero."], "Consejo: termina tu frase con «muéstrame primero un esquema» para revisar la estructura antes de la construcción completa: así se rehace menos."], ["Presentaciones e informes: de una frase a un archivo presentable", "Número de páginas, estructura, imágenes y gráficos en una sola pasada. Recibes archivos .pptx y .docx que puedes seguir editando.", ["Indica el tema, la extensión y el enfoque; por ejemplo: «convierte estos datos de ventas trimestrales en una presentación de revisión de 12 diapositivas, centrada en la región de mayor crecimiento, con un gráfico de tendencia». ¿Tienes material previo? Suelta el archivo en el chat: Poko lo lee antes de empezar.", "Verás cómo se completan los pasos: esquema, contenido por diapositiva, imágenes y gráficos, y maquetación. ¿Quieres un cambio a mitad de camino? Añade una nota en el chat.", "Los entregables son archivos Office estándar — .pptx para presentaciones y .docx para informes — para que sigas editando en PowerPoint, WPS o Keynote. Nada queda encerrado dentro de Poko."], "Consejo: indicar una referencia de estilo funciona muy bien: «minimalista, estilo keynote» o «usa nuestro color de marca #FF5C1A»."], ["Hojas y datos: limpiar, analizar y graficar de una sola vez", "Sube un Excel o CSV. Poko lo limpia, ejecuta el análisis, crea los gráficos y te devuelve una hoja nueva.", ["Funciona con .xlsx, .xls y .csv. Pide directamente: «suma las ventas por región, marca las tiendas que bajaron más de un 10 % interanual y añade un gráfico de barras». Poko responde con un resumen de conclusiones y el archivo procesado.", "Trabajos habituales: combinar hojas, eliminar duplicados y unificar formatos, resúmenes pivot, detección de valores atípicos y convertir exportaciones en bruto en un informe mensual con gráficos. ¿Archivo enorme? Una muestra también sirve: Poko indicará las reglas que aplicó.", "Tu archivo original nunca se modifica; recibes uno nuevo. ¿No estás de acuerdo con una regla? Dilo y se repite el proceso con otra."], "Consejo: pide primero «mira las primeras 20 filas y dime qué se puede analizar» antes de comprometerte con el proceso completo."], ["Pósters e imágenes: describe la escena y el modelo hace el resto", "Pósters de eventos, fotos de producto, ilustraciones, portadas: describe el uso y el estilo, y Poko elige un modelo de imagen y devuelve archivos .png.", ["Cuatro elementos hacen fiables las imágenes: el <b>sujeto</b>, el <b>escenario</b>, el <b>estilo</b> (foto, ilustración, minimalista…) y el <b>tamaño/finalidad</b> (vertical para redes, horizontal para diapositivas). ¿Necesitas texto en la imagen? Escribe el texto exacto y Poko lo compondrá tal cual.", "Recibes varias versiones para elegir. Elige una y sigue refinando — «pon el fondo de noche», «agranda el titular» — las ediciones se construyen sobre la misma imagen. El vídeo funciona igual: describe la toma en una frase y recibes un clip corto (ilustrativo en modo demo)."], "Consejo: las palabras de estilo concretas superan a las vagas: «estilo Ghibli» funciona diez veces mejor que «bonito»."], ["Páginas web y código: generar, ejecutar y entregar el código fuente", "Páginas de aterrizaje, herramientas pequeñas, scripts: Poko escribe el código, lo ejecuta en un entorno aislado y entrega archivos fuente descargables.", ["Los resultados web llegan como un único archivo .html completo, con estilos y scripts integrados: doble clic para abrirlo o despliegue en cualquier alojamiento estático. Páginas de eventos, de registro y de presentación de producto son las peticiones más comunes.", "Con el código, pide sin miedo: scripts de datos, pequeños scrapers, conversores de formato, renombrado por lotes. Poko escribe el código, lo ejecuta de verdad para verificarlo y te envía el resultado junto con el fuente. ¿Un error? Pégalo de vuelta y se corrige solo.", "Las revisiones están a una frase: «redondea los botones», «añade modo oscuro». Poko edita el archivo existente en lugar de empezar de una página en blanco."], "Consejo: pule primero el archivo .html hasta que te convenza y despliega después: ahorra muchos idas y vueltas."], ["Modelos y facturación: cómo funciona la selección inteligente y a dónde va el dinero", "Pago por uso, sin cuota mensual. Cada respuesta lleva una nota de coste: cuánto fue y qué modelo hizo el trabajo.", ["La selección inteligente, la opción por defecto, asigna modelos a cada trabajo: modelos insignia para lo que exige calidad (presentaciones clave, análisis difíciles) y modelos económicos para volumen y tareas simples. ¿Prefieres control? Elige un modelo en el selector del editor y se mantendrá durante todo el trabajo.", "La facturación sigue el uso real: chat por token, imágenes por imagen, vídeo por segundo; las tarifas están en la Galería de modelos (cifras previstas para la primera fase). La nota de coste bajo cada respuesta muestra exactamente lo que consumió esa respuesta, sin sorpresas a fin de mes.", "Sobre los datos: todo va cifrado en tránsito, y los archivos que subes solo se usan para terminar tu tarea. Si borras una conversación, sus archivos se borran con ella: nunca se conservan ni se reutilizan."], "Consejo: con documentos largos, pide primero un resumen y lee en profundidad solo lo importante: ahorra la mayoría de los tokens."]];
+DOCS_TR_es.forEach((tr,i)=>{DOCS[i].title.es=tr[0];DOCS[i].lede.es=tr[1];DOCS[i].body.es=tr[2];DOCS[i].tip.es=tr[3];});
+const FINDQ_ja={"h": ["はじめ方", "成果物とファイル", "課金とデータ"], "q": [["初めてですが、どこから始めれば？", "一言には何を入れればいい？", "API キーは必要？"], ["スライドは完成後も編集できる？", "表はどれくらいの大きさまで分析できる？", "ポスターの文字は指定できる？", "Webページはどんなファイルで届く？"], ["料金はどうなっている？月額はある？", "モデルは自分で選べる？", "アップロードしたファイルは保持される？"]]};
+FINDQ.forEach((g,gi)=>{g.h.ja=FINDQ_ja.h[gi];g.items.forEach((it,ii)=>{it.q.ja=FINDQ_ja.q[gi][ii];});});
+const FAQ_ja=[["Poko は普通のチャットボットと何が違うの？", "普通のチャットは文章を返しますが、Poko はファイルを届けます。開けるスライド、編集できる表、デプロイできる Web ページ。作業は目に見えるステップで進み、成果はダウンロードできます。"], ["プロンプトが書けなくても使える？", "使えます。何を、誰のために、何が一番大事かをはっきり伝えるだけです。アイデアがなければ、このドキュメントの文例を真似するか、Poko に先にいくつか質問してもらうのも手です。"], ["対応言語は？", "画面もチャットも簡体字中国語、英語、日本語、韓国語、スペイン語の5言語に対応し、右上からいつでも切り替えられます。質問した言語で成果も届きます。"], ["仕上がりが気に入らないときは？", "チャットで直したいところを伝えれば、Poko が同じファイルを続けて直します。スタイル変更、構成変更、内容追加も可能です。それでも合わなければ、モデルを変えて再実行もできます。"], ["企業でも使える？チームプランはある？", "使えます。法人向けプランにはチームワークスペース、ブランドテンプレート、使用量と権限の管理があります。詳しくは法人向けページをご覧いただくか、メールでお問い合わせください。"]];
+FAQ.forEach((f,i)=>{f.q.ja=FAQ_ja[i][0];f.a.ja=FAQ_ja[i][1];});
+const FINDQ_ko={"h": ["시작하기", "결과물과 파일", "요금과 데이터"], "q": [["처음인데 어디서 시작하죠?", "한 문장에 무엇을 담아야 하죠?", "API 키가 필요한가요?"], ["PPT는 완성 후에도 편집할 수 있나요?", "표는 얼마나 큰 파일까지 분석되나요?", "포스터 문구를 직접 지정할 수 있나요?", "웹페이지는 어떤 파일로 전달되나요?"], ["요금은 어떻게 되나요? 월정액이 있나요?", "모델을 직접 고를 수 있나요?", "업로드한 파일이 보관되나요?"]]};
+FINDQ.forEach((g,gi)=>{g.h.ko=FINDQ_ko.h[gi];g.items.forEach((it,ii)=>{it.q.ko=FINDQ_ko.q[gi][ii];});});
+const FAQ_ko=[["Poko는 일반 챗봇과 뭐가 다른가요?", "일반 챗봇은 텍스트를 주지만, Poko는 파일을 전달합니다. 열 수 있는 PPT, 편집할 수 있는 표, 배포할 수 있는 웹페이지. 작업은 눈에 보이는 단계로 진행되고 결과물은 다운로드할 수 있습니다."], ["프롬프트를 못 써도 쓸 수 있나요?", "쓸 수 있습니다. 무엇을, 누구를 위해, 무엇이 가장 중요한지만 또렷이 말하세요. 감이 안 잡히면 이 문서의 문장 패턴을 따라 하거나, Poko가 먼저 몇 가지 질문하게 해 보세요."], ["어떤 언어를 지원하나요?", "인터페이스와 대화 모두 간체 중국어, 영어, 일본어, 한국어, 스페인어 다섯 언어를 지원하며 오른쪽 위에서 언제든 바꿀 수 있습니다. 질문한 언어로 결과물도 받습니다."], ["결과가 마음에 들지 않으면요?", "대화에서 고칠 부분을 말하면 Poko가 같은 파일을 이어서 수정합니다. 스타일 변경, 구조 변경, 내용 추가 모두 됩니다. 그래도 안 맞으면 모델을 바꿔 다시 실행할 수도 있습니다."], ["기업도 쓸 수 있나요? 팀 플랜이 있나요?", "쓸 수 있습니다. 기업용 플랜은 팀 워크스페이스, 브랜드 템플릿, 사용량·권한 관리를 제공합니다. 기업 서비스 페이지를 보거나 이메일로 문의해 주세요."]];
+FAQ.forEach((f,i)=>{f.q.ko=FAQ_ko[i][0];f.a.ko=FAQ_ko[i][1];});
+const FINDQ_es={"h": ["Primeros pasos", "Resultados y archivos", "Facturación y datos"], "q": [["Es mi primera vez, ¿por dónde empiezo?", "¿Qué debe incluir mi frase?", "¿Necesito una clave API?"], ["¿Puedo seguir editando la presentación?", "¿Qué tamaño de hoja se puede analizar?", "¿Puedo dictar el texto de un póster?", "¿En qué archivo llega una página web?"], ["¿Cómo funciona la facturación? ¿Hay cuota mensual?", "¿Puedo elegir el modelo yo mismo?", "¿Se conservan los archivos que subo?"]]};
+FINDQ.forEach((g,gi)=>{g.h.es=FINDQ_es.h[gi];g.items.forEach((it,ii)=>{it.q.es=FINDQ_es.q[gi][ii];});});
+const FAQ_es=[["¿En qué se diferencia Poko de un chatbot normal?", "Un chatbot normal te da texto; Poko entrega archivos: presentaciones que puedes abrir, hojas que puedes editar, páginas que puedes desplegar. Los trabajos avanzan en pasos visibles y los resultados se descargan."], ["No sé escribir prompts. ¿Puedo usarlo igualmente?", "Sí. Solo di qué necesitas, para quién es y qué es lo más importante. ¿Sin ideas? Copia un patrón de frase de esta documentación o deja que Poko te haga primero algunas preguntas."], ["¿Qué idiomas se admiten?", "La interfaz y el chat funcionan en chino simplificado, inglés, japonés, coreano y español; puedes cambiar en cualquier momento desde arriba. Pregunta en un idioma y recibe los resultados en el mismo."], ["¿Y si no me gusta el resultado?", "Di qué cambiar en el chat y Poko edita el mismo archivo: nuevo estilo, nueva estructura, más contenido. ¿Sigue sin encajar? Repite el trabajo con otro modelo."], ["¿Pueden usarlo las empresas? ¿Hay un plan para equipos?", "Sí. El plan para empresas añade espacios de trabajo en equipo, plantillas de marca y controles de uso y permisos: consulta la página de Empresas o escríbenos para más detalles."]];
+FAQ.forEach((f,i)=>{f.q.es=FAQ_es[i][0];f.a.es=FAQ_es[i][1];});
+function renderDocs(){
+  $("#docCards").innerHTML=DOCS.map(d=>`
+    <a class="dcard" href="#${d.id}"><div class="ic">${d.icon}</div><h3>${L(d.title)}</h3><p>${L(d.lede)}</p></a>`).join("");
+  $("#findCols").innerHTML=FINDQ.map(g=>`
+    <div class="col"><h4>${L(g.h)}</h4>${g.items.map(i=>`<a href="#${i.to}">→ ${L(i.q)}</a>`).join("")}</div>`).join("");
+  $("#sideNav").innerHTML=DOCS.map(d=>`<a href="#${d.id}">${L(d.title)}</a>`).join("")+`<a href="#faq">${t("dc_faq_t")}</a>`;
+  $("#docArticles").innerHTML=DOCS.map(d=>`
+    <article class="doc" id="${d.id}" data-search="${(L(d.title)+" "+L(d.lede)).toLowerCase()}">
+      <h2>${d.icon} ${L(d.title)}</h2><p class="lede">${L(d.lede)}</p>
+      ${L(d.body).map(p=>`<p>${p}</p>`).join("")}
+      <div class="tip">${L(d.tip)}</div>
+    </article>`).join("");
+  $("#faqList").innerHTML=FAQ.map(f=>`
+    <div class="faqitem"><button type="button"><span>${L(f.q)}</span><span class="fx">+</span></button><div class="fa"><p>${L(f.a)}</p></div></div>`).join("");
+  $$("#faqList .faqitem > button").forEach(b=>b.addEventListener("click",()=>b.parentElement.classList.toggle("open")));
+}
+function filterDocs(){
+  const q=$("#docQ").value.trim().toLowerCase();
+  let visible=0;
+  $$("#docArticles .doc").forEach(a=>{
+    const hit=!q || a.dataset.search.includes(q) || a.textContent.toLowerCase().includes(q);
+    a.style.display=hit?"":"none"; if(hit) visible++;
+  });
+  $("#noResult").style.display=visible?"none":"block";
+}
+function applyLang(){
+  document.documentElement.lang={zh:"zh-CN",en:"en",ja:"ja",ko:"ko",es:"es"}[lang];
+  $$("[data-i18n]").forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+  $$("[data-i18n-ph]").forEach(el=>{ el.placeholder=t(el.dataset.i18nPh); });
+  $("#langSel").value=lang;
+  renderDocs(); filterDocs();
+}
+$("#docQ").addEventListener("input",filterDocs);
+document.addEventListener("keydown",e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){ e.preventDefault(); $("#docQ").focus(); }
+});
+$("#langSel").addEventListener("change",e=>{ lang=e.target.value; localStorage.setItem("poko_lang",lang); applyLang(); });
+if(localStorage.getItem("poko_cookie_ok")) $("#cookieBar").classList.remove("show"); else $("#cookieBar").classList.add("show");
+$("#cookieOk").addEventListener("click",()=>{ localStorage.setItem("poko_cookie_ok","1"); $("#cookieBar").classList.remove("show"); });
+applyLang();
+</script>
+
+<script>
+/* 滚动渐入（Design System v2）：无 IntersectionObserver / 减少动态时内容直接可见 */
+(function(){try{
+  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  if(!("IntersectionObserver" in window))return;
+  var els=[].slice.call(document.querySelectorAll(".sec-head,.page-head,.hero .wrap,.bcard,.cap,.ind,.dcard,.casecard,.faqitem,.chart,.demo,.aud-tabs,.mrow,.newcard,.cta,footer .foot-grid"));
+  if(!els.length)return;
+  document.documentElement.classList.add("jsrv");
+  els.forEach(function(el){el.classList.add("rv")});
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+    if(!en.isIntersecting)return;
+    var el=en.target;
+    var sib=[].slice.call(el.parentNode.children).filter(function(c){return c.classList&&c.classList.contains("rv")});
+    var i=sib.indexOf(el);
+    el.style.setProperty("--rvd",Math.min(Math.max(i,0)*0.06,0.3)+"s");
+    el.classList.add("in"); io.unobserve(el);
+    var done=function(){el.classList.remove("rv","in");el.style.removeProperty("--rvd")};
+    el.addEventListener("transitionend",function h(ev){if(ev.propertyName==="transform"){done();el.removeEventListener("transitionend",h)}});
+    setTimeout(done,1100);
+  })},{threshold:.1,rootMargin:"0px 0px -5% 0px"});
+  els.forEach(function(el){io.observe(el)});
+}catch(e){}})();
+</script>
+<script>
+/* 第五轮补键：页脚法务链接等 */
+Object.assign(I18N.zh,{"foot_terms": "服务条款", "foot_privacy": "隐私政策", "pg_home": "首页"});
+Object.assign(I18N.en,{"foot_terms": "Terms of Service", "foot_privacy": "Privacy Policy", "pg_home": "Home"});
+Object.assign(I18N.ja,{"foot_terms": "利用規約", "foot_privacy": "プライバシーポリシー", "pg_home": "ホーム"});
+Object.assign(I18N.ko,{"foot_terms": "서비스 약관", "foot_privacy": "개인정보 처리방침", "pg_home": "홈"});
+Object.assign(I18N.es,{"foot_terms": "Términos del servicio", "foot_privacy": "Política de privacidad", "pg_home": "Inicio"});
+$$("[data-i18n]").forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+</script>
+<script>
+/* 回到顶部（第五轮；docs 的 ⌘K 保留给文档搜索，故不加页面跳转面板） */
+(function(){
+  var toTop=document.createElement("button");
+  toTop.id="toTop"; toTop.type="button"; toTop.setAttribute("aria-label","Back to top"); toTop.textContent="↑";
+  document.body.appendChild(toTop);
+  addEventListener("scroll",function(){ toTop.classList.toggle("show", window.scrollY>600); },{passive:true});
+  toTop.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+})();
+</script>
+</body>
+</html>

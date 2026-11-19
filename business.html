@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poko 企业服务 — 团队工作区、品牌模板与用量管理</title>
+<meta name="description" content="Poko 企业服务：团队工作区、品牌模板库、用量与预算管理、权限控制、数据零留存与优先支持，让团队用一句话交付标准一致的成果。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Poko 企业服务 — 团队工作区、品牌模板与用量管理">
+<meta property="og:description" content="团队工作区、品牌模板、用量与权限管理、数据零留存与优先支持。">
+<meta property="og:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<link rel="canonical" href="https://tmc.loc.cc/business.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z' fill='%233C9A5F'/%3E%3Ccircle cx='24' cy='26' r='19' fill='%23FF5C1A'/%3E%3Ccircle cx='17.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Ccircle cx='30.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Cpath d='M20 30.5q4 3.2 8 0' stroke='%237A2A08' stroke-width='2.1' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#17130c; --sub:#6d675c; --line:#e9e4d8; --line2:#dcd4c3; --bg:#ffffff; --bg2:#f7f6f1; --bg3:#f0eee6;
+  --brand:#FF5C1A; --brand-dark:#e8480c; --brand-soft:#fff1e8; --amber:#ffb03a;
+  --brand-grad:linear-gradient(135deg,#ff7d2e 0%,#ff5c1a 52%,#f43d0a 100%);
+  --radius:20px; --r-lg:24px; --r-md:16px; --r-sm:12px;
+  --shadow-sm:0 1px 2px rgba(23,18,8,.05),0 2px 8px -2px rgba(23,18,8,.06);
+  --shadow:0 2px 4px rgba(23,18,8,.04),0 18px 44px -14px rgba(23,18,8,.16);
+  --shadow-lg:0 4px 10px rgba(23,18,8,.05),0 36px 72px -20px rgba(23,18,8,.26);
+  --shadow-brand:0 10px 22px -8px rgba(255,92,26,.5);
+  --ring:0 0 0 4px rgba(255,92,26,.16);
+  --ease:cubic-bezier(.22,.68,.26,1);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans JP","Noto Sans KR",Roboto,Helvetica,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.mascot{display:inline-block;flex:none;vertical-align:middle}
+.mascot svg{display:block}
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:24px;height:64px}
+.logo{display:flex;align-items:center;gap:9px;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.nav-links{display:flex;gap:22px;margin-left:8px;font-size:15px;color:#33322e}
+.nav-links a:hover{color:var(--brand)}
+.nav-links a.on{color:var(--brand);font-weight:600}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.langsel{position:relative}
+.langsel select{appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 30px 8px 14px;font-size:14px;color:var(--ink);cursor:pointer}
+.langsel::after{content:"▾";position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--sub);pointer-events:none}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:999px;font-size:15px;font-weight:600;padding:11px 22px;border:1px solid transparent;transition:.15s}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-dark)}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:#cfccc4}
+.btn-login{background:none;border:none;font-size:15px;font-weight:600;padding:10px 6px}
+.btn-login:hover{color:var(--brand)}
+.hero{padding:72px 0 20px;text-align:center}
+.kicker{display:inline-block;font-size:13px;font-weight:700;color:var(--brand-dark);background:var(--brand-soft);border-radius:999px;padding:6px 14px;letter-spacing:.06em}
+.hero h1{font-size:44px;font-weight:850;letter-spacing:-.02em;line-height:1.2;max-width:820px;margin:20px auto 0}
+.hero p{margin:18px auto 0;max-width:640px;color:var(--sub);font-size:17.5px}
+.hero .ctas{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.sec-head{max-width:720px;margin:0 auto 40px;text-align:center}
+.sec-head h2{font-size:34px;font-weight:800}
+.sec-head p{margin-top:12px;color:var(--sub);font-size:16.5px}
+section{padding:64px 0 8px}
+.capgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.cap{border:1px solid var(--line);border-radius:20px;padding:24px;background:#fff;transition:.15s}
+.cap:hover{border-color:#f3c3ab;box-shadow:var(--shadow)}
+.cap h3{font-size:18px;margin-bottom:8px}
+.cap p{font-size:14.5px;color:var(--sub);line-height:1.7}
+.miniui{margin-top:16px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px;font-size:13px}
+.miniui .mrow{display:flex;align-items:center;gap:8px;padding:5px 0}
+.miniui .ava{width:22px;height:22px;border-radius:50%;flex:none;display:inline-block}
+.miniui .role{margin-left:auto;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#fff;border:1px solid var(--line);color:#55534c}
+.miniui .num{font-size:19px;font-weight:800}
+.miniui .lab{color:var(--sub);font-size:12px}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);margin:2px 3px 2px 0}
+.chip.hot{background:var(--brand-soft);border-color:#f6cdb4;color:var(--brand-dark)}
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:700;font-size:13.5px}
+.flow .arr{color:var(--brand);font-weight:800}
+.steps{display:flex;gap:6px;flex-wrap:wrap}
+.steps span{font-size:12px;font-weight:600;background:#fff;border:1px solid var(--line);border-radius:8px;padding:5px 9px}
+.logline{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:#55534c;padding:3px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uinote{text-align:center;color:var(--sub);font-size:12.5px;margin-top:14px}
+.indgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ind{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#fff;transition:.15s}
+.ind:hover{border-color:#f3c3ab;box-shadow:var(--shadow)}
+.ind .cover{height:130px;position:relative}
+.ind .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.ind .body{padding:18px 20px 20px}
+.ind h3{font-size:17px;margin-bottom:6px}
+.ind p{font-size:14px;color:var(--sub);line-height:1.65;margin-bottom:12px}
+.tag{font-size:11px;padding:3px 8px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:#55534c;margin-right:5px}
+table.cmp{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}
+table.cmp th,table.cmp td{padding:15px 18px;text-align:left;font-size:15px;border-bottom:1px solid var(--line)}
+table.cmp tr:last-child td{border-bottom:none}
+table.cmp thead th{background:var(--bg2);font-size:15px}
+table.cmp thead th.us{background:var(--brand-soft);color:var(--brand-dark)}
+table.cmp td.us{background:#fffaf6;font-weight:600}
+table.cmp td.dim{color:var(--sub)}
+.yes{color:#2f9e63;font-weight:800}
+.no{color:#c8c4bb;font-weight:800}
+.about{max-width:820px;margin:0 auto;text-align:center}
+.about p{font-size:16.5px;line-height:1.9;color:#2c2b27;margin-bottom:14px}
+.cta{margin:70px 0 0;background:linear-gradient(120deg,#ff7a3c,#FF5C1A);border-radius:28px;padding:56px 30px;text-align:center;color:#fff}
+.cta h2{font-size:32px;font-weight:800}
+.cta p{margin:12px auto 24px;max-width:520px;opacity:.92}
+.cta .btn{background:#fff;color:var(--brand-dark)}
+.cta .btn.alt{background:transparent;color:#fff;border-color:rgba(255,255,255,.65)}
+section.bottompad{padding-bottom:80px}
+footer{border-top:1px solid var(--line);padding:56px 0 30px;background:#fff;margin-top:80px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:28px}
+.foot-brand p{color:var(--sub);font-size:14px;margin-top:12px}
+footer h4{font-size:14px;margin-bottom:14px}
+footer ul{list-style:none}
+footer li{margin-bottom:9px}
+footer li a{color:var(--sub);font-size:14px}
+footer li a:hover{color:var(--brand)}
+.foot-bar{display:flex;gap:22px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);margin-top:38px;padding-top:22px;color:var(--sub);font-size:13px}
+.foot-bar .sp{margin-left:auto;display:flex;align-items:center;gap:7px}
+.foot-bar .dot{width:8px;height:8px;border-radius:50%;background:#2f9e63;display:inline-block}
+.cookiebar{position:fixed;left:16px;right:16px;bottom:16px;z-index:90;max-width:560px;margin:0 auto;background:#1d1a16;color:#f3efe9;border-radius:16px;padding:16px 18px;display:none;align-items:center;gap:14px;box-shadow:0 16px 40px rgba(0,0,0,.25);font-size:14px}
+.cookiebar.show{display:flex}
+.cookiebar button{flex:none;background:var(--brand);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-weight:600;font-size:14px}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hero h1{font-size:32px}
+  .capgrid,.indgrid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  table.cmp th,table.cmp td{padding:11px 12px;font-size:13.5px}
+}
+
+/* ============ Poko Design System v2 · 视觉升级层 ============ */
+::selection{background:#ffd7c2;color:#7a2400}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+body{text-rendering:optimizeLegibility;overflow-x:clip}
+header,header.site{background:rgba(255,255,255,.85);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);box-shadow:0 14px 34px -26px rgba(23,18,8,.4)}
+.nav-links a{position:relative;transition:color .18s}
+.nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:2px;border-radius:2px;background:var(--brand-grad);transition:right .28s var(--ease)}
+.nav-links a:hover::after{right:0}
+.btn{transition:transform .18s var(--ease),box-shadow .18s var(--ease),background-color .18s,color .18s,border-color .18s,filter .18s}
+.btn-primary{background:var(--brand-grad);box-shadow:var(--shadow-brand),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-primary:hover{background:var(--brand-grad);filter:brightness(1.05);transform:translateY(-1px);box-shadow:0 15px 30px -9px rgba(255,92,26,.55),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-primary:active{transform:translateY(0) scale(.98)}
+.btn-ghost{box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:var(--line2)}
+.btn-login{transition:color .18s}
+.langsel select{transition:border-color .18s,box-shadow .18s}
+.langsel select:hover{border-color:var(--line2)}
+.langsel select:focus{border-color:var(--brand);box-shadow:var(--ring);outline:none}
+.sec-head h2{letter-spacing:-.02em}
+footer{background:linear-gradient(180deg,#fff 0%,#fbf9f4 100%)}
+.foot-grid li a{transition:color .18s}
+.cookiebar{box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,.09)}
+.cookiebar button{transition:transform .18s var(--ease),filter .18s}
+.cookiebar button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.pills button,.mfilter button{transition:all .18s var(--ease)}
+.pills button.on,.mfilter button.on{box-shadow:var(--shadow-sm)}
+.chip,.cpill,.mchip{transition:all .18s var(--ease)}
+.chip:hover,.cpill:hover,.mchip:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+/* 滚动渐入（JS 加 .jsrv 后才隐藏，无 JS 时内容直接可见） */
+.jsrv .rv{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--rvd,0s)}
+.jsrv .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .jsrv .rv{opacity:1;transform:none}
+}
+
+.cta{position:relative;overflow:hidden;background:linear-gradient(125deg,#ff8a3d 0%,#ff5c1a 52%,#f0440a 100%);box-shadow:0 30px 60px -24px rgba(244,61,10,.5)}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(520px 240px at 12% -10%,rgba(255,255,255,.35),transparent 60%),radial-gradient(560px 260px at 88% 115%,rgba(255,176,58,.4),transparent 60%);pointer-events:none}
+.cta>*{position:relative}
+.cta .btn{box-shadow:0 12px 24px -10px rgba(90,20,0,.45);transition:transform .18s var(--ease),box-shadow .18s var(--ease),background-color .18s,color .18s}
+.cta .btn:hover{transform:translateY(-2px)}
+.page-head{position:relative}
+.page-head::before{content:"";position:absolute;left:50%;top:-72px;transform:translateX(-50%);width:min(880px,100vw);height:340px;background:radial-gradient(closest-side,rgba(255,92,26,.13),rgba(255,176,58,.07) 55%,transparent 72%);pointer-events:none}
+.page-head>*{position:relative}
+
+.hero{position:relative}
+.hero::before{content:"";position:absolute;left:50%;top:-72px;transform:translateX(-50%);width:min(880px,100vw);height:340px;background:radial-gradient(closest-side,rgba(255,92,26,.13),rgba(255,176,58,.07) 55%,transparent 72%);pointer-events:none}
+.hero>*{position:relative}
+.kicker{border:1px solid #ffd9c2;box-shadow:var(--shadow-sm)}
+.cap,.ind{box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s}
+.cap:hover,.ind:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#f0cdb2}
+.ind .cover img{transition:transform .7s var(--ease)}
+.ind:hover .cover img{transform:scale(1.05)}
+.miniui{background:linear-gradient(180deg,#fbfaf7,#f4f1ea);box-shadow:inset 0 1px 0 #fff}
+table.cmp{box-shadow:var(--shadow-sm)}
+table.cmp thead th.us{background:linear-gradient(135deg,#ffe9d8,#fff1e8)}
+.chip{transition:all .15s}
+.chip:hover{border-color:var(--line2)}
+
+/* DS v2 补丁：移动端页眉防拥挤（按钮不换行、登录键让位） */
+.btn{white-space:nowrap}
+@media(max-width:900px){
+  .btn-login{display:none}
+  .nav{gap:12px}
+  .nav-right{gap:8px}
+  .logo{font-size:20px}
+  .langsel select{padding:7px 22px 7px 10px;font-size:13px}
+  .nav-right .btn{padding:9px 15px;font-size:14px}
+}
+</style>
+<style>
+/* ===== 第五轮细节：全局滚动条 + 回到顶部 + ⌘K 页面跳转 ===== */
+html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#ddd5c3;border-radius:8px;border:2px solid #fff}
+::-webkit-scrollbar-thumb:hover{background:#cfc4ab}
+::-webkit-scrollbar-track{background:transparent}
+#toTop{position:fixed;right:22px;bottom:22px;z-index:80;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(8px);box-shadow:var(--shadow);color:var(--ink);font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s var(--ease)}
+#toTop.show{opacity:1;pointer-events:auto;transform:none}
+#toTop:hover{border-color:#f0cdb2;color:var(--brand)}
+.pal{position:fixed;inset:0;z-index:200;display:none;align-items:flex-start;justify-content:center;background:rgba(23,18,8,.38);backdrop-filter:blur(3px)}
+.pal.open{display:flex}
+.pal-box{margin-top:12vh;width:min(520px,92vw);background:#fff;border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid var(--line)}
+.pal-box input{width:100%;border:none;outline:none;font-size:17px;padding:16px 18px;font-family:inherit;border-bottom:1px solid var(--line);background:#fff;color:var(--ink)}
+.pal-list{max-height:320px;overflow:auto;padding:6px}
+.pal-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;padding:11px 12px;border-radius:12px;font-size:15px;color:var(--ink);cursor:pointer;font-family:inherit}
+.pal-item .hint{margin-left:auto;color:var(--sub);font-size:12.5px}
+.pal-item.sel{background:var(--brand-soft)}
+.pal-empty{padding:14px;color:var(--sub);font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">
+      <span class="mascot"><svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span>
+      Poko
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features" data-i18n="nav_features">功能</a>
+      <a href="index.html#pricing" data-i18n="nav_pricing">价格</a>
+      <a href="index.html#cases" data-i18n="nav_cases">案例</a>
+      <a href="models.html" data-i18n="nav_models">模型广场</a>
+      <a href="docs.html" data-i18n="nav_docs">文档</a>
+      <a href="blog.html" data-i18n="nav_blog">博客</a>
+      <a href="business.html" class="on" data-i18n="nav_biz">企业</a>
+    </nav>
+    <div class="nav-right">
+      <span class="langsel">
+        <select id="langSel" aria-label="Language">
+          <option value="zh">简体中文</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="es">Español</option>
+        </select>
+      </span>
+      <a class="btn-login" href="auth.html" data-i18n="nav_login">登录</a>
+      <a class="btn btn-primary" href="auth.html?mode=signup" data-i18n="nav_start">开始使用</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <span class="kicker" data-i18n="bz_kicker">POKO FOR BUSINESS</span>
+    <h1 data-i18n="bz_h1">让整个团队，用一句话交付标准一致的成果</h1>
+    <p data-i18n="bz_sub">个人版是一个人提速，企业版是一群人对齐：统一的工作区、统一的品牌模板、统一的用量账本。每个人都在做 PPT、表格、海报和网页，但出来的东西像出自同一支团队。</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="mailto:hello@poko.example" data-i18n="bz_cta1">联系销售</a>
+      <a class="btn btn-ghost" href="chat.html" data-i18n="bz_cta2">先试用个人版</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2 data-i18n="bz_cap_t">企业级能力，开箱即有</h2>
+      <p data-i18n="bz_cap_p">不只是把个人版放大。团队协作真正需要的管理、品牌与安全能力，都在这里。</p>
+    </div>
+    <div class="capgrid" id="capGrid"></div>
+    <p class="uinote" data-i18n="bz_uinote">卡片内的小界面为功能示意。</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2 data-i18n="bz_ind_t">行业用例</h2>
+      <p data-i18n="bz_ind_p">凡是「经常要做材料」的团队，都能把重复劳动交出去。</p>
+    </div>
+    <div class="indgrid" id="indGrid"></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2 data-i18n="bz_cmp_t">和传统做法比一比</h2>
+      <p data-i18n="bz_cmp_p">按通用维度对比：逐个买单点工具拼凑，或把材料外包出去。</p>
+    </div>
+    <div id="cmpWrap"></div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head"><h2 data-i18n="bz_about_t">关于 Poko</h2></div>
+    <div class="about" id="aboutBody"></div>
+  </section>
+
+  <div class="cta">
+    <h2 data-i18n="bz_cta_t">准备好让团队一起提速了吗？</h2>
+    <p data-i18n="bz_cta_p">先用个人版跑通一个真实项目，再谈团队推广——我们陪你一起落地。</p>
+    <a class="btn" href="chat.html" data-i18n="bz_cta_b1">免费开始试用</a>
+    <a class="btn alt" href="mailto:hello@poko.example" data-i18n="bz_cta_b2">联系销售</a>
+  </div>
+</div>
+<section class="bottompad"></section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="index.html">
+          <span class="mascot"><svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span>
+          Poko
+        </a>
+        <p data-i18n="foot_tag">一句话，做出拿得出手的成果。</p>
+      </div>
+      <div><h4 data-i18n="foot_c1">产品</h4><ul>
+        <li><a href="chat.html" data-i18n="foot_chat">AI 对话</a></li>
+        <li><a href="index.html#features" data-i18n="foot_ppt">PPT 生成</a></li>
+        <li><a href="models.html" data-i18n="nav_models">模型广场</a></li>
+        <li><a href="business.html" data-i18n="nav_biz">企业</a></li>
+        <li><a href="pricing.html" data-i18n="foot_price">定价</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c2">热门模型</h4><ul>
+        <li><a href="models.html">GPT</a></li><li><a href="models.html">Claude</a></li><li><a href="models.html">Gemini</a></li>
+        <li><a href="models.html">DeepSeek</a></li><li><a href="models.html">Qwen</a></li><li><a href="models.html">Kimi</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c3">模型厂商</h4><ul>
+        <li><a href="models.html">OpenAI</a></li><li><a href="models.html">Anthropic</a></li><li><a href="models.html">Google</a></li>
+        <li><a href="models.html">DeepSeek</a></li><li><a href="models.html" data-i18n="vendor_qwen">阿里通义</a></li><li><a href="models.html" data-i18n="vendor_moon">月之暗面</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c4">资源</h4><ul>
+        <li><a href="docs.html" data-i18n="foot_guide">使用指南</a></li>
+        <li><a href="index.html#cases" data-i18n="foot_tpl">模板库</a></li>
+        <li><a href="blog.html" data-i18n="nav_blog">博客</a></li>
+        <li><a href="docs.html#faq" data-i18n="foot_help">帮助中心</a></li>
+        <li><a href="business.html#about" data-i18n="foot_about">关于我们</a></li>
+        <li><a href="mailto:hello@poko.example" data-i18n="foot_contact">联系我们</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bar">
+      <span>© 2026 Poko</span><span>v0.1.0</span><span>hello@poko.example</span><a href="terms.html" data-i18n="foot_terms">服务条款</a><a href="privacy.html" data-i18n="foot_privacy">隐私政策</a>
+      <span class="sp"><span class="dot"></span><span data-i18n="foot_status">演示站点</span></span>
+    </div>
+  </div>
+</footer>
+
+<div class="cookiebar" id="cookieBar" role="dialog" aria-live="polite">
+  <span data-i18n="cookie_txt">Poko 只在你的浏览器本地保存语言偏好，不用追踪型 Cookie。</span>
+  <button type="button" id="cookieOk" data-i18n="cookie_ok">知道了</button>
+</div>
+
+<script>
+/* ================= i18n ================= */
+const I18N = {
+zh:{
+  nav_features:"功能",nav_pricing:"价格",nav_cases:"案例",nav_models:"模型广场",nav_docs:"文档",nav_blog:"博客",nav_biz:"企业",nav_login:"登录",nav_start:"开始使用",
+  foot_tag:"一句话，做出拿得出手的成果。",foot_c1:"产品",foot_c2:"热门模型",foot_c3:"模型厂商",foot_c4:"资源",
+  foot_chat:"AI 对话",foot_ppt:"PPT 生成",foot_price:"定价",vendor_qwen:"阿里通义",vendor_moon:"月之暗面",
+  foot_guide:"使用指南",foot_tpl:"模板库",foot_help:"帮助中心",foot_about:"关于我们",foot_contact:"联系我们",foot_status:"演示站点",
+  cookie_txt:"Poko 只在你的浏览器本地保存语言偏好，不用追踪型 Cookie。",cookie_ok:"知道了",
+  bz_kicker:"POKO FOR BUSINESS",bz_h1:"让整个团队，用一句话交付标准一致的成果",
+  bz_sub:"个人版是一个人提速，企业版是一群人对齐：统一的工作区、统一的品牌模板、统一的用量账本。每个人都在做 PPT、表格、海报和网页，但出来的东西像出自同一支团队。",
+  bz_cta1:"联系销售",bz_cta2:"先试用个人版",
+  bz_cap_t:"企业级能力，开箱即有",bz_cap_p:"不只是把个人版放大。团队协作真正需要的管理、品牌与安全能力，都在这里。",
+  bz_uinote:"卡片内的小界面为功能示意。",
+  bz_ind_t:"行业用例",bz_ind_p:"凡是「经常要做材料」的团队，都能把重复劳动交出去。",
+  bz_cmp_t:"和传统做法比一比",bz_cmp_p:"按通用维度对比：逐个买单点工具拼凑，或把材料外包出去。",
+  bz_about_t:"关于 Poko",bz_cta_t:"准备好让团队一起提速了吗？",bz_cta_p:"先用个人版跑通一个真实项目，再谈团队推广——我们陪你一起落地。",
+  bz_cta_b1:"免费开始试用",bz_cta_b2:"联系销售"
+},
+en:{
+  nav_features:"Features",nav_pricing:"Pricing",nav_cases:"Cases",nav_models:"Models",nav_docs:"Docs",nav_blog:"Blog",nav_biz:"Business",nav_login:"Log in",nav_start:"Get started",
+  foot_tag:"One sentence. Results worth showing.",foot_c1:"Product",foot_c2:"Popular models",foot_c3:"Providers",foot_c4:"Resources",
+  foot_chat:"AI Chat",foot_ppt:"Deck generation",foot_price:"Pricing",vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",
+  foot_guide:"User guide",foot_tpl:"Templates",foot_help:"Help center",foot_about:"About us",foot_contact:"Contact",foot_status:"Demo site",
+  cookie_txt:"Poko only stores your language preference locally in your browser — no tracking cookies.",cookie_ok:"Got it",
+  bz_kicker:"POKO FOR BUSINESS",bz_h1:"One sentence per person. One standard for the whole team.",
+  bz_sub:"The personal plan speeds up one person; the business plan aligns a whole team: one workspace, one set of brand templates, one usage ledger. Everyone makes decks, sheets, posters and pages — and everything looks like it came from the same team.",
+  bz_cta1:"Contact sales",bz_cta2:"Try the personal plan first",
+  bz_cap_t:"Enterprise capabilities, out of the box",bz_cap_p:"Not just a bigger personal plan. The management, brand and security controls teamwork actually needs.",
+  bz_uinote:"Mini interfaces in the cards are illustrative.",
+  bz_ind_t:"Industry use cases",bz_ind_p:"Any team that makes materials all the time can hand off the repetitive parts.",
+  bz_cmp_t:"Against the traditional ways",bz_cmp_p:"Compared on generic dimensions: stitching together single-purpose tools, or outsourcing the work.",
+  bz_about_t:"About Poko",bz_cta_t:"Ready to speed up the whole team?",bz_cta_p:"Run one real project on the personal plan first, then roll out — we'll land it with you.",
+  bz_cta_b1:"Start free",bz_cta_b2:"Contact sales"
+}};
+I18N.ja={nav_features:"機能",nav_pricing:"料金",nav_cases:"事例",nav_models:"モデル一覧",nav_docs:"ドキュメント",nav_blog:"ブログ",nav_biz:"法人向け",nav_login:"ログイン",nav_start:"使ってみる",
+  foot_tag:"一言で、見せられる成果を。",foot_c1:"製品",foot_c2:"人気モデル",foot_c3:"モデル提供元",foot_c4:"リソース",foot_chat:"AIチャット",foot_ppt:"スライド生成",foot_price:"料金",
+  vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",foot_guide:"使い方ガイド",foot_tpl:"テンプレート",foot_help:"ヘルプセンター",foot_about:"私たちについて",foot_contact:"お問い合わせ",foot_status:"デモサイト",
+  cookie_txt:"Poko は言語設定をブラウザに保存するだけで、追跡 Cookie は使いません。",cookie_ok:"了解",bz_cap_t:"法人向け機能",bz_ind_t:"業界別ユースケース",bz_about_t:"Poko について"};
+I18N.ko={nav_features:"기능",nav_pricing:"요금",nav_cases:"사례",nav_models:"모델 광장",nav_docs:"문서",nav_blog:"블로그",nav_biz:"기업용",nav_login:"로그인",nav_start:"시작하기",
+  foot_tag:"한 문장으로, 자신 있게 내놓을 수 있는 결과물을.",foot_c1:"제품",foot_c2:"인기 모델",foot_c3:"모델 제공사",foot_c4:"리소스",foot_chat:"AI 대화",foot_ppt:"PPT 생성",foot_price:"요금",
+  vendor_qwen:"알리바바 Tongyi",vendor_moon:"Moonshot AI",foot_guide:"사용 가이드",foot_tpl:"템플릿",foot_help:"도움말 센터",foot_about:"회사 소개",foot_contact:"문의하기",foot_status:"데모 사이트",
+  cookie_txt:"Poko는 언어 설정을 브라우저에 저장할 뿐, 추적 쿠키를 쓰지 않습니다.",cookie_ok:"확인",bz_cap_t:"기업용 기능",bz_ind_t:"산업별 활용 사례",bz_about_t:"Poko 소개"};
+I18N.es={nav_features:"Funciones",nav_pricing:"Precios",nav_cases:"Casos",nav_models:"Modelos",nav_docs:"Documentos",nav_blog:"Blog",nav_biz:"Empresas",nav_login:"Iniciar sesión",nav_start:"Empezar",
+  foot_tag:"Una frase. Resultados de los que presumir.",foot_c1:"Producto",foot_c2:"Modelos populares",foot_c3:"Proveedores",foot_c4:"Recursos",foot_chat:"Chat con IA",foot_ppt:"Generación de presentaciones",foot_price:"Precios",
+  vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",foot_guide:"Guía de uso",foot_tpl:"Plantillas",foot_help:"Centro de ayuda",foot_about:"Nosotros",foot_contact:"Contacto",foot_status:"Sitio de demostración",
+  cookie_txt:"Poko solo guarda tu idioma en tu navegador, sin cookies de rastreo.",cookie_ok:"Entendido",bz_cap_t:"Capacidades empresariales",bz_ind_t:"Casos por industria",bz_about_t:"Sobre Poko"};
+Object.assign(I18N.ja,{"bz_h1": "一人ひとりは一言で。チーム全体は一つの基準で。", "bz_sub": "個人版は一人の速度を上げ、法人版はチーム全体をそろえます：ワークスペースは1つ、ブランドテンプレートは1セット、使用量の台帳は1冊。全員がスライド、表、ポスター、Webページを作っても、同じチームが作ったように見えます。", "bz_cta1": "営業に相談", "bz_cta2": "まず個人版を試す", "bz_cap_p": "個人版を大きくしただけではありません。チームワークに本当に必要な管理、ブランド、セキュリティの機能を備えています。", "bz_uinote": "カード内の小さな画面は機能のイメージです。", "bz_ind_p": "「資料作りが日常」というチームなら、繰り返し作業を任せられます。", "bz_cmp_t": "従来のやり方と比べてみる", "bz_cmp_p": "一般的な観点で比較します：単機能ツールを買い集めてつなぐ方法と、制作を外注する方法です。", "bz_cta_t": "チーム全体の速度を上げる準備はできましたか？", "bz_cta_p": "まず個人版で本物のプロジェクトを1つ回し、それからチーム展開へ。導入まで私たちが伴走します。", "bz_cta_b1": "無料で試す", "bz_cta_b2": "営業に相談"});
+Object.assign(I18N.ko,{"bz_h1": "개인은 한 문장으로, 팀 전체는 하나의 기준으로.", "bz_sub": "개인용이 한 사람의 속도를 높인다면, 기업용은 팀 전체를 맞춥니다: 워크스페이스 하나, 브랜드 템플릿 한 세트, 사용량 장부 하나. 모두가 PPT, 표, 포스터, 웹페이지를 만들어도 같은 팀이 만든 것처럼 보입니다.", "bz_cta1": "영업팀에 문의", "bz_cta2": "개인용부터 써보기", "bz_cap_p": "개인용을 키운 것만이 아닙니다. 팀워크에 실제로 필요한 관리, 브랜드, 보안 기능을 갖췄습니다.", "bz_uinote": "카드 안의 작은 화면은 기능 예시입니다.", "bz_ind_p": "'자료 만들 일이 잦은' 팀이라면 반복 작업을 맡길 수 있습니다.", "bz_cmp_t": "기존 방식과 비교하기", "bz_cmp_p": "일반적인 기준으로 비교합니다: 단일 기능 도구들을 사서 이어 붙이는 방식과, 제작을 외주 주는 방식입니다.", "bz_cta_t": "팀 전체의 속도를 높일 준비가 됐나요?", "bz_cta_p": "먼저 개인용으로 실제 프로젝트 하나를 돌려 본 뒤 팀에 펼치세요. 정착까지 함께합니다.", "bz_cta_b1": "무료로 시작", "bz_cta_b2": "영업팀에 문의"});
+Object.assign(I18N.es,{"bz_h1": "Una frase por persona. Un mismo estándar para todo el equipo.", "bz_sub": "El plan personal acelera a una persona; el plan para empresas alinea a todo un equipo: un espacio de trabajo, un conjunto de plantillas de marca, un registro de uso. Todos hacen presentaciones, hojas, pósters y páginas, y todo parece obra del mismo equipo.", "bz_cta1": "Contactar con ventas", "bz_cta2": "Probar primero el plan personal", "bz_cap_p": "No es solo un plan personal más grande: incluye los controles de gestión, marca y seguridad que el trabajo en equipo realmente necesita.", "bz_uinote": "Las miniinterfaces de las tarjetas son ilustrativas.", "bz_ind_p": "Cualquier equipo que produce materiales constantemente puede delegar la parte repetitiva.", "bz_cmp_t": "Frente a las formas tradicionales", "bz_cmp_p": "Comparado en dimensiones genéricas: unir herramientas de un solo propósito o externalizar el trabajo.", "bz_cta_t": "¿Listo para acelerar a todo el equipo?", "bz_cta_p": "Ejecuta primero un proyecto real con el plan personal y luego despliega: te acompañamos en la implantación.", "bz_cta_b1": "Empezar gratis", "bz_cta_b2": "Contactar con ventas"});
+
+let lang = localStorage.getItem("poko_lang") || "zh";
+if(!I18N[lang]) lang = "zh";
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const t = k => (I18N[lang] && I18N[lang][k]) || I18N.en[k] || I18N.zh[k] || k;
+const L = o => o[lang] || o.en || o.zh;
+
+/* ================= 企业内容（Poko 原创） ================= */
+const CAPS=[
+ {h:{zh:"团队工作区",en:"Team workspace"},p:{zh:"一个工作区装下全团队的对话、文件和模板。项目按组组织，新人进来就能接上上下文，不用满群翻文件。",en:"One workspace holds the team's chats, files and templates. Work is organized by project, so new joiners pick up the context instead of digging through chat history."},
+  ui:{zh:`<div class="mrow"><span class="ava" style="background:#FF5C1A"></span>市场组 · Q4 复盘<span class="role">编辑</span></div><div class="mrow"><span class="ava" style="background:#31517f"></span>产品组 · 发布物料<span class="role">编辑</span></div><div class="mrow"><span class="ava" style="background:#2f9e63"></span>全员 · 品牌模板<span class="role">查看</span></div>`,
+      en:`<div class="mrow"><span class="ava" style="background:#FF5C1A"></span>Marketing · Q4 review<span class="role">Editor</span></div><div class="mrow"><span class="ava" style="background:#31517f"></span>Product · Launch kit<span class="role">Editor</span></div><div class="mrow"><span class="ava" style="background:#2f9e63"></span>Everyone · Brand templates<span class="role">Viewer</span></div>`}},
+ {h:{zh:"品牌模板库",en:"Brand template library"},p:{zh:"把品牌色、字体、Logo 和版式规范沉淀成模板。谁做都自动套用同一套规范，产出不再「一人一个样」。",en:"Brand colors, fonts, logo and layout rules live in templates. Whoever makes something, the same standards apply — no more one-style-per-person."},
+  ui:{zh:`<span class="chip hot">季度汇报 · 品牌版</span><span class="chip">产品发布 · 深色</span><span class="chip">招聘海报 · 活力橙</span><span class="chip">数据周报 · 极简</span>`,
+      en:`<span class="chip hot">Quarterly review · Brand</span><span class="chip">Launch · Dark</span><span class="chip">Hiring poster · Orange</span><span class="chip">Weekly data · Minimal</span>`}},
+ {h:{zh:"用量与预算管理",en:"Usage & budget controls"},p:{zh:"按团队、成员设月度上限，超了自动停；每笔消耗带模型名和任务名，月底对账不用猜。",en:"Set monthly caps per team or member — usage stops automatically at the limit. Every charge carries its model and task name, so month-end reconciliation needs no guesswork."},
+  ui:{zh:`<div class="mrow"><span class="num">$12</span><span class="lab">今日</span><span class="num" style="margin-left:14px">$86</span><span class="lab">本周</span><span class="num" style="margin-left:14px">$340</span><span class="lab">本月</span></div><div class="mrow"><span class="lab">市场组上限 $500 · 已用 68%</span></div>`,
+      en:`<div class="mrow"><span class="num">$12</span><span class="lab">Today</span><span class="num" style="margin-left:14px">$86</span><span class="lab">This week</span><span class="num" style="margin-left:14px">$340</span><span class="lab">This month</span></div><div class="mrow"><span class="lab">Marketing cap $500 · 68% used</span></div>`}},
+ {h:{zh:"权限与角色",en:"Roles & permissions"},p:{zh:"管理员、编辑、查看三级角色，模板和账单各管各的。离职交接一键转移资产，不丢一份文件。",en:"Admin, editor and viewer roles, with templates and billing managed separately. Offboarding transfers assets in one click — no file gets lost."},
+  ui:{zh:`<span class="chip hot">管理员 · 账单与成员</span><span class="chip">编辑 · 创建与修改</span><span class="chip">查看 · 只读与下载</span>`,
+      en:`<span class="chip hot">Admin · Billing & members</span><span class="chip">Editor · Create & edit</span><span class="chip">Viewer · Read & download</span>`}},
+ {h:{zh:"数据零留存",en:"Zero-retention data policy"},p:{zh:"对话内容与上传文件默认不用于训练；企业版可开启零留存模式，任务完成即删，审计有据可查。",en:"Chats and uploads are never used for training by default. Business plans can enable zero-retention mode — data is deleted when the task completes, with an audit trail to prove it."},
+  ui:{zh:`<div class="flow"><span>团队请求</span><span class="arr">→</span><span>Poko 处理</span><span class="arr">→</span><span>交付文件</span></div><div style="margin-top:8px"><span class="chip">✓ 不训练</span><span class="chip">✓ 传输加密</span><span class="chip">✓ 可即时删除</span></div>`,
+      en:`<div class="flow"><span>Team request</span><span class="arr">→</span><span>Poko processes</span><span class="arr">→</span><span>File delivered</span></div><div style="margin-top:8px"><span class="chip">✓ No training</span><span class="chip">✓ Encrypted</span><span class="chip">✓ Instant delete</span></div>`}},
+ {h:{zh:"优先支持",en:"Priority support"},p:{zh:"企业客户有专属对接人。问题按等级分流：普通工单一天内、优先工单四小时内、生产问题实时响应。",en:"Business customers get a named contact. Issues are triaged by severity: standard tickets within a day, priority within four hours, production issues in real time."},
+  ui:{zh:`<span class="chip">✉️ 工单 &lt; 24h</span><span class="chip">💬 优先 &lt; 4h</span><span class="chip hot">🧑‍💻 专属对接 · 实时</span>`,
+      en:`<span class="chip">✉️ Tickets &lt; 24h</span><span class="chip">💬 Priority &lt; 4h</span><span class="chip hot">🧑‍💻 Named contact · Live</span>`}},
+ {h:{zh:"多区域接入",en:"Multi-region access"},p:{zh:"就近接入节点让异地团队同样流畅；生成任务在边缘排队调度，高峰期也不互相挤占。",en:"Regional access points keep distributed teams fast, and generation jobs are scheduled at the edge so peak hours don't squeeze anyone out."},
+  ui:{zh:`<span class="chip">华东 · 18ms</span><span class="chip">华南 · 22ms</span><span class="chip">新加坡 · 35ms</span><span class="chip">法兰克福 · 80ms</span>`,
+      en:`<span class="chip">East CN · 18ms</span><span class="chip">South CN · 22ms</span><span class="chip">Singapore · 35ms</span><span class="chip">Frankfurt · 80ms</span>`}},
+ {h:{zh:"SSO 与审计日志",en:"SSO & audit logs"},p:{zh:"支持企业单点登录，账号随入离职自动开关。谁在什么时候生成了什么、下载了什么，日志里查得到。",en:"Enterprise SSO provisions and deprovisions accounts automatically with joiners and leavers. Who generated or downloaded what, and when, is all in the audit log."},
+  ui:{zh:`<div class="logline">09:41 · li.wei 生成《Q4 复盘.pptx》</div><div class="logline">09:37 · wang.fang 下载《价目表.xlsx》</div><div class="logline">09:30 · admin 修改市场组预算上限</div>`,
+      en:`<div class="logline">09:41 · li.wei generated Q4-review.pptx</div><div class="logline">09:37 · wang.fang downloaded pricing.xlsx</div><div class="logline">09:30 · admin changed Marketing budget cap</div>`}},
+ {h:{zh:"落地陪跑",en:"Rollout, together"},p:{zh:"从梳理高频场景、共建模板，到全员培训和月度复盘，我们陪你把 Poko 用成团队习惯，而不是买来吃灰的账号。",en:"From mapping your frequent scenarios and co-building templates to team training and monthly reviews, we roll Poko out with you — until it's a habit, not a shelfware account."},
+  ui:{zh:`<div class="steps"><span>① 场景梳理</span><span>② 模板共建</span><span>③ 培训上线</span><span>④ 复盘优化</span></div>`,
+      en:`<div class="steps"><span>① Map scenarios</span><span>② Co-build templates</span><span>③ Train & launch</span><span>④ Review & tune</span></div>`}}
+];
+const INDS=[
+ {img:"assets/biz-mkt.jpg",g:"linear-gradient(135deg,#ffd9a8,#FF5C1A)",h:{zh:"市场营销",en:"Marketing"},p:{zh:"活动物料、社媒配图、落地页一起出，热点来了当天就能发。",en:"Campaign assets, social visuals and landing pages in one go — publish the same day the moment lands."},tags:{zh:["海报生成","多语言内容","落地页"],en:["Posters","Multilingual","Landing pages"]}},
+ {img:"assets/biz-edu.jpg",g:"linear-gradient(135deg,#b9ccf5,#31517f)",h:{zh:"教育培训",en:"Education & training"},p:{zh:"课件、讲义、结课展示一次成套，老师把时间还给讲课本身。",en:"Slides, handouts and end-of-course showcases as one set — teachers get their time back for teaching."},tags:{zh:["课件生成","文档解析","多语言处理"],en:["Courseware","Doc parsing","Multilingual"]}},
+ {img:"assets/biz-ecom.jpg",g:"linear-gradient(135deg,#bfe6c4,#2f9e63)",h:{zh:"电商零售",en:"E-commerce & retail"},p:{zh:"商品图、活动页、上新文案批量产出，大促前夜不再通宵。",en:"Product shots, promo pages and launch copy in batches — no more all-nighters before a big sale."},tags:{zh:["图片生成","内容生成","表格分析"],en:["Images","Copywriting","Sheet analysis"]}},
+ {img:"assets/biz-consult.jpg",g:"linear-gradient(135deg,#cdbcf7,#6a3ec9)",h:{zh:"咨询服务",en:"Consulting"},p:{zh:"提案 Deck、行业简报、数据附录标准化交付，新人也能交出资深同事的版式。",en:"Proposal decks, industry briefs and data appendices delivered to a standard — juniors ship senior-grade layouts."},tags:{zh:["报告生成","数据处理","文档解析"],en:["Reports","Data work","Doc parsing"]}},
+ {img:"assets/biz-media.jpg",g:"linear-gradient(135deg,#f6c3d9,#e87fae)",h:{zh:"媒体内容",en:"Media & content"},p:{zh:"选题稿、封面图、短视频脚本与成片，多语种版本同步生产。",en:"Story drafts, cover art, short-video scripts and cuts — with multilingual versions produced in the same pass."},tags:{zh:["视频生成","图片生成","多语言内容"],en:["Video","Images","Multilingual"]}},
+ {img:"assets/biz-func.jpg",g:"linear-gradient(135deg,#a8dee2,#4aa8b5)",h:{zh:"企业职能",en:"Corporate functions"},p:{zh:"周报月报、制度文档、招聘物料——职能团队的重复劳动，一句话交掉。",en:"Weekly and monthly reports, policy docs, hiring materials — the functions team's repetitive work, done in a sentence."},tags:{zh:["报告生成","表格分析","模板复用"],en:["Reports","Sheet analysis","Templates"]}}
+];
+const CMP={
+ head:{zh:["对比项","Poko 企业版","单点工具拼凑","传统外包"],en:["Dimension","Poko Business","Single-purpose tool stack","Traditional outsourcing"]},
+ rows:[
+  [{zh:"产出覆盖",en:"Output coverage"},{zh:"PPT / 表格 / 海报 / 网页 / 代码，一处全包",en:"Decks / sheets / posters / pages / code in one place"},{zh:"每类产出买一个工具，账号一堆",en:"One tool per output type, a pile of accounts"},{zh:"按项目单点交付，改版另算",en:"Per-project delivery; revisions cost extra"}],
+  [{zh:"上手门槛",en:"Getting started"},{zh:"说人话就行，全员同一入口",en:"Plain language, one entrance for everyone"},{zh:"每个工具都要学，培训成本高",en:"Every tool has a learning curve"},{zh:"需求沟通来回多，周期不可控",en:"Long brief cycles, unpredictable timelines"}],
+  [{zh:"品牌一致性",en:"Brand consistency"},{zh:"模板统一套用，谁做都一个样",en:"Shared templates — same look, whoever makes it"},{zh:"靠自觉，人一换风格就漂",en:"Depends on discipline; style drifts per person"},{zh:"看外包水平，波动大",en:"Varies with the vendor"}],
+  [{zh:"花费透明",en:"Cost transparency"},{zh:"每条回复带花费注脚，预算可封顶",en:"Cost footnote per reply; budgets can be capped"},{zh:"多个订阅叠加，月底才知道总数",en:"Stacked subscriptions; total known only at month-end"},{zh:"按项目报价，追加需求追加钱",en:"Quoted per project; extras cost extra"}],
+  [{zh:"数据控制",en:"Data control"},{zh:"零留存可开，审计日志可查",en:"Zero-retention available; audit logs on record"},{zh:"数据散在各家，口径各异",en:"Data scattered across vendors, policies vary"},{zh:"文件出了公司，管控最弱",en:"Files leave the company — weakest control"}],
+  [{zh:"支持响应",en:"Support"},{zh:"专属对接，优先工单 4 小时内",en:"Named contact; priority tickets within 4 hours"},{zh:"各家工单排队，无统一入口",en:"Separate queues per vendor"},{zh:"看合同与档期",en:"Depends on contract and schedule"}]
+ ]};
+const ABOUT=[
+ {zh:"Poko 是一个一句话做成果的 AI 对话产品：你把要做的事说清楚，它把 PPT、报告、表格、海报、网页和代码做成能直接打开使用的文件，交付给你。我们相信，AI 的价值不在聊了多少，而在交付了什么——所以 Poko 的每一次任务，都以一份文件收尾。",
+  en:"Poko is an AI chat product that turns one sentence into a finished result: describe what you need, and it builds decks, reports, sheets, posters, web pages and code into files you can open and use right away. We believe AI's value isn't in how much it chats but in what it delivers — so every Poko job ends with a file."},
+ {zh:"Poko 目前处于演示阶段，模型与价格以模型广场的计划口径为准。企业合作、模板共建与媒体垂询，欢迎邮件联系：hello@poko.example（示例地址，正式域名确定后更新）。",
+  en:"Poko is currently in demo stage; models and pricing follow the planned figures in the Model Gallery. For business partnerships, template co-building or press, email hello@poko.example (placeholder address, to be updated with the official domain)."}
+];
+/* 三语补齐（第五轮）：CAPS / INDS / CMP / ABOUT 的 ja/ko/es 正文 */
+const CAPS_ja=[["チームワークスペース", "チーム全員のチャット、ファイル、テンプレートを1つのワークスペースに。プロジェクトごとに整理されるので、新しく入った人も文脈をすぐ掴めます。チャット履歴を掘り返す必要はありません。", "<div class=\"mrow\"><span class=\"ava\" style=\"background:#FF5C1A\"></span>マーケティング · Q4 振り返り<span class=\"role\">編集</span></div><div class=\"mrow\"><span class=\"ava\" style=\"background:#31517f\"></span>プロダクト · ローンチ資料<span class=\"role\">編集</span></div><div class=\"mrow\"><span class=\"ava\" style=\"background:#2f9e63\"></span>全員 · ブランドテンプレート<span class=\"role\">閲覧</span></div>"], ["ブランドテンプレートライブラリ", "ブランドカラー、フォント、ロゴ、レイアウト規則をテンプレートとして蓄積。誰が作っても同じ基準が自動で適用され、「人ごとにバラバラ」がなくなります。", "<span class=\"chip hot\">四半期報告 · ブランド版</span><span class=\"chip\">製品発表 · ダーク</span><span class=\"chip\">採用ポスター · オレンジ</span><span class=\"chip\">週次データ · ミニマル</span>"], ["使用量と予算の管理", "チームやメンバーごとに月次上限を設定し、達したら自動停止。すべての消費にモデル名とタスク名が付くので、月末の突き合わせに推測はいりません。", "<div class=\"mrow\"><span class=\"num\">$12</span><span class=\"lab\">今日</span><span class=\"num\" style=\"margin-left:14px\">$86</span><span class=\"lab\">今週</span><span class=\"num\" style=\"margin-left:14px\">$340</span><span class=\"lab\">今月</span></div><div class=\"mrow\"><span class=\"lab\">マーケティング上限 $500 · 68% 使用</span></div>"], ["権限と役割", "管理者、編集者、閲覧者の3段階の役割で、テンプレートと請求を別々に管理。退職時の引き継ぎはワンクリックで資産を移転でき、ファイルは1つも失われません。", "<span class=\"chip hot\">管理者 · 請求とメンバー</span><span class=\"chip\">編集者 · 作成と編集</span><span class=\"chip\">閲覧者 · 閲覧とダウンロード</span>"], ["データゼロ保持ポリシー", "チャット内容とアップロードファイルは、デフォルトで学習に使われません。法人版ではゼロ保持モードを有効化でき、タスク完了と同時に削除され、監査証跡で証明できます。", "<div class=\"flow\"><span>チームのリクエスト</span><span class=\"arr\">→</span><span>Poko が処理</span><span class=\"arr\">→</span><span>ファイル納品</span></div><div style=\"margin-top:8px\"><span class=\"chip\">✓ 学習に使わない</span><span class=\"chip\">✓ 暗号化</span><span class=\"chip\">✓ 即時削除</span></div>"], ["優先サポート", "法人顧客には専任の担当者が付きます。課題は重要度で振り分け：通常チケットは1日以内、優先は4時間以内、本番障害はリアルタイム対応です。", "<span class=\"chip\">✉️ チケット &lt; 24h</span><span class=\"chip\">💬 優先 &lt; 4h</span><span class=\"chip hot\">🧑‍💻 専任担当 · リアルタイム</span>"], ["マルチリージョン接続", "各地の接続拠点が分散したチームでも快適さを保ち、生成ジョブはエッジでスケジューリングされるので、ピーク時でも互いに邪魔し合いません。", "<span class=\"chip\">中国東部 · 18ms</span><span class=\"chip\">中国南部 · 22ms</span><span class=\"chip\">シンガポール · 35ms</span><span class=\"chip\">フランクフルト · 80ms</span>"], ["SSO と監査ログ", "企業向け SSO により、入社・退社に合わせてアカウントが自動で有効化・無効化されます。誰がいつ何を生成し、何をダウンロードしたか、すべて監査ログで確認できます。", "<div class=\"logline\">09:41 · li.wei が《Q4 振り返り.pptx》を生成</div><div class=\"logline\">09:37 · wang.fang が《価格表.xlsx》をダウンロード</div><div class=\"logline\">09:30 · admin がマーケティングの予算上限を変更</div>"], ["導入の伴走支援", "頻出シナリオの洗い出し、テンプレートの共同制作、全員研修、月次レビューまで、Poko が棚上げのアカウントにならないよう、一緒に導入します。", "<div class=\"steps\"><span>① シナリオ整理</span><span>② テンプレート共同制作</span><span>③ 研修と開始</span><span>④ レビューと改善</span></div>"]];
+CAPS.forEach((c,i)=>{c.h.ja=CAPS_ja[i][0];c.p.ja=CAPS_ja[i][1];c.ui.ja=CAPS_ja[i][2];});
+const INDS_ja=[["マーケティング", "キャンペーン素材、SNS 画像、ランディングページをまとめて作成。話題の波が来たその日に公開できます。", ["ポスター生成", "多言語コンテンツ", "ランディングページ"]], ["教育・研修", "教材、配布資料、修了発表をセットで作成。先生は教えること自体に時間を取り戻せます。", ["教材生成", "文書解析", "多言語処理"]], ["EC・小売", "商品画像、キャンペーンページ、新作コピーをまとめて量産。大セール前夜の徹夜とはもうお別れです。", ["画像生成", "コピー生成", "表分析"]], ["コンサルティング", "提案デッキ、業界ブリーフ、データ付録を標準化して納品。新人でもベテランのレイアウトで出せます。", ["レポート生成", "データ処理", "文書解析"]], ["メディア・コンテンツ", "企画稿、カバー画像、短尺動画の台本と完成版まで。多言語版も同じ工程で同時生産できます。", ["動画生成", "画像生成", "多言語コンテンツ"]], ["管理部門", "週報・月報、制度文書、採用素材——管理部門の繰り返し作業は一言で片付きます。", ["レポート生成", "表分析", "テンプレート再利用"]]];
+INDS.forEach((d,i)=>{d.h.ja=INDS_ja[i][0];d.p.ja=INDS_ja[i][1];d.tags.ja=INDS_ja[i][2];});
+const CMP_ja={"head": ["比較項目", "Poko 法人版", "単機能ツールの寄せ集め", "従来の外注"], "rows": [["成果物の範囲", "スライド／表／ポスター／ページ／コードを一か所で", "成果物の種類ごとにツールが1つ、アカウントだらけ", "プロジェクト単位の納品、修正は別料金"], ["導入のハードル", "普通の言葉でOK、全員が同じ入口", "ツールごとに学習が必要で研修コストが高い", "要件のすり合わせが長く、期間が読めない"], ["ブランドの一貫性", "テンプレートを共有し、誰が作っても同じ見た目", "自覚頼みで、担当が変わるとスタイルが漂う", "外注先の腕次第でばらつきが大きい"], ["コストの透明性", "返信ごとに費用注記、予算に上限も設定可能", "サブスクが積み重なり、総額は月末まで不明", "プロジェクト単位の見積もり、追加要望は追加料金"], ["データ管理", "ゼロ保持を利用可能、監査ログも記録", "データが各社に分散し、方針もばらばら", "ファイルが社外に出るため管理が最も弱い"], ["サポート対応", "専任担当、優先チケットは4時間以内", "各社の窓口で順番待ち、入口は統一されていない", "契約とスケジュール次第"]]};
+CMP.head.ja=CMP_ja.head;CMP.rows.forEach((r,i)=>{r.forEach((cell,ci)=>{cell.ja=CMP_ja.rows[i][ci];});});
+const ABOUT_ja=["Poko は、一言を完成品に変える AI チャット製品です。やりたいことを伝えれば、スライド、レポート、表、ポスター、Webページ、コードを、そのまま開いて使えるファイルとして作り、届けます。私たちは、AI の価値はどれだけ会話したかではなく、何を届けたかだと考えています。だから Poko の仕事は、いつも1つのファイルで終わります。", "Poko は現在デモ段階です。モデルと価格はモデル一覧の予定価格に基づきます。法人提携、テンプレート共同制作、取材についてはメールでご連絡ください：hello@poko.example（仮のアドレスです。正式ドメイン確定後に更新します）。"];
+ABOUT.forEach((p,i)=>{p.ja=ABOUT_ja[i];});
+const CAPS_ko=[["팀 워크스페이스", "팀 전체의 대화, 파일, 템플릿을 워크스페이스 하나에 담습니다. 프로젝트별로 정리되어 새로 합류한 사람도 맥락을 바로 이어받습니다. 채팅 기록을 뒤질 필요가 없습니다.", "<div class=\"mrow\"><span class=\"ava\" style=\"background:#FF5C1A\"></span>마케팅 · Q4 복기<span class=\"role\">편집</span></div><div class=\"mrow\"><span class=\"ava\" style=\"background:#31517f\"></span>제품 · 출시 자료<span class=\"role\">편집</span></div><div class=\"mrow\"><span class=\"ava\" style=\"background:#2f9e63\"></span>전원 · 브랜드 템플릿<span class=\"role\">보기</span></div>"], ["브랜드 템플릿 라이브러리", "브랜드 색상, 글꼴, 로고, 레이아웃 규칙을 템플릿으로 쌓아 둡니다. 누가 만들어도 같은 기준이 적용되어 '사람마다 제각각'이 사라집니다.", "<span class=\"chip hot\">분기 보고 · 브랜드</span><span class=\"chip\">제품 출시 · 다크</span><span class=\"chip\">채용 포스터 · 오렌지</span><span class=\"chip\">주간 데이터 · 미니멀</span>"], ["사용량과 예산 관리", "팀이나 멤버별로 월 한도를 정하면 도달 시 자동으로 멈춥니다. 모든 소비에 모델명과 작업명이 붙어 월말 정산에 추측이 필요 없습니다.", "<div class=\"mrow\"><span class=\"num\">$12</span><span class=\"lab\">오늘</span><span class=\"num\" style=\"margin-left:14px\">$86</span><span class=\"lab\">이번 주</span><span class=\"num\" style=\"margin-left:14px\">$340</span><span class=\"lab\">이번 달</span></div><div class=\"mrow\"><span class=\"lab\">마케팅 한도 $500 · 68% 사용</span></div>"], ["역할과 권한", "관리자, 편집자, 조회자 세 단계 역할로 템플릿과 청구를 따로 관리합니다. 퇴사 시 자산 이전은 클릭 한 번으로 끝나 파일 하나도 잃지 않습니다.", "<span class=\"chip hot\">관리자 · 청구와 멤버</span><span class=\"chip\">편집자 · 만들기와 수정</span><span class=\"chip\">조회자 · 읽기와 다운로드</span>"], ["데이터 무보관 정책", "대화 내용과 업로드 파일은 기본적으로 학습에 쓰이지 않습니다. 기업용에서는 무보관 모드를 켤 수 있어 작업이 끝나면 데이터가 삭제되고, 감사 기록으로 증명할 수 있습니다.", "<div class=\"flow\"><span>팀 요청</span><span class=\"arr\">→</span><span>Poko 처리</span><span class=\"arr\">→</span><span>파일 전달</span></div><div style=\"margin-top:8px\"><span class=\"chip\">✓ 학습 안 함</span><span class=\"chip\">✓ 암호화</span><span class=\"chip\">✓ 즉시 삭제</span></div>"], ["우선 지원", "기업 고객에게는 전담 담당자가 배정됩니다. 문제는 심각도별로 분류합니다: 일반 티켓은 하루 안에, 우선 티켓은 4시간 안에, 운영 장애는 실시간으로 대응합니다.", "<span class=\"chip\">✉️ 티켓 &lt; 24h</span><span class=\"chip\">💬 우선 &lt; 4h</span><span class=\"chip hot\">🧑‍💻 전담 담당 · 실시간</span>"], ["다중 지역 접속", "지역 접속 거점이 분산된 팀도 빠르게 유지하고, 생성 작업은 엣지에서 스케줄링되어 피크 시간에도 서로 밀리지 않습니다.", "<span class=\"chip\">중국 동부 · 18ms</span><span class=\"chip\">중국 남부 · 22ms</span><span class=\"chip\">싱가포르 · 35ms</span><span class=\"chip\">프랑크푸르트 · 80ms</span>"], ["SSO와 감사 로그", "기업 SSO로 입사·퇴사에 맞춰 계정이 자동으로 켜지고 꺼집니다. 누가 언제 무엇을 생성하고 다운로드했는지 모두 감사 로그에 남습니다.", "<div class=\"logline\">09:41 · li.wei가 Q4-복기.pptx 생성</div><div class=\"logline\">09:37 · wang.fang이 가격표.xlsx 다운로드</div><div class=\"logline\">09:30 · admin이 마케팅 예산 한도 변경</div>"], ["도입 동반 지원", "자주 쓰는 시나리오 정리, 템플릿 공동 제작부터 전원 교육과 월간 리뷰까지, Poko가 방치되는 계정이 아니라 팀의 습관이 되도록 함께 도입합니다.", "<div class=\"steps\"><span>① 시나리오 정리</span><span>② 템플릿 공동 제작</span><span>③ 교육과 시작</span><span>④ 리뷰와 개선</span></div>"]];
+CAPS.forEach((c,i)=>{c.h.ko=CAPS_ko[i][0];c.p.ko=CAPS_ko[i][1];c.ui.ko=CAPS_ko[i][2];});
+const INDS_ko=[["마케팅", "캠페인 소재, SNS 이미지, 랜딩 페이지를 한 번에 제작합니다. 화제가 된 바로 그날 게시할 수 있습니다.", ["포스터 생성", "다국어 콘텐츠", "랜딩 페이지"]], ["교육과 연수", "수업 자료, 유인물, 수료 발표를 한 세트로 만듭니다. 선생님은 가르치는 일 자체에 시간을 돌려받습니다.", ["교재 생성", "문서 분석", "다국어 처리"]], ["이커머스와 소매", "상품 이미지, 프로모션 페이지, 신상품 문구를 대량으로 제작합니다. 대형 세일 전날 밤샘은 이제 없습니다.", ["이미지 생성", "문구 생성", "표 분석"]], ["컨설팅", "제안 덱, 산업 브리프, 데이터 부록을 표준화해 전달합니다. 신입도 베테랑의 레이아웃으로 내놓을 수 있습니다.", ["보고서 생성", "데이터 처리", "문서 분석"]], ["미디어와 콘텐츠", "기획안, 커버 이미지, 숏폼 대본과 완성본까지. 다국어 버전도 같은 과정에서 동시에 생산합니다.", ["동영상 생성", "이미지 생성", "다국어 콘텐츠"]], ["기업 지원 부서", "주간·월간 보고서, 제도 문서, 채용 자료까지. 지원 부서의 반복 업무를 한 문장으로 끝냅니다.", ["보고서 생성", "표 분석", "템플릿 재사용"]]];
+INDS.forEach((d,i)=>{d.h.ko=INDS_ko[i][0];d.p.ko=INDS_ko[i][1];d.tags.ko=INDS_ko[i][2];});
+const CMP_ko={"head": ["비교 항목", "Poko 기업용", "단일 기능 도구 조합", "기존 외주"], "rows": [["결과물 범위", "PPT/표/포스터/페이지/코드를 한곳에서", "결과물 종류마다 도구가 하나씩, 계정만 잔뜩", "프로젝트 단위 전달, 수정은 별도 비용"], ["시작 문턱", "평범한 말이면 충분, 전원이 같은 입구", "도구마다 배워야 해서 교육 비용이 큼", "요구사항 조율이 길고 일정 예측이 어려움"], ["브랜드 일관성", "템플릿을 공유해 누가 만들어도 같은 모습", "자율에 맡겨 담당이 바뀌면 스타일이 흔들림", "외주 업체 수준에 따라 편차가 큼"], ["비용 투명성", "답변마다 비용 각주, 예산 상한 설정 가능", "구독이 쌓여 총액은 월말에야 앎", "프로젝트 단위 견적, 추가 요구는 추가 비용"], ["데이터 통제", "무보관 사용 가능, 감사 로그 기록", "데이터가 각 업체에 흩어지고 정책도 제각각", "파일이 회사를 나가 통제가 가장 약함"], ["지원 대응", "전담 담당자, 우선 티켓 4시간 이내", "업체마다 줄 서기, 통일된 창구 없음", "계약과 일정에 따라 다름"]]};
+CMP.head.ko=CMP_ko.head;CMP.rows.forEach((r,i)=>{r.forEach((cell,ci)=>{cell.ko=CMP_ko.rows[i][ci];});});
+const ABOUT_ko=["Poko는 한 문장을 완성된 결과물로 바꾸는 AI 대화 제품입니다. 필요한 것을 설명하면 PPT, 보고서, 표, 포스터, 웹페이지, 코드를 바로 열어 쓸 수 있는 파일로 만들어 전달합니다. 우리는 AI의 가치가 얼마나 대화했느냐가 아니라 무엇을 전달했느냐에 있다고 믿습니다. 그래서 Poko의 모든 작업은 파일 하나로 끝납니다.", "Poko는 현재 데모 단계이며, 모델과 가격은 모델 광장의 예정 가격을 따릅니다. 기업 제휴, 템플릿 공동 제작, 언론 문의는 이메일로 연락해 주세요: hello@poko.example(임시 주소로, 정식 도메인이 정해지면 바뀝니다)."];
+ABOUT.forEach((p,i)=>{p.ko=ABOUT_ko[i];});
+const CAPS_es=[["Espacio de trabajo en equipo", "Un espacio guarda los chats, archivos y plantillas de todo el equipo. El trabajo se organiza por proyecto, así que quien se incorpora recoge el contexto en lugar de rebuscar en el historial.", "<div class=\"mrow\"><span class=\"ava\" style=\"background:#FF5C1A\"></span>Marketing · Revisión Q4<span class=\"role\">Editor</span></div><div class=\"mrow\"><span class=\"ava\" style=\"background:#31517f\"></span>Producto · Kit de lanzamiento<span class=\"role\">Editor</span></div><div class=\"mrow\"><span class=\"ava\" style=\"background:#2f9e63\"></span>Todos · Plantillas de marca<span class=\"role\">Lectura</span></div>"], ["Biblioteca de plantillas de marca", "Los colores de marca, las fuentes, el logotipo y las reglas de maquetación viven en plantillas. Haga lo que haga quien sea, se aplican los mismos estándares: se acabó el «cada uno a su estilo».", "<span class=\"chip hot\">Informe trimestral · Marca</span><span class=\"chip\">Lanzamiento · Oscuro</span><span class=\"chip\">Póster de empleo · Naranja</span><span class=\"chip\">Datos semanales · Minimalista</span>"], ["Control de uso y presupuesto", "Fija topes mensuales por equipo o miembro: el uso se detiene automáticamente al llegar al límite. Cada cargo lleva su modelo y su tarea, así que la conciliación de fin de mes no requiere adivinar nada.", "<div class=\"mrow\"><span class=\"num\">$12</span><span class=\"lab\">Hoy</span><span class=\"num\" style=\"margin-left:14px\">$86</span><span class=\"lab\">Esta semana</span><span class=\"num\" style=\"margin-left:14px\">$340</span><span class=\"lab\">Este mes</span></div><div class=\"mrow\"><span class=\"lab\">Tope de Marketing $500 · 68 % usado</span></div>"], ["Roles y permisos", "Roles de administrador, editor y lector, con plantillas y facturación gestionadas por separado. Al salir alguien, los activos se transfieren con un clic: no se pierde ningún archivo.", "<span class=\"chip hot\">Admin · Facturación y miembros</span><span class=\"chip\">Editor · Crear y editar</span><span class=\"chip\">Lector · Leer y descargar</span>"], ["Política de retención cero", "Los chats y las subidas nunca se usan para entrenamiento por defecto. Los planes para empresas pueden activar el modo de retención cero: los datos se eliminan al completar la tarea, con un registro de auditoría que lo demuestra.", "<div class=\"flow\"><span>Petición del equipo</span><span class=\"arr\">→</span><span>Poko procesa</span><span class=\"arr\">→</span><span>Archivo entregado</span></div><div style=\"margin-top:8px\"><span class=\"chip\">✓ Sin entrenamiento</span><span class=\"chip\">✓ Cifrado</span><span class=\"chip\">✓ Borrado instantáneo</span></div>"], ["Soporte prioritario", "Los clientes empresariales tienen un contacto asignado. Los problemas se clasifican por gravedad: tickets estándar en un día, prioritarios en cuatro horas e incidencias de producción en tiempo real.", "<span class=\"chip\">✉️ Tickets &lt; 24 h</span><span class=\"chip\">💬 Prioridad &lt; 4 h</span><span class=\"chip hot\">🧑‍💻 Contacto asignado · En vivo</span>"], ["Acceso multirregión", "Los puntos de acceso regionales mantienen la rapidez de los equipos distribuidos, y los trabajos de generación se programan en el borde para que las horas punta no aprieten a nadie.", "<span class=\"chip\">China Este · 18 ms</span><span class=\"chip\">China Sur · 22 ms</span><span class=\"chip\">Singapur · 35 ms</span><span class=\"chip\">Fráncfort · 80 ms</span>"], ["SSO y registros de auditoría", "El SSO empresarial activa y desactiva cuentas automáticamente con las altas y bajas. Quién generó o descargó qué, y cuándo, queda en el registro de auditoría.", "<div class=\"logline\">09:41 · li.wei generó Revisión-Q4.pptx</div><div class=\"logline\">09:37 · wang.fang descargó precios.xlsx</div><div class=\"logline\">09:30 · admin cambió el tope de Marketing</div>"], ["Implantación acompañada", "Desde mapear tus escenarios frecuentes y cocrear plantillas hasta la formación del equipo y las revisiones mensuales, implantamos Poko contigo: hasta que sea un hábito, no una cuenta olvidada.", "<div class=\"steps\"><span>① Mapear escenarios</span><span>② Cocrear plantillas</span><span>③ Formar y lanzar</span><span>④ Revisar y ajustar</span></div>"]];
+CAPS.forEach((c,i)=>{c.h.es=CAPS_es[i][0];c.p.es=CAPS_es[i][1];c.ui.es=CAPS_es[i][2];});
+const INDS_es=[["Marketing", "Materiales de campaña, visuales para redes y páginas de aterrizaje de una sola vez: publica el mismo día en que llega el momento.", ["Pósters", "Multilingüe", "Páginas de aterrizaje"]], ["Educación y formación", "Diapositivas, materiales y presentaciones de fin de curso como un conjunto: el profesorado recupera su tiempo para enseñar.", ["Material didáctico", "Análisis de documentos", "Multilingüe"]], ["Comercio electrónico y retail", "Fotos de producto, páginas promocionales y textos de lanzamiento por lotes: se acabaron las noches en vela antes de una gran venta.", ["Imágenes", "Redacción", "Análisis de hojas"]], ["Consultoría", "Propuestas, informes sectoriales y apéndices de datos entregados con un estándar: los júnior entregan con la maquetación de un sénior.", ["Informes", "Trabajo de datos", "Análisis de documentos"]], ["Medios y contenido", "Borradores, portadas, guiones de vídeo corto y cortes finales, con versiones multilingües producidas en la misma pasada.", ["Vídeo", "Imágenes", "Multilingüe"]], ["Funciones corporativas", "Informes semanales y mensuales, documentos de políticas, materiales de contratación: el trabajo repetitivo del equipo de funciones, resuelto en una frase.", ["Informes", "Análisis de hojas", "Plantillas"]]];
+INDS.forEach((d,i)=>{d.h.es=INDS_es[i][0];d.p.es=INDS_es[i][1];d.tags.es=INDS_es[i][2];});
+const CMP_es={"head": ["Dimensión", "Poko Empresas", "Conjunto de herramientas sueltas", "Externalización tradicional"], "rows": [["Cobertura", "Presentaciones / hojas / pósters / páginas / código en un solo lugar", "Una herramienta por tipo de resultado, un montón de cuentas", "Entrega por proyecto; las revisiones cuestan más"], ["Puesta en marcha", "Lenguaje normal, una sola entrada para todos", "Cada herramienta tiene su curva de aprendizaje", "Ciclos de briefing largos, plazos impredecibles"], ["Consistencia de marca", "Plantillas compartidas: el mismo aspecto, haga quien lo haga", "Depende de la disciplina; el estilo deriva según la persona", "Varía según el proveedor"], ["Transparencia de costes", "Nota de coste en cada respuesta; presupuestos con tope", "Suscripciones acumuladas; el total se conoce a fin de mes", "Presupuesto por proyecto; los extras cuestan más"], ["Control de datos", "Retención cero disponible; registros de auditoría", "Datos repartidos entre proveedores, políticas diversas", "Los archivos salen de la empresa: el control más débil"], ["Soporte", "Contacto asignado; tickets prioritarios en 4 horas", "Colas separadas por proveedor", "Depende del contrato y la agenda"]]};
+CMP.head.es=CMP_es.head;CMP.rows.forEach((r,i)=>{r.forEach((cell,ci)=>{cell.es=CMP_es.rows[i][ci];});});
+const ABOUT_es=["Poko es un producto de chat con IA que convierte una frase en un resultado terminado: describe lo que necesitas y construye presentaciones, informes, hojas, pósters, páginas web y código en archivos que puedes abrir y usar al momento. Creemos que el valor de la IA no está en cuánto conversa, sino en lo que entrega: por eso cada trabajo de Poko termina con un archivo.", "Poko está actualmente en fase de demostración; los modelos y precios siguen las cifras previstas de la Galería de modelos. Para alianzas empresariales, cocreación de plantillas o prensa, escribe a hello@poko.example (dirección provisional, se actualizará con el dominio oficial)."];
+ABOUT.forEach((p,i)=>{p.es=ABOUT_es[i];});
+function renderBiz(){
+  $("#capGrid").innerHTML=CAPS.map(c=>`<div class="cap"><h3>${L(c.h)}</h3><p>${L(c.p)}</p><div class="miniui">${L(c.ui)}</div></div>`).join("");
+  $("#indGrid").innerHTML=INDS.map(i=>`<div class="ind"><div class="cover" style="background:${i.g}"><img src="${i.img}" alt="" loading="lazy" onerror="this.remove()"></div><div class="body"><h3>${L(i.h)}</h3><p>${L(i.p)}</p><div>${L(i.tags).map(x=>`<span class="tag">${x}</span>`).join("")}</div></div></div>`).join("");
+  const head=L(CMP.head), rows=CMP.rows;
+  $("#cmpWrap").innerHTML=`<table class="cmp"><thead><tr>${head.map((h,ix)=>`<th class="${ix===1?"us":""}">${h}</th>`).join("")}</tr></thead><tbody>${
+    rows.map(r=>`<tr><td><b>${L(r[0])}</b></td><td class="us">${L(r[1])}</td><td class="dim">${L(r[2])}</td><td class="dim">${L(r[3])}</td></tr>`).join("")}</tbody></table>`;
+  $("#aboutBody").innerHTML=ABOUT.map(p=>`<p>${L(p)}</p>`).join("");
+}
+function applyLang(){
+  document.documentElement.lang={zh:"zh-CN",en:"en",ja:"ja",ko:"ko",es:"es"}[lang];
+  $$("[data-i18n]").forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+  $("#langSel").value=lang;
+  renderBiz();
+}
+$("#langSel").addEventListener("change",e=>{ lang=e.target.value; localStorage.setItem("poko_lang",lang); applyLang(); });
+if(localStorage.getItem("poko_cookie_ok")) $("#cookieBar").classList.remove("show"); else $("#cookieBar").classList.add("show");
+$("#cookieOk").addEventListener("click",()=>{ localStorage.setItem("poko_cookie_ok","1"); $("#cookieBar").classList.remove("show"); });
+applyLang();
+</script>
+
+<script>
+/* 滚动渐入（Design System v2）：无 IntersectionObserver / 减少动态时内容直接可见 */
+(function(){try{
+  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  if(!("IntersectionObserver" in window))return;
+  var els=[].slice.call(document.querySelectorAll(".sec-head,.page-head,.hero .wrap,.bcard,.cap,.ind,.dcard,.casecard,.faqitem,.chart,.demo,.aud-tabs,.mrow,.newcard,.cta,footer .foot-grid"));
+  if(!els.length)return;
+  document.documentElement.classList.add("jsrv");
+  els.forEach(function(el){el.classList.add("rv")});
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+    if(!en.isIntersecting)return;
+    var el=en.target;
+    var sib=[].slice.call(el.parentNode.children).filter(function(c){return c.classList&&c.classList.contains("rv")});
+    var i=sib.indexOf(el);
+    el.style.setProperty("--rvd",Math.min(Math.max(i,0)*0.06,0.3)+"s");
+    el.classList.add("in"); io.unobserve(el);
+    var done=function(){el.classList.remove("rv","in");el.style.removeProperty("--rvd")};
+    el.addEventListener("transitionend",function h(ev){if(ev.propertyName==="transform"){done();el.removeEventListener("transitionend",h)}});
+    setTimeout(done,1100);
+  })},{threshold:.1,rootMargin:"0px 0px -5% 0px"});
+  els.forEach(function(el){io.observe(el)});
+}catch(e){}})();
+</script>
+<script>
+/* 第五轮补键：页脚法务链接等 */
+Object.assign(I18N.zh,{"foot_terms": "服务条款", "foot_privacy": "隐私政策", "pg_home": "首页"});
+Object.assign(I18N.en,{"foot_terms": "Terms of Service", "foot_privacy": "Privacy Policy", "pg_home": "Home"});
+Object.assign(I18N.ja,{"foot_terms": "利用規約", "foot_privacy": "プライバシーポリシー", "pg_home": "ホーム"});
+Object.assign(I18N.ko,{"foot_terms": "서비스 약관", "foot_privacy": "개인정보 처리방침", "pg_home": "홈"});
+Object.assign(I18N.es,{"foot_terms": "Términos del servicio", "foot_privacy": "Política de privacidad", "pg_home": "Inicio"});
+$$("[data-i18n]").forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+</script>
+<script>
+/* 回到顶部 + ⌘K 页面跳转（第五轮） */
+(function(){
+  var toTop=document.createElement("button");
+  toTop.id="toTop"; toTop.type="button"; toTop.setAttribute("aria-label","Back to top"); toTop.textContent="↑";
+  document.body.appendChild(toTop);
+  addEventListener("scroll",function(){ toTop.classList.toggle("show", window.scrollY>600); },{passive:true});
+  toTop.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+  var PAGES=[["index.html","pg_home"],["chat.html","foot_chat"],["models.html","nav_models"],["docs.html","nav_docs"],["blog.html","nav_blog"],["business.html","nav_biz"],["pricing.html","nav_pricing"],["terms.html","foot_terms"],["privacy.html","foot_privacy"]];
+  var pal=document.createElement("div"); pal.className="pal"; pal.setAttribute("role","dialog"); pal.setAttribute("aria-modal","true");
+  pal.innerHTML='<div class="pal-box"><input type="text" autocomplete="off" aria-label="Jump to page"><div class="pal-list"></div></div>';
+  document.body.appendChild(pal);
+  var input=pal.querySelector("input"), list=pal.querySelector(".pal-list"), sel=0, items=[];
+  function render(q){
+    items=PAGES.map(function(p){ return {href:p[0], name:(typeof t==="function"? t(p[1]) : p[1])}; })
+      .filter(function(it){ return !q || it.name.toLowerCase().includes(q.toLowerCase()) || it.href.includes(q.toLowerCase()); });
+    if(sel>items.length-1) sel=Math.max(0,items.length-1);
+    list.innerHTML=items.length? items.map(function(it,i){ return '<button type="button" class="pal-item'+(i===sel?" sel":"")+'" data-href="'+it.href+'"><span>'+it.name+'</span><span class="hint">'+it.href+'</span></button>'; }).join("") : '<div class="pal-empty">—</div>';
+    list.querySelectorAll(".pal-item").forEach(function(b){ b.addEventListener("click",function(){ location.href=b.dataset.href; }); });
+  }
+  function open(){ pal.classList.add("open"); input.value=""; sel=0; render(""); setTimeout(function(){ input.focus(); },30); }
+  function close(){ pal.classList.remove("open"); }
+  input.addEventListener("input",function(){ sel=0; render(input.value.trim()); });
+  input.addEventListener("keydown",function(e){
+    if(e.key==="ArrowDown"){ e.preventDefault(); sel=Math.min(sel+1,items.length-1); render(input.value.trim()); }
+    else if(e.key==="ArrowUp"){ e.preventDefault(); sel=Math.max(sel-1,0); render(input.value.trim()); }
+    else if(e.key==="Enter"){ if(items[sel]) location.href=items[sel].href; }
+  });
+  pal.addEventListener("click",function(e){ if(e.target===pal) close(); });
+  document.addEventListener("keydown",function(e){
+    if((e.metaKey||e.ctrlKey)&&(e.key==="k"||e.key==="K")){ e.preventDefault(); if(pal.classList.contains("open")) close(); else open(); }
+    else if(e.key==="Escape"&&pal.classList.contains("open")) close();
+  });
+})();
+</script>
+</body>
+</html>

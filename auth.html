@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 Poko — 演示环境</title>
+<meta name="description" content="登录或注册 Poko（当前为演示环境，不会真正创建账号，提交后以访客身份进入演示对话）。">
+<link rel="canonical" href="https://tmc.loc.cc/auth.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="登录 Poko — 演示环境">
+<meta property="og:description" content="登录 Poko：演示环境，提交后以访客身份进入演示对话。">
+<meta property="og:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z' fill='%233C9A5F'/%3E%3Ccircle cx='24' cy='26' r='19' fill='%23FF5C1A'/%3E%3Ccircle cx='17.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Ccircle cx='30.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Cpath d='M20 30.5q4 3.2 8 0' stroke='%237A2A08' stroke-width='2.1' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#17130c; --sub:#6d675c; --line:#e9e4d8; --line2:#dcd4c3; --bg:#ffffff; --bg2:#f7f6f1; --bg3:#f0eee6;
+  --brand:#FF5C1A; --brand-dark:#e8480c; --brand-soft:#fff1e8; --amber:#ffb03a;
+  --brand-grad:linear-gradient(135deg,#ff7d2e 0%,#ff5c1a 52%,#f43d0a 100%);
+  --radius:20px; --r-lg:24px; --r-md:16px; --r-sm:12px;
+  --shadow-sm:0 1px 2px rgba(23,18,8,.05),0 2px 8px -2px rgba(23,18,8,.06);
+  --shadow:0 2px 4px rgba(23,18,8,.04),0 18px 44px -14px rgba(23,18,8,.16);
+  --shadow-lg:0 4px 10px rgba(23,18,8,.05),0 36px 72px -20px rgba(23,18,8,.26);
+  --shadow-brand:0 10px 22px -8px rgba(255,92,26,.5);
+  --ring:0 0 0 4px rgba(255,92,26,.16);
+  --ease:cubic-bezier(.22,.68,.26,1);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans JP","Noto Sans KR",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.mascot{display:inline-block;flex:none;vertical-align:middle}
+.mascot svg{display:block}
+header.site{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:24px;height:64px}
+.logo{display:flex;align-items:center;gap:9px;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.nav-links{display:flex;gap:22px;margin-left:8px;font-size:15px;color:#33322e}
+.nav-links a:hover{color:var(--brand)}
+.nav-links a.on{color:var(--brand);font-weight:600}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.langsel{position:relative}
+.langsel select{appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 30px 8px 14px;font-size:14px;color:var(--ink);cursor:pointer}
+.langsel::after{content:"▾";position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--sub);pointer-events:none}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:999px;font-size:15px;font-weight:600;padding:10px 20px;border:1px solid transparent;transition:.15s}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-dark)}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+.btn-login{background:none;border:none;font-size:15px;font-weight:600;padding:10px 6px}
+.btn-login:hover{color:var(--brand)}
+.page-head{padding:60px 0 10px;text-align:center}
+.page-head h1{font-size:40px;font-weight:850;letter-spacing:-.02em}
+.page-head p{margin:14px auto 0;max-width:600px;color:var(--sub);font-size:17px}
+.docsearch{max-width:560px;margin:28px auto 0;display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:16px;padding:0 16px;background:#fff;box-shadow:var(--shadow)}
+.docsearch:focus-within{border-color:var(--brand)}
+.docsearch input{flex:1;border:none;outline:none;font-size:16px;padding:15px 0;font-family:inherit;background:transparent}
+.docsearch kbd{font-family:var(--mono);font-size:12px;color:var(--sub);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:2px 7px;background:var(--bg2)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:44px 0 8px}
+.dcard{border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff;transition:.15s;display:block}
+.dcard:hover{border-color:#f3c3ab;box-shadow:var(--shadow);transform:translateY(-2px)}
+.dcard .ic{font-size:26px;margin-bottom:10px}
+.dcard h3{font-size:17px;margin-bottom:6px}
+.dcard p{font-size:14px;color:var(--sub);line-height:1.65}
+.findq{margin:52px 0 0}
+.findq h2,.faqsec h2{font-size:26px;font-weight:800;text-align:center}
+.findq .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.findq .col{border:1px solid var(--line);border-radius:18px;padding:20px;background:var(--bg2)}
+.findq .col h4{font-size:14px;color:var(--sub);margin-bottom:12px}
+.findq .col a{display:block;padding:7px 0;font-size:15px;font-weight:550}
+.findq .col a:hover{color:var(--brand)}
+.doclayout{display:grid;grid-template-columns:230px 1fr;gap:36px;margin:64px 0 0;align-items:start}
+aside.side{position:sticky;top:88px}
+aside.side h5{font-size:12px;color:var(--sub);letter-spacing:.08em;margin:0 0 10px;text-transform:uppercase}
+aside.side a{display:block;padding:8px 12px;border-radius:10px;font-size:14.5px;color:#33322e}
+aside.side a:hover{background:var(--bg2);color:var(--brand)}
+article.doc{border-top:1px solid var(--line);padding:34px 0 8px;scroll-margin-top:90px}
+article.doc:first-child{border-top:none;padding-top:6px}
+article.doc h2{font-size:24px;font-weight:800;margin-bottom:6px}
+article.doc .lede{color:var(--sub);font-size:15.5px;margin-bottom:14px}
+article.doc p{font-size:15.5px;line-height:1.85;margin-bottom:12px;color:#2c2b27}
+article.doc ul{margin:0 0 14px 20px}
+article.doc li{font-size:15.5px;line-height:1.8;margin-bottom:5px;color:#2c2b27}
+article.doc .tip{background:var(--brand-soft);border-radius:14px;padding:14px 18px;font-size:14.5px;line-height:1.75;color:#6b3a1e}
+article.doc code{font-family:var(--mono);font-size:.92em;background:var(--bg2);border:1px solid var(--line);padding:1px 6px;border-radius:6px}
+.noresult{display:none;text-align:center;color:var(--sub);padding:44px 0}
+.faqsec{margin:70px 0 0}
+.faqwrap{max-width:820px;margin:26px auto 0}
+.faqitem{border:1px solid var(--line);border-radius:16px;margin-bottom:10px;background:#fff;overflow:hidden}
+.faqitem>button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;background:none;border:none;text-align:left;font-size:16px;font-weight:600;padding:18px 20px}
+.faqitem .fx{color:var(--brand);font-size:20px;transition:.2s}
+.faqitem .fa{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faqitem .fa p{padding:0 20px 18px;color:var(--sub);font-size:15px;line-height:1.75}
+.faqitem.open .fa{max-height:300px}
+.faqitem.open .fx{transform:rotate(45deg)}
+.cta{margin:70px 0 0;background:linear-gradient(120deg,#ff7a3c,#FF5C1A);border-radius:28px;padding:56px 30px;text-align:center;color:#fff}
+.cta h2{font-size:32px;font-weight:800}
+.cta p{margin:12px auto 24px;max-width:520px;opacity:.92}
+.cta .btn{background:#fff;color:var(--brand-dark)}
+section.bottompad{padding-bottom:80px}
+footer{border-top:1px solid var(--line);padding:56px 0 30px;background:#fff;margin-top:80px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:28px}
+.foot-brand p{color:var(--sub);font-size:14px;margin-top:12px}
+footer h4{font-size:14px;margin-bottom:14px}
+footer ul{list-style:none}
+footer li{margin-bottom:9px}
+footer li a{color:var(--sub);font-size:14px}
+footer li a:hover{color:var(--brand)}
+.foot-bar{display:flex;gap:22px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);margin-top:38px;padding-top:22px;color:var(--sub);font-size:13px}
+.foot-bar .sp{margin-left:auto;display:flex;align-items:center;gap:7px}
+.foot-bar .dot{width:8px;height:8px;border-radius:50%;background:#2f9e63;display:inline-block}
+.cookiebar{position:fixed;left:16px;right:16px;bottom:16px;z-index:90;max-width:560px;margin:0 auto;background:#1d1a16;color:#f3efe9;border-radius:16px;padding:16px 18px;display:none;align-items:center;gap:14px;box-shadow:0 16px 40px rgba(0,0,0,.25);font-size:14px}
+.cookiebar.show{display:flex}
+.cookiebar button{flex:none;background:var(--brand);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-weight:600;font-size:14px}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .page-head h1{font-size:31px}
+  .cards{grid-template-columns:1fr}
+  .findq .cols{grid-template-columns:1fr}
+  .doclayout{grid-template-columns:1fr}
+  aside.side{position:static;display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}
+  aside.side h5{display:none}
+  aside.side a{white-space:nowrap;border:1px solid var(--line)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ============ Poko Design System v2 · 视觉升级层 ============ */
+::selection{background:#ffd7c2;color:#7a2400}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+body{text-rendering:optimizeLegibility;overflow-x:clip}
+header,header.site{background:rgba(255,255,255,.85);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);box-shadow:0 14px 34px -26px rgba(23,18,8,.4)}
+.nav-links a{position:relative;transition:color .18s}
+.nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:2px;border-radius:2px;background:var(--brand-grad);transition:right .28s var(--ease)}
+.nav-links a:hover::after{right:0}
+.btn{transition:transform .18s var(--ease),box-shadow .18s var(--ease),background-color .18s,color .18s,border-color .18s,filter .18s}
+.btn-primary{background:var(--brand-grad);box-shadow:var(--shadow-brand),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-primary:hover{background:var(--brand-grad);filter:brightness(1.05);transform:translateY(-1px);box-shadow:0 15px 30px -9px rgba(255,92,26,.55),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-primary:active{transform:translateY(0) scale(.98)}
+.btn-ghost{box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:var(--line2)}
+.btn-login{transition:color .18s}
+.langsel select{transition:border-color .18s,box-shadow .18s}
+.langsel select:hover{border-color:var(--line2)}
+.langsel select:focus{border-color:var(--brand);box-shadow:var(--ring);outline:none}
+.sec-head h2{letter-spacing:-.02em}
+footer{background:linear-gradient(180deg,#fff 0%,#fbf9f4 100%)}
+.foot-grid li a{transition:color .18s}
+.cookiebar{box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,.09)}
+.cookiebar button{transition:transform .18s var(--ease),filter .18s}
+.cookiebar button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.pills button,.mfilter button{transition:all .18s var(--ease)}
+.pills button.on,.mfilter button.on{box-shadow:var(--shadow-sm)}
+.chip,.cpill,.mchip{transition:all .18s var(--ease)}
+.chip:hover,.cpill:hover,.mchip:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+/* 滚动渐入（JS 加 .jsrv 后才隐藏，无 JS 时内容直接可见） */
+.jsrv .rv{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--rvd,0s)}
+.jsrv .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .jsrv .rv{opacity:1;transform:none}
+}
+
+.cta{position:relative;overflow:hidden;background:linear-gradient(125deg,#ff8a3d 0%,#ff5c1a 52%,#f0440a 100%);box-shadow:0 30px 60px -24px rgba(244,61,10,.5)}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(520px 240px at 12% -10%,rgba(255,255,255,.35),transparent 60%),radial-gradient(560px 260px at 88% 115%,rgba(255,176,58,.4),transparent 60%);pointer-events:none}
+.cta>*{position:relative}
+.cta .btn{box-shadow:0 12px 24px -10px rgba(90,20,0,.45);transition:transform .18s var(--ease),box-shadow .18s var(--ease),background-color .18s,color .18s}
+.cta .btn:hover{transform:translateY(-2px)}
+.page-head{position:relative}
+.page-head::before{content:"";position:absolute;left:50%;top:-72px;transform:translateX(-50%);width:min(880px,100vw);height:340px;background:radial-gradient(closest-side,rgba(255,92,26,.13),rgba(255,176,58,.07) 55%,transparent 72%);pointer-events:none}
+.page-head>*{position:relative}
+
+.docsearch{transition:border-color .18s,box-shadow .18s}
+.docsearch:focus-within{box-shadow:var(--shadow),var(--ring)}
+.dcard{box-shadow:var(--shadow-sm)}
+.dcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#f0cdb2}
+.findq .col{box-shadow:var(--shadow-sm)}
+article.doc .tip{background:linear-gradient(135deg,#fff4ec,#ffeee1);border:1px solid #ffdcc4;border-left:4px solid var(--brand)}
+article.doc code{background:#f6f3ec}
+aside.side a{transition:all .15s}
+.faqitem{transition:border-color .2s,box-shadow .2s}
+.faqitem.open{border-color:#f0cdb2;box-shadow:var(--shadow-sm)}
+
+/* DS v2 补丁：移动端页眉防拥挤（按钮不换行、登录键让位） */
+.btn{white-space:nowrap}
+@media(max-width:900px){
+  .btn-login{display:none}
+  .nav{gap:12px}
+  .nav-right{gap:8px}
+  .logo{font-size:20px}
+  .langsel select{padding:7px 22px 7px 10px;font-size:13px}
+  .nav-right .btn{padding:9px 15px;font-size:14px}
+}
+
+
+.authwrap{display:flex;justify-content:center;padding:56px 0 6px}
+.authcard{width:min(430px,94vw);border:1px solid var(--line);border-radius:24px;background:#fff;box-shadow:var(--shadow);padding:34px 32px 28px;text-align:center;position:relative}
+.authcard::before{content:"";position:absolute;inset:0 0 auto;height:120px;border-radius:24px 24px 0 0;background:radial-gradient(420px 140px at 50% -30%,rgba(255,92,26,.16),transparent 70%);pointer-events:none}
+.auth-mascot{display:flex;justify-content:center;position:relative}
+.authcard h1{font-size:25px;font-weight:850;letter-spacing:-.02em;margin-top:12px;position:relative}
+.auth-sub{color:var(--sub);font-size:14.5px;margin-top:6px;position:relative}
+.auth-demo{position:relative;margin:18px 0 4px;background:var(--brand-soft);border:1px solid #ffdcc4;border-radius:12px;padding:10px 14px;font-size:13px;line-height:1.65;color:#6b3a1e;text-align:left}
+.authtabs{display:flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:4px;margin:18px 0 20px;position:relative}
+.authtabs button{flex:1;border:none;background:none;font-family:inherit;font-size:15px;font-weight:600;padding:9px 0;border-radius:999px;color:var(--sub);cursor:pointer}
+.authtabs button.on{background:#fff;color:var(--ink);box-shadow:var(--shadow-sm)}
+#auForm{text-align:left;position:relative}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.field input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15.5px;font-family:inherit;outline:none;background:#fff;color:var(--ink);transition:border-color .18s,box-shadow .18s}
+.field input:focus{border-color:var(--brand);box-shadow:var(--ring)}
+.field input.bad{border-color:#d64541}
+.ferr{display:none;color:#d64541;font-size:13px;margin-top:5px}
+.ferr.show{display:block}
+.pwdwrap{position:relative}
+.pwdwrap input{padding-right:46px}
+#pwdEye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:none;background:none;font-size:16px;padding:8px;cursor:pointer;opacity:.65}
+.auth-submit{width:100%;justify-content:center;font-size:16px;padding:13px 20px;margin-top:4px}
+.auth-submit.loading{opacity:.75;pointer-events:none}
+.auth-or{display:flex;align-items:center;gap:12px;color:var(--sub);font-size:13px;margin:20px 0 14px}
+.auth-or::before,.auth-or::after{content:"";flex:1;border-top:1px solid var(--line)}
+.socials{display:flex;gap:10px}
+.soc{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 4px;font-size:14.5px;font-weight:600;font-family:inherit;color:var(--ink);cursor:pointer;transition:.18s var(--ease)}
+.soc:hover{border-color:var(--line2);box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+.auth-guest{display:inline-block;margin-top:18px;font-size:14.5px;font-weight:600;color:var(--brand-dark)}
+.auth-guest:hover{text-decoration:underline}
+.auth-agree{margin-top:14px;font-size:12.5px;color:var(--sub);line-height:1.6}
+.auth-agree a{color:var(--brand-dark);text-decoration:underline}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html">
+      <span class="mascot"><svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span>
+      Poko
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features" data-i18n="nav_features">功能</a>
+      <a href="pricing.html" data-i18n="nav_pricing">价格</a>
+      <a href="index.html#cases" data-i18n="nav_cases">案例</a>
+      <a href="models.html" data-i18n="nav_models">模型广场</a>
+      <a href="docs.html" data-i18n="nav_docs">文档</a>
+      <a href="blog.html" data-i18n="nav_blog">博客</a>
+      <a href="business.html" data-i18n="nav_biz">企业</a>
+    </nav>
+    <div class="nav-right">
+      <span class="langsel">
+        <select id="langSel" aria-label="Language">
+          <option value="zh">简体中文</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="es">Español</option>
+        </select>
+      </span>
+      <a class="btn-login" href="auth.html" data-i18n="nav_login">登录</a>
+      <a class="btn btn-primary" href="auth.html?mode=signup" data-i18n="nav_start">开始使用</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="authwrap">
+    <div class="authcard">
+      <div class="auth-mascot"><span class="mascot"><svg width="52" height="52" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span></div>
+      <h1 id="auTitle"></h1>
+      <p class="auth-sub" id="auSub"></p>
+      <div class="auth-demo" data-i18n="au_demo"></div>
+      <div class="authtabs" role="tablist">
+        <button type="button" id="tabLogin" role="tab"></button>
+        <button type="button" id="tabSignup" role="tab"></button>
+      </div>
+      <form id="auForm" novalidate>
+        <div class="field" id="nameField" hidden>
+          <label for="auName" data-i18n="au_name"></label>
+          <input id="auName" type="text" autocomplete="nickname" data-i18n-ph="au_name_ph">
+          <p class="ferr" id="errName"></p>
+        </div>
+        <div class="field">
+          <label for="auEmail" data-i18n="au_email"></label>
+          <input id="auEmail" type="email" autocomplete="email" placeholder="you@example.com">
+          <p class="ferr" id="errEmail"></p>
+        </div>
+        <div class="field">
+          <label for="auPwd" data-i18n="au_pwd"></label>
+          <div class="pwdwrap">
+            <input id="auPwd" type="password" autocomplete="current-password" data-i18n-ph="au_pwd_ph">
+            <button type="button" id="pwdEye" aria-label="Show password">👁</button>
+          </div>
+          <p class="ferr" id="errPwd"></p>
+        </div>
+        <button class="btn btn-primary auth-submit" type="submit" id="auSubmit"></button>
+      </form>
+      <div class="auth-or"><span data-i18n="au_or"></span></div>
+      <div class="socials">
+        <button type="button" class="soc" data-soc="Google"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C36.9 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"/></svg><span>Google</span></button>
+        <button type="button" class="soc" data-soc="GitHub"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.6 0 0 3.6 0 8c0 3.5 2.3 6.5 5.5 7.6.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1.1-2.7-1.1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.7-.9-3.7-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.4 7.4 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3.1-1.9 3.8-3.7 4 .3.3.6.8.6 1.5V15c0 .2.1.5.5.4A8 8 0 0 0 16 8c0-4.4-3.6-8-8-8z"/></svg><span>GitHub</span></button>
+        <button type="button" class="soc" data-soc="Apple"><svg width="18" height="18" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg><span>Apple</span></button>
+      </div>
+      <a class="auth-guest" href="chat.html" data-i18n="au_guest"></a>
+      <p class="auth-agree" id="auAgree"></p>
+    </div>
+  </div>
+</div>
+<section class="bottompad"></section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="index.html">
+          <span class="mascot"><svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span>
+          Poko
+        </a>
+        <p data-i18n="foot_tag">一句话，做出拿得出手的成果。</p>
+      </div>
+      <div><h4 data-i18n="foot_c1">产品</h4><ul>
+        <li><a href="chat.html" data-i18n="foot_chat">AI 对话</a></li>
+        <li><a href="index.html#features" data-i18n="foot_ppt">PPT 生成</a></li>
+        <li><a href="models.html" data-i18n="nav_models">模型广场</a></li>
+        <li><a href="business.html" data-i18n="nav_biz">企业</a></li>
+        <li><a href="pricing.html" data-i18n="foot_price">定价</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c2">热门模型</h4><ul>
+        <li><a href="models.html">GPT</a></li><li><a href="models.html">Claude</a></li><li><a href="models.html">Gemini</a></li>
+        <li><a href="models.html">DeepSeek</a></li><li><a href="models.html">Qwen</a></li><li><a href="models.html">Kimi</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c3">模型厂商</h4><ul>
+        <li><a href="models.html">OpenAI</a></li><li><a href="models.html">Anthropic</a></li><li><a href="models.html">Google</a></li>
+        <li><a href="models.html">DeepSeek</a></li><li><a href="models.html" data-i18n="vendor_qwen">阿里通义</a></li><li><a href="models.html" data-i18n="vendor_moon">月之暗面</a></li>
+      </ul></div>
+      <div><h4 data-i18n="foot_c4">资源</h4><ul>
+        <li><a href="docs.html" data-i18n="foot_guide">使用指南</a></li>
+        <li><a href="index.html#cases" data-i18n="foot_tpl">模板库</a></li>
+        <li><a href="blog.html" data-i18n="nav_blog">博客</a></li>
+        <li><a href="docs.html#faq" data-i18n="foot_help">帮助中心</a></li>
+        <li><a href="business.html#about" data-i18n="foot_about">关于我们</a></li>
+        <li><a href="mailto:hello@poko.example" data-i18n="foot_contact">联系我们</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bar">
+      <span>© 2026 Poko</span><span>v0.1.0</span><span>hello@poko.example</span><a href="terms.html" data-i18n="foot_terms">服务条款</a><a href="privacy.html" data-i18n="foot_privacy">隐私政策</a>
+      <span class="sp"><span class="dot"></span><span data-i18n="foot_status">演示站点</span></span>
+    </div>
+  </div>
+</footer>
+<div class="cookiebar" id="cookieBar" role="dialog" aria-live="polite">
+  <span data-i18n="cookie_txt">Poko 只在你的浏览器本地保存语言偏好，不用追踪型 Cookie。</span>
+  <button type="button" id="cookieOk" data-i18n="cookie_ok">知道了</button>
+</div>
+
+
+<script>
+const I18N={zh:{"nav_features": "功能", "nav_pricing": "价格", "nav_cases": "案例", "nav_models": "模型广场", "nav_docs": "文档", "nav_blog": "博客", "nav_biz": "企业", "nav_login": "登录", "nav_start": "开始使用", "foot_tag": "一句话，做出拿得出手的成果。", "foot_c1": "产品", "foot_c2": "热门模型", "foot_c3": "模型厂商", "foot_c4": "资源", "foot_chat": "AI 对话", "foot_ppt": "PPT 生成", "foot_price": "定价", "vendor_qwen": "阿里通义", "vendor_moon": "月之暗面", "foot_guide": "使用指南", "foot_tpl": "模板库", "foot_help": "帮助中心", "foot_about": "关于我们", "foot_contact": "联系我们", "foot_status": "演示站点", "foot_terms": "服务条款", "foot_privacy": "隐私政策", "pg_home": "首页", "cookie_txt": "Poko 只在你的浏览器本地保存语言偏好，不用追踪型 Cookie。", "cookie_ok": "知道了", "au_t_login": "欢迎回来", "au_t_signup": "创建你的 Poko 账号", "au_sub_login": "登录后，继续你的一句话之旅。", "au_sub_signup": "注册只要一分钟，第一份成果马上就能做。", "au_login": "登录", "au_signup": "注册", "au_demo": "当前为演示环境：不会真正创建账号，也不会发送任何数据。提交后将以访客身份进入演示对话。", "au_name": "昵称", "au_name_ph": "怎么称呼你", "au_email": "邮箱", "au_pwd": "密码", "au_pwd_ph": "至少 6 位", "au_btn_login": "登录并进入演示 →", "au_btn_signup": "注册并进入演示 →", "au_or": "或", "au_guest": "不登录，以访客身份直接进入 →", "au_err_email": "请输入有效的邮箱地址", "au_err_pwd": "密码至少 6 位", "au_err_name": "先给自己起个昵称吧", "au_agree": "提交即代表你同意《服务条款》与《隐私政策》。"},
+en:{"nav_features": "Features", "nav_pricing": "Pricing", "nav_cases": "Cases", "nav_models": "Models", "nav_docs": "Docs", "nav_blog": "Blog", "nav_biz": "Business", "nav_login": "Log in", "nav_start": "Get started", "foot_tag": "One sentence. Results worth showing.", "foot_c1": "Product", "foot_c2": "Popular models", "foot_c3": "Providers", "foot_c4": "Resources", "foot_chat": "AI Chat", "foot_ppt": "Deck generation", "foot_price": "Pricing", "vendor_qwen": "Alibaba Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "User guide", "foot_tpl": "Templates", "foot_help": "Help center", "foot_about": "About us", "foot_contact": "Contact", "foot_status": "Demo site", "foot_terms": "Terms of Service", "foot_privacy": "Privacy Policy", "pg_home": "Home", "cookie_txt": "Poko only stores your language preference locally in your browser — no tracking cookies.", "cookie_ok": "Got it", "au_t_login": "Welcome back", "au_t_signup": "Create your Poko account", "au_sub_login": "Log in to continue where you left off.", "au_sub_signup": "Signing up takes a minute — your first result comes right after.", "au_login": "Log in", "au_signup": "Sign up", "au_demo": "This is a demo environment: no account is actually created and nothing is sent anywhere. Submitting takes you into the demo chat as a guest.", "au_name": "Name", "au_name_ph": "What should we call you", "au_email": "Email", "au_pwd": "Password", "au_pwd_ph": "At least 6 characters", "au_btn_login": "Log in & enter the demo →", "au_btn_signup": "Sign up & enter the demo →", "au_or": "or", "au_guest": "Continue as a guest →", "au_err_email": "Please enter a valid email address", "au_err_pwd": "Password needs at least 6 characters", "au_err_name": "Give yourself a name first", "au_agree": "By continuing you agree to our Terms of Service and Privacy Policy."}};
+I18N.ja={"nav_features": "機能", "nav_pricing": "料金", "nav_cases": "事例", "nav_models": "モデル一覧", "nav_docs": "ドキュメント", "nav_blog": "ブログ", "nav_biz": "法人向け", "nav_login": "ログイン", "nav_start": "使ってみる", "foot_tag": "一言で、見せられる成果を。", "foot_c1": "製品", "foot_c2": "人気モデル", "foot_c3": "モデル提供元", "foot_c4": "リソース", "foot_chat": "AIチャット", "foot_ppt": "スライド生成", "foot_price": "料金", "vendor_qwen": "Alibaba Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "使い方ガイド", "foot_tpl": "テンプレート", "foot_help": "ヘルプセンター", "foot_about": "私たちについて", "foot_contact": "お問い合わせ", "foot_status": "デモサイト", "foot_terms": "利用規約", "foot_privacy": "プライバシーポリシー", "pg_home": "ホーム", "cookie_txt": "Poko は言語設定をブラウザに保存するだけで、追跡 Cookie は使いません。", "cookie_ok": "了解", "au_t_login": "おかえりなさい", "au_t_signup": "Poko アカウントを作成", "au_sub_login": "ログインして続きを始めましょう。", "au_sub_signup": "登録は1分ほど。すぐに最初の成果が作れます。", "au_login": "ログイン", "au_signup": "登録", "au_demo": "現在はデモ環境です：アカウントは実際には作成されず、データも送信されません。送信するとゲストとしてデモチャットに入ります。", "au_name": "ニックネーム", "au_name_ph": "お名前・ニックネーム", "au_email": "メールアドレス", "au_pwd": "パスワード", "au_pwd_ph": "6文字以上", "au_btn_login": "ログインしてデモへ →", "au_btn_signup": "登録してデモへ →", "au_or": "または", "au_guest": "ログインせず、ゲストとして入る →", "au_err_email": "有効なメールアドレスを入力してください", "au_err_pwd": "パスワードは6文字以上にしてください", "au_err_name": "まずニックネームを入力してください", "au_agree": "続行すると、利用規約とプライバシーポリシーに同意したことになります。"};
+I18N.ko={"nav_features": "기능", "nav_pricing": "요금", "nav_cases": "사례", "nav_models": "모델 광장", "nav_docs": "문서", "nav_blog": "블로그", "nav_biz": "기업용", "nav_login": "로그인", "nav_start": "시작하기", "foot_tag": "한 문장으로, 자신 있게 내놓을 수 있는 결과물을.", "foot_c1": "제품", "foot_c2": "인기 모델", "foot_c3": "모델 제공사", "foot_c4": "리소스", "foot_chat": "AI 대화", "foot_ppt": "PPT 생성", "foot_price": "요금", "vendor_qwen": "알리바바 Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "사용 가이드", "foot_tpl": "템플릿", "foot_help": "도움말 센터", "foot_about": "회사 소개", "foot_contact": "문의하기", "foot_status": "데모 사이트", "foot_terms": "서비스 약관", "foot_privacy": "개인정보 처리방침", "pg_home": "홈", "cookie_txt": "Poko는 언어 설정을 브라우저에 저장할 뿐, 추적 쿠키를 쓰지 않습니다.", "cookie_ok": "확인", "au_t_login": "다시 오신 것을 환영합니다", "au_t_signup": "Poko 계정 만들기", "au_sub_login": "로그인하고 이어서 시작하세요.", "au_sub_signup": "가입은 1분이면 됩니다. 바로 첫 결과물을 만들 수 있습니다.", "au_login": "로그인", "au_signup": "가입하기", "au_demo": "현재 데모 환경입니다: 계정이 실제로 만들어지지 않고 어떤 데이터도 전송되지 않습니다. 제출하면 게스트로 데모 대화에 들어갑니다.", "au_name": "닉네임", "au_name_ph": "어떻게 불러드릴까요", "au_email": "이메일", "au_pwd": "비밀번호", "au_pwd_ph": "6자 이상", "au_btn_login": "로그인하고 데모로 →", "au_btn_signup": "가입하고 데모로 →", "au_or": "또는", "au_guest": "로그인 없이 게스트로 들어가기 →", "au_err_email": "올바른 이메일 주소를 입력하세요", "au_err_pwd": "비밀번호는 6자 이상이어야 합니다", "au_err_name": "먼저 닉네임을 입력하세요", "au_agree": "계속하면 서비스 약관과 개인정보 처리방침에 동의하는 것으로 간주됩니다."};
+I18N.es={"nav_features": "Funciones", "nav_pricing": "Precios", "nav_cases": "Casos", "nav_models": "Modelos", "nav_docs": "Documentos", "nav_blog": "Blog", "nav_biz": "Empresas", "nav_login": "Iniciar sesión", "nav_start": "Empezar", "foot_tag": "Una frase. Resultados de los que presumir.", "foot_c1": "Producto", "foot_c2": "Modelos populares", "foot_c3": "Proveedores", "foot_c4": "Recursos", "foot_chat": "Chat con IA", "foot_ppt": "Generación de presentaciones", "foot_price": "Precios", "vendor_qwen": "Alibaba Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "Guía de uso", "foot_tpl": "Plantillas", "foot_help": "Centro de ayuda", "foot_about": "Nosotros", "foot_contact": "Contacto", "foot_status": "Sitio de demostración", "foot_terms": "Términos del servicio", "foot_privacy": "Política de privacidad", "pg_home": "Inicio", "cookie_txt": "Poko solo guarda tu idioma en tu navegador, sin cookies de rastreo.", "cookie_ok": "Entendido", "au_t_login": "Bienvenido de nuevo", "au_t_signup": "Crea tu cuenta de Poko", "au_sub_login": "Inicia sesión para continuar donde lo dejaste.", "au_sub_signup": "Registrarse lleva un minuto: tu primer resultado viene justo después.", "au_login": "Iniciar sesión", "au_signup": "Registrarse", "au_demo": "Esto es un entorno de demostración: no se crea ninguna cuenta real ni se envía dato alguno. Al enviar entrarás al chat de demostración como invitado.", "au_name": "Nombre", "au_name_ph": "¿Cómo te llamamos?", "au_email": "Correo electrónico", "au_pwd": "Contraseña", "au_pwd_ph": "Al menos 6 caracteres", "au_btn_login": "Entrar a la demo →", "au_btn_signup": "Registrarse y entrar →", "au_or": "o", "au_guest": "Entrar como invitado →", "au_err_email": "Introduce un correo válido", "au_err_pwd": "La contraseña necesita al menos 6 caracteres", "au_err_name": "Primero escribe un nombre", "au_agree": "Al continuar aceptas nuestros Términos del servicio y la Política de privacidad."};
+
+let lang = localStorage.getItem("poko_lang") || "zh";
+if(!I18N[lang]) lang = "zh";
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const t = k => (I18N[lang] && I18N[lang][k]) || I18N.en[k] || I18N.zh[k] || k;
+const L = o => o[lang] || o.en || o.zh;
+function applyLang(){
+  document.documentElement.lang = {zh:"zh-CN",en:"en",ja:"ja",ko:"ko",es:"es"}[lang];
+  $$("[data-i18n]").forEach(el=>{ el.textContent = t(el.dataset.i18n); });
+  $$("[data-i18n-ph]").forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
+  $("#langSel").value = lang;
+  if(window.renderPage) renderPage();
+}
+$("#langSel").addEventListener("change", e=>{ lang = e.target.value; localStorage.setItem("poko_lang", lang); applyLang(); });
+if(localStorage.getItem("poko_cookie_ok")) $("#cookieBar").classList.remove("show"); else $("#cookieBar").classList.add("show");
+$("#cookieOk").addEventListener("click", ()=>{ localStorage.setItem("poko_cookie_ok","1"); $("#cookieBar").classList.remove("show"); });
+
+let auMode = new URLSearchParams(location.search).get("mode") === "signup" ? "signup" : "login";
+function renderAuth(){
+  const login = auMode === "login";
+  $("#auTitle").textContent = t(login ? "au_t_login" : "au_t_signup");
+  $("#auSub").textContent = t(login ? "au_sub_login" : "au_sub_signup");
+  $("#tabLogin").textContent = t("au_login");
+  $("#tabSignup").textContent = t("au_signup");
+  $("#tabLogin").classList.toggle("on", login);
+  $("#tabSignup").classList.toggle("on", !login);
+  $("#nameField").hidden = login;
+  $("#auPwd").setAttribute("autocomplete", login ? "current-password" : "new-password");
+  $("#auSubmit").textContent = t(login ? "au_btn_login" : "au_btn_signup");
+  const ag = t("au_agree");
+  $("#auAgree").innerHTML = ag.replace("服务条款", '<a href="terms.html">服务条款</a>').replace("隐私政策", '<a href="privacy.html">隐私政策</a>')
+    .replace("Terms of Service", '<a href="terms.html">Terms of Service</a>').replace("Privacy Policy", '<a href="privacy.html">Privacy Policy</a>')
+    .replace("利用規約", '<a href="terms.html">利用規約</a>').replace("プライバシーポリシー", '<a href="privacy.html">プライバシーポリシー</a>')
+    .replace("서비스 약관", '<a href="terms.html">서비스 약관</a>').replace("개인정보 처리방침", '<a href="privacy.html">개인정보 처리방침</a>')
+    .replace("Términos del servicio", '<a href="terms.html">Términos del servicio</a>').replace("Política de privacidad", '<a href="privacy.html">Política de privacidad</a>');
+}
+window.renderPage = renderAuth;
+function setMode(m){ auMode = m; renderAuth(); }
+$("#tabLogin").addEventListener("click", ()=>setMode("login"));
+$("#tabSignup").addEventListener("click", ()=>setMode("signup"));
+$("#pwdEye").addEventListener("click", ()=>{ const p=$("#auPwd"); p.type = p.type==="password" ? "text" : "password"; });
+function fieldErr(input, errEl, msg){ errEl.textContent = msg || ""; errEl.classList.toggle("show", !!msg); input.classList.toggle("bad", !!msg); return !msg; }
+$("#auForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  let ok = true;
+  if(auMode === "signup") ok = fieldErr($("#auName"), $("#errName"), $("#auName").value.trim() ? "" : t("au_err_name")) && ok;
+  ok = fieldErr($("#auEmail"), $("#errEmail"), /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($("#auEmail").value.trim()) ? "" : t("au_err_email")) && ok;
+  ok = fieldErr($("#auPwd"), $("#errPwd"), $("#auPwd").value.length >= 6 ? "" : t("au_err_pwd")) && ok;
+  if(!ok) return;
+  const btn = $("#auSubmit");
+  btn.classList.add("loading"); btn.textContent = "···";
+  try{ localStorage.setItem("poko_demo_user", $("#auEmail").value.trim()); }catch(_){}
+  setTimeout(()=>{ location.href = "chat.html"; }, 650);
+});
+$$(".soc").forEach(b=>b.addEventListener("click", ()=>{
+  b.classList.add("loading");
+  try{ localStorage.setItem("poko_demo_user", b.dataset.soc); }catch(_){}
+  setTimeout(()=>{ location.href = "chat.html"; }, 500);
+}));
+
+applyLang();
+</script>
+<script>
+/* 滚动渐入（Design System v2）：无 IntersectionObserver / 减少动态时内容直接可见 */
+(function(){try{
+  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  if(!("IntersectionObserver" in window))return;
+  var els=[].slice.call(document.querySelectorAll(".sec-head,.page-head,.hero .wrap,.bcard,.cap,.ind,.dcard,.casecard,.faqitem,.chart,.demo,.aud-tabs,.mrow,.newcard,.cta,footer .foot-grid"));
+  if(!els.length)return;
+  document.documentElement.classList.add("jsrv");
+  els.forEach(function(el){el.classList.add("rv")});
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+    if(!en.isIntersecting)return;
+    var el=en.target;
+    var sib=[].slice.call(el.parentNode.children).filter(function(c){return c.classList&&c.classList.contains("rv")});
+    var i=sib.indexOf(el);
+    el.style.setProperty("--rvd",Math.min(Math.max(i,0)*0.06,0.3)+"s");
+    el.classList.add("in"); io.unobserve(el);
+    var done=function(){el.classList.remove("rv","in");el.style.removeProperty("--rvd")};
+    el.addEventListener("transitionend",function h(ev){if(ev.propertyName==="transform"){done();el.removeEventListener("transitionend",h)}});
+    setTimeout(done,1100);
+  })},{threshold:.1,rootMargin:"0px 0px -5% 0px"});
+  els.forEach(function(el){io.observe(el)});
+}catch(e){}})();
+</script>
+
+</body>
+</html>
