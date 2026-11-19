@@ -163,6 +163,16 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 </style>
+
+<style id="r7">
+/* ===== 第七轮：继续追问 / 快捷键提示 / NEW 角标 ===== */
+.furow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+.fulab{font-size:12.5px;color:var(--sub);font-weight:600;margin-right:2px}
+.fuchip{border:1px solid var(--line2);background:#fff;color:var(--ink);border-radius:999px;padding:6px 13px;font-size:13px;cursor:pointer;font-family:inherit;box-shadow:var(--shadow-sm);transition:transform .2s var(--ease),border-color .2s,color .2s}
+.fuchip:hover{border-color:var(--brand);color:var(--brand-dark);transform:translateY(-1px)}
+.kbhint{margin:6px 2px 0;font-size:12px;color:var(--sub);opacity:.72;text-align:center}
+.newb{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:var(--brand-grad);color:#fff;font-size:9.5px;font-style:normal;font-weight:800;letter-spacing:.08em;vertical-align:2px}
+</style>
 </head>
 <body>
 <aside>
@@ -222,6 +232,7 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
         </div>
       </div>
       <p class="hint" data-i18n="hint">演示模式下不会调用真实模型，产出文件为示例内容。</p>
+      <p class="kbhint" data-i18n="kb_hint">Enter 发送 · Shift + Enter 换行</p>
     </div>
   </div>
 </main>
@@ -387,7 +398,7 @@ function applyLang(){
 }
 function renderModes(){
   $("#modeChips").innerHTML = t("modes").map(([label, m], i)=>
-    `<button type="button" class="chip${i===0 ? " free" : ""}${m===currentMode ? " on" : ""}" data-mode="${m}">${label}</button>`).join("");
+    `<button type="button" class="chip${i===0 ? " free" : ""}${m===currentMode ? " on" : ""}" data-mode="${m}">${label}${m==="video" ? '<i class="newb">NEW</i>' : ""}</button>`).join("");
   document.querySelectorAll("#modeChips .chip").forEach(c => c.addEventListener("click", ()=>{
     currentMode = c.dataset.mode; renderModes(); $("#input").focus();
   }));
@@ -539,6 +550,7 @@ async function runDemo(text){
       downloadBtn("poko_script.py", buildScript(), "text/x-python"));
   }
   addCostNote(wrap);
+  addFollowUps(wrap, intent);
   scrollBottom();
 }
 
@@ -586,6 +598,7 @@ async function runAPI(text){
     return;
   }
   addCostNote(wrap);
+  addFollowUps(wrap, detectIntent(text));
   scrollBottom();
 }
 
@@ -639,6 +652,56 @@ applyLang();
     setTimeout(send, 450);
   }
 })();
+</script>
+
+<script>
+/* 第七轮补键：继续追问 + 快捷键提示（五语） */
+Object.assign(I18N.zh,{fu_label:"继续追问",kb_hint:"Enter 发送 · Shift + Enter 换行"});
+Object.assign(I18N.en,{fu_label:"Follow up",kb_hint:"Enter to send · Shift + Enter for a new line"});
+Object.assign(I18N.ja,{fu_label:"続けて聞く",kb_hint:"Enter で送信 · Shift + Enter で改行"});
+Object.assign(I18N.ko,{fu_label:"이어서 묻기",kb_hint:"Enter 전송 · Shift + Enter 줄바꿈"});
+Object.assign(I18N.es,{fu_label:"Seguir preguntando",kb_hint:"Enter para enviar · Shift + Enter para una nueva línea"});
+const FOLLOWUPS = {
+  zh:{
+    ppt:["换成深色风格","加一页数据图表","压缩到 6 页"],
+    sheet:["再按月份汇总一次","把结果做成图表","导出成网页看板"],
+    report:["再写一版更简短的摘要","换成更正式的语气","加一个行动清单"],
+    web:["换一套配色","加一个价格区","做成深色主题"],
+    media:["换一种风格再出一张","改成竖版尺寸","把标题文案换一句"],
+    code:["给脚本加上注释说明","改成读取我上传的文件","加一个出错重试"],
+    generic:["先给我一个小样看看","换一种交付形式","把要点列成清单"]
+  },
+  en:{
+    ppt:["Make it dark-themed","Add a data chart slide","Trim it to 6 slides"],
+    sheet:["Group it by month too","Turn the result into charts","Export it as a web dashboard"],
+    report:["Write a shorter summary version","Make the tone more formal","Add an action checklist"],
+    web:["Try a different color scheme","Add a pricing section","Make it a dark theme"],
+    media:["Try another style","Make it portrait orientation","Change the headline copy"],
+    code:["Add explanatory comments","Read my uploaded file instead","Add retry on failure"],
+    generic:["Show me a small sample first","Switch the deliverable format","List the key points as a checklist"]
+  }
+};
+function addFollowUps(wrap, intent){
+  try{
+    const L = FOLLOWUPS[scriptLang()] || FOLLOWUPS.en;
+    const list = L[intent] || L.generic;
+    if(!list || !list.length) return;
+    const row = document.createElement("div");
+    row.className = "furow";
+    const lab = document.createElement("span");
+    lab.className = "fulab"; lab.textContent = t("fu_label");
+    row.appendChild(lab);
+    list.forEach(q=>{
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "fuchip"; b.textContent = q;
+      b.addEventListener("click", ()=>{ if(busy) return; $("#input").value = q; send(); });
+      row.appendChild(b);
+    });
+    wrap.appendChild(row);
+    scrollBottom();
+  }catch(e){ /* 追问胶囊是增强项，失败不影响主流程 */ }
+}
+applyLang();
 </script>
 </body>
 </html>

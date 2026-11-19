@@ -199,6 +199,18 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
 .pal-item.sel{background:var(--brand-soft)}
 .pal-empty{padding:14px;color:var(--sub);font-size:14px}
 </style>
+
+<style id="r7">
+/* ===== 第七轮：更新日志时间线 ===== */
+.logsub{color:var(--sub);margin:-4px 0 6px;font-size:15px}
+.loglist{border-top:1px solid var(--line);margin-bottom:8px}
+.logitem{display:grid;grid-template-columns:112px 1fr;gap:20px;padding:20px 2px;border-bottom:1px solid var(--line)}
+.logdate{font-size:13px;color:var(--sub);font-variant-numeric:tabular-nums;padding-top:3px;white-space:nowrap}
+.logtag{display:inline-block;font-size:11px;font-weight:700;color:var(--brand-dark);background:var(--brand-soft);border:1px solid #ffd9c4;border-radius:999px;padding:2px 9px;margin-bottom:7px}
+.logbody h3{margin:0 0 5px;font-size:16.5px;letter-spacing:-.01em}
+.logbody p{margin:0;color:var(--sub);font-size:14px;line-height:1.65}
+@media(max-width:560px){.logitem{grid-template-columns:1fr;gap:5px;padding:16px 2px}}
+</style>
 </head>
 <body>
 <header>
@@ -247,6 +259,10 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
   <div class="grid" id="artGrid"></div>
   <div class="empty" id="emptyState"><p data-i18n="bl_empty">这个分类下还没有文章。</p></div>
   <div class="morewrap"><button type="button" class="btn btn-ghost" id="moreBtn" data-i18n="bl_more">加载更多</button></div>
+
+  <h2 class="sec-t" data-i18n="bl_log_t">更新日志</h2>
+  <p class="logsub" data-i18n="bl_log_sub">本站的每一步变化，都记在这里。</p>
+  <div class="loglist" id="logList"></div>
 
   <div class="cta">
     <h2 data-i18n="bl_cta_t">看完不如做一遍</h2>
@@ -546,11 +562,36 @@ applyLang();
 </script>
 
 <script>
+/* 第七轮补键：更新日志（五语标题，正文 zh/en） */
+Object.assign(I18N.zh,{bl_log_t:"更新日志",bl_log_sub:"本站的每一步变化，都记在这里。"});
+Object.assign(I18N.en,{bl_log_t:"Changelog",bl_log_sub:"Every step this site takes, recorded here."});
+Object.assign(I18N.ja,{bl_log_t:"更新履歴",bl_log_sub:"このサイトの変更を、すべてここに記録します。"});
+Object.assign(I18N.ko,{bl_log_t:"업데이트 로그",bl_log_sub:"이 사이트의 모든 변경 사항을 여기에 기록합니다."});
+Object.assign(I18N.es,{bl_log_t:"Registro de cambios",bl_log_sub:"Cada paso de este sitio, registrado aquí."});
+const CHANGELOG=[
+ {d:"2026-11-19",gz:"新页面",ge:"New pages",tz:"模型广场、文档、博客与企业页上线",te:"Model gallery, docs, blog and business pages launched",dz:"四个独立页面一次补齐：34 个计划接入模型集中展示，文档中心带 ⌘K 搜索，博客首批 12 篇原创文章，企业页讲清服务能力。",de:"Four standalone pages in one release: a gallery of 34 planned models, a docs center with ⌘K search, a blog opening with 12 original posts, and a business page that spells out the service."},
+ {d:"2026-11-19",gz:"体验改进",ge:"Experience",tz:"设计系统 v2 全站升级",te:"Design system v2 across the whole site",dz:"统一暖中性色板、圆角阶梯、阴影层级与滚动渐入，移动端横向溢出清零，十一个页面一次换新。",de:"One warm neutral palette, a radius scale, shadow layers and scroll reveal — zero horizontal overflow on mobile, eleven pages refreshed at once."},
+ {d:"2026-11-19",gz:"新页面",ge:"New pages",tz:"定价、登录与法务页补齐",te:"Pricing, sign-in and legal pages added",dz:"独立定价页支持月付/年付切换；登录页如实标注演示环境；服务条款与隐私政策按演示阶段的真实数据处理方式撰写。",de:"A standalone pricing page with a monthly/yearly toggle; a sign-in page that honestly labels the demo environment; terms and privacy written around how the demo actually handles data."},
+ {d:"2026-11-18",gz:"新功能",ge:"New feature",tz:"案例墙扩充至 24 个案例",te:"Case wall grows to 24 cases",dz:"新增播客封面、婚礼请柬、发布会 Keynote 等 8 个案例，全部配原创实样图与完整提示词，点开即可做同款。",de:"Eight new cases — podcast cover, wedding invitation, launch keynote and more — each with an original sample visual and the full prompt, ready to remix."},
+ {d:"2026-11-18",gz:"新功能",ge:"New feature",tz:"对话页支持指定模型",te:"Pick a model in chat",dz:"对话页顶栏新增模型选择器，可指定模型家族；所选模型会标注在每条回复的花费注脚里，花费更透明。",de:"The chat header gains a model picker — choose a model family, and the choice is noted in the cost footnote of every reply."},
+ {d:"2026-11-17",gz:"里程碑",ge:"Milestone",tz:"Poko 上线：五语界面与一句话生成",te:"Poko launches: five languages, one-sentence generation",dz:"中、英、日、韩、西五语界面同步上线；输入一句话即可生成 PPT、表格、海报、网页与代码，当前为演示模式。",de:"Interfaces in Chinese, English, Japanese, Korean and Spanish from day one; one sentence generates decks, sheets, posters, pages and code — currently in demo mode."}
+];
+function renderLog(){
+  const z = lang==="zh";
+  $("#logList").innerHTML = CHANGELOG.map(e=>`<div class="logitem"><div class="logdate">${e.d}</div><div class="logbody"><span class="logtag">${z?e.gz:e.ge}</span><h3>${z?e.tz:e.te}</h3><p>${z?e.dz:e.de}</p></div></div>`).join("");
+}
+renderLog();
+const _applyLang7 = applyLang;
+applyLang = function(){ _applyLang7(); renderLog(); };
+$$("[data-i18n]").forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+</script>
+
+<script>
 /* 滚动渐入（Design System v2）：无 IntersectionObserver / 减少动态时内容直接可见 */
 (function(){try{
   if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   if(!("IntersectionObserver" in window))return;
-  var els=[].slice.call(document.querySelectorAll(".sec-head,.page-head,.hero .wrap,.bcard,.cap,.ind,.dcard,.casecard,.faqitem,.chart,.demo,.aud-tabs,.mrow,.newcard,.cta,footer .foot-grid"));
+  var els=[].slice.call(document.querySelectorAll(".sec-head,.page-head,.hero .wrap,.bcard,.cap,.ind,.dcard,.casecard,.logitem,.faqitem,.chart,.demo,.aud-tabs,.mrow,.newcard,.cta,footer .foot-grid"));
   if(!els.length)return;
   document.documentElement.classList.add("jsrv");
   els.forEach(function(el){el.classList.add("rv")});

@@ -367,6 +367,37 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
 .pal-empty{padding:14px;color:var(--sub);font-size:14px}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "name": "Poko", "url": "https://tmc.loc.cc/", "email": "hello@poko.example", "description": "一句话生成 PPT、报告、表格、海报、网页和代码的 AI 对话产品。"}, {"@type": "WebSite", "name": "Poko", "url": "https://tmc.loc.cc/", "inLanguage": ["zh-CN", "en", "ja", "ko", "es"]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "如何收费？", "acceptedAnswer": {"@type": "Answer", "text": "Poko 按量付费，没有月费。按所选模型的实际用量计费，余额永不过期；每条回复下方都会写明这次花了多少，花在哪儿，一目了然。"}}, {"@type": "Question", "name": "和 ChatGPT、Claude、Manus 有什么区别？", "acceptedAnswer": {"@type": "Answer", "text": "Poko 不绑定任何一家模型厂商，主流模型都能用，对话中途也能换。相比订阅制产品，Poko 不用包月，用多少付多少；而且它交付的不是一段文字，而是能直接打开使用的文件——PPT、表格、网页、图片都行。"}}, {"@type": "Question", "name": "支持哪些模型？", "acceptedAnswer": {"@type": "Answer", "text": "已接入 100+ 模型，覆盖 GPT、Claude、Gemini、DeepSeek、Qwen、Kimi、GLM、Grok 等主流家族。你可以让 Poko 按任务自动优选，也可以自己指定模型。"}}, {"@type": "Question", "name": "数据安全如何保障？", "acceptedAnswer": {"@type": "Answer", "text": "全程加密传输；你上传的文件只用于完成当前任务。删除对话时，相关文件会一并删除，不会留着占地方，更不会拿去做别的用途。"}}, {"@type": "Question", "name": "怎么开始使用？", "acceptedAnswer": {"@type": "Answer", "text": "打开网页、说一句话就行。不需要注册开发者账号，不需要配置 API Key，也不用先学提示词——先从「免费试用」开始。"}}, {"@type": "Question", "name": "支持哪些语言？", "acceptedAnswer": {"@type": "Answer", "text": "Poko 的界面和对话都支持简体中文、English、日本語、한국어、Español 五种语言，页面右上角随时切换。你用什么语言提问，Poko 就用什么语言交付，混着用也没问题。"}}, {"@type": "Question", "name": "生成的文件是什么格式？下载后还能改吗？", "acceptedAnswer": {"@type": "Answer", "text": "常见格式都有：演示文稿是 .pptx、表格是 .xlsx / .csv、文档是 .docx / .md、图片是 .png、网页是单个 .html 文件。下载后用你惯用的软件打开就能继续编辑，不会被锁在 Poko 里。"}}]}]}</script>
+
+<style id="r7">
+/* ===== 第七轮：三步上手 / 视觉画廊 / NEW 角标 ===== */
+.howgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+.howcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 26px 24px;box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.howcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.howcard .n{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:13px;background:var(--brand-soft);color:var(--brand-dark);font-weight:800;font-size:16px;letter-spacing:.02em;margin-bottom:16px}
+.howcard h3{font-size:18px;margin:0 0 8px;letter-spacing:-.01em}
+.howcard p{margin:0;color:var(--sub);font-size:14.5px;line-height:1.65}
+.howcard:not(:last-child)::after{content:"";position:absolute;top:48px;right:-13px;width:8px;height:8px;border-top:2px solid var(--line2);border-right:2px solid var(--line2);transform:rotate(45deg);z-index:1}
+@media(max-width:900px){.howgrid{grid-template-columns:1fr}.howcard:not(:last-child)::after{display:none}}
+.galgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.galgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.galgrid{grid-template-columns:1fr}}
+.gcard{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.gcard:hover,.gcard:focus-visible{transform:translateY(-4px);box-shadow:var(--shadow)}
+.gcard:focus-visible{outline:none;box-shadow:var(--shadow),var(--ring)}
+.gart{position:relative;overflow:hidden}
+.gart svg{display:block;width:100%;height:auto;transition:transform .5s var(--ease)}
+.gcard:hover .gart svg{transform:scale(1.045)}
+.gprompt{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 10px;background:linear-gradient(180deg,rgba(16,12,6,0),rgba(16,12,6,.78));color:#fff;font-size:12px;line-height:1.55;opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.gprompt b{display:block;font-size:10.5px;letter-spacing:.12em;opacity:.75;margin-bottom:2px;font-weight:600}
+.gcard:hover .gprompt,.gcard:focus-visible .gprompt{opacity:1;transform:none}
+@media(hover:none){.gprompt{position:static;background:none;color:var(--sub);opacity:1;transform:none;padding:10px 14px 0}.gprompt b{color:var(--brand-dark);opacity:1}}
+.gcap{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px 14px}
+.gcap .gn{font-weight:700;font-size:15px;letter-spacing:-.01em}
+.gcap .gt{color:var(--sub);font-size:12px;margin-left:8px;font-weight:500}
+.gmodel{flex:none;font-size:11.5px;font-weight:700;color:var(--brand-dark);background:var(--brand-soft);border:1px solid #ffd9c4;border-radius:999px;padding:3px 9px}
+.galnote{margin-top:16px;text-align:center;color:var(--sub);font-size:13px}
+.newb{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:var(--brand-grad);color:#fff;font-size:9.5px;font-style:normal;font-weight:800;letter-spacing:.08em;vertical-align:2px}
+</style>
 </head>
 <body>
 <header>
@@ -460,6 +491,21 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
   </div>
 </section>
 
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="how_title">三步，把活交出去</h2>
+      <p data-i18n="how_sub">不用学提示词工程，也不用先挑模型。从开口到拿到文件，就三步。</p>
+    </div>
+    <div class="howgrid">
+      <div class="howcard"><span class="n">01</span><h3 data-i18n="how_s1t">说清你要什么</h3><p data-i18n="how_s1d">一句话描述目标，能附文件就附上——数据表、旧文档、参考图都可以，Poko 自己会读。</p></div>
+      <div class="howcard"><span class="n">02</span><h3 data-i18n="how_s2t">它自己拆步干活</h3><p data-i18n="how_s2d">Poko 按任务挑合适的模型，把活拆成几步依次做完，每一步都看得见，不用你盯着。</p></div>
+      <div class="howcard"><span class="n">03</span><h3 data-i18n="how_s3t">拿走成品文件</h3><p data-i18n="how_s3d">PPT、表格、海报、网页直接下载就能用；不满意就再说一句，接着改到你点头。</p></div>
+    </div>
+  </div>
+</section>
+
 <section id="features">
   <div class="wrap">
     <div class="sec-head">
@@ -522,6 +568,18 @@ top = df.groupby(<span class="s">"region"</span>).sum()
     </div>
     <div class="casepills" id="casePills"></div>
     <div class="wall" id="caseWall"></div>
+  </div>
+</section>
+
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="gal_title">视觉灵感画廊</h2>
+      <p data-i18n="gal_sub">图片和视频也能一句话生成。每张作品都标了所用模型和完整提示词——点开看大图，喜欢就做同款。</p>
+    </div>
+    <div class="galgrid" id="galGrid"></div>
+    <p class="galnote" data-i18n="gal_note">画廊作品为风格示意，由站内原创图形绘制；接入图像与视频模型后，这里会换成真实生成的结果。</p>
   </div>
 </section>
 
@@ -846,8 +904,8 @@ en:[
  {tab:"Developers",sub:"Scripts, log analysis and small tools",user:"Write a script to analyze this server log and find the endpoints and hours with the most errors",attach:["LOG","server.log"],steps:["Parse the log format and fields","Aggregate error distribution and peak hours","Generate the script and summarize findings"],reply:"Script and findings are ready: errors concentrate on the /api/order endpoint, worst between 20:00–22:00. The raw stats table is attached, and the script is reusable.",file:["🐍","log-analysis.py","Script · stats included"]}
 ]};
 /* ============ 案例数据（名称/介绍/提示词 zh/en；其余语言回退 en） ============ */
-const GRADS=["linear-gradient(140deg,#f2709c,#ff9472)","linear-gradient(140deg,#233043,#4d6fa5)","linear-gradient(140deg,#f2b04a,#e2693a)","linear-gradient(140deg,#3f7d5d,#79b98f)","linear-gradient(140deg,#654ea3,#eaafc8)","linear-gradient(140deg,#0f2027,#2c5364)","linear-gradient(140deg,#c33764,#1d2671)","linear-gradient(140deg,#11998e,#38ef7d)","linear-gradient(140deg,#8e2de2,#4a00e0)","linear-gradient(140deg,#f953c6,#b91d73)","linear-gradient(140deg,#4e54c8,#8f94fb)","linear-gradient(140deg,#f7971e,#ffd200)","linear-gradient(140deg,#134e5e,#71b280)","linear-gradient(140deg,#232526,#414345)","linear-gradient(140deg,#ee9ca7,#ffdde1)","linear-gradient(140deg,#2193b0,#6dd5ed)","linear-gradient(140deg,#355c7d,#c06c84)","linear-gradient(140deg,#f8b195,#f67280)","linear-gradient(140deg,#134e5e,#a8e063)","linear-gradient(140deg,#614385,#516395)","linear-gradient(140deg,#eacda3,#d95d39)","linear-gradient(140deg,#283c86,#45a247)","linear-gradient(140deg,#757f9a,#d7dde8)","linear-gradient(140deg,#8a4d2b,#e0a458)"];
-const HEIGHTS=[230,300,190,260,210,290,200,250,280,195,240,270,205,295,225,255,265,215,285,235,275,200,245,290];
+const GRADS=["linear-gradient(140deg,#f2709c,#ff9472)","linear-gradient(140deg,#233043,#4d6fa5)","linear-gradient(140deg,#f2b04a,#e2693a)","linear-gradient(140deg,#3f7d5d,#79b98f)","linear-gradient(140deg,#654ea3,#eaafc8)","linear-gradient(140deg,#0f2027,#2c5364)","linear-gradient(140deg,#c33764,#1d2671)","linear-gradient(140deg,#11998e,#38ef7d)","linear-gradient(140deg,#8e2de2,#4a00e0)","linear-gradient(140deg,#f953c6,#b91d73)","linear-gradient(140deg,#4e54c8,#8f94fb)","linear-gradient(140deg,#f7971e,#ffd200)","linear-gradient(140deg,#134e5e,#71b280)","linear-gradient(140deg,#232526,#414345)","linear-gradient(140deg,#ee9ca7,#ffdde1)","linear-gradient(140deg,#2193b0,#6dd5ed)","linear-gradient(140deg,#355c7d,#c06c84)","linear-gradient(140deg,#f8b195,#f67280)","linear-gradient(140deg,#134e5e,#a8e063)","linear-gradient(140deg,#614385,#516395)","linear-gradient(140deg,#eacda3,#d95d39)","linear-gradient(140deg,#283c86,#45a247)","linear-gradient(140deg,#757f9a,#d7dde8)","linear-gradient(140deg,#8a4d2b,#e0a458)","linear-gradient(140deg,#2e4a7d,#f7c873)","linear-gradient(140deg,#e8dcc4,#cbb493)","linear-gradient(140deg,#1b2a4a,#e87fae)","linear-gradient(140deg,#7fd4c8,#2e7d8c)","linear-gradient(140deg,#3f5d43,#f2b04a)","linear-gradient(140deg,#141c3a,#654ea3)"];
+const HEIGHTS=[230,300,190,260,210,290,200,250,280,195,240,270,205,295,225,255,265,215,285,235,275,200,245,290,280,240,300,250,265,285];
 const CASES=[
  {nz:"极简产品海报",ne:"Minimal product poster",cz:"电商",ce:"E-commerce",t:"image",dz:"大面积留白加一件产品居中，适合新品首发和详情页头图。",de:"Generous white space with one hero product — perfect for launches and store headers.",pz:"给一款白色无线耳机做一张极简海报，浅灰背景，产品居中，底部一行小字写产品名",pe:"Make a minimal poster for white wireless earbuds: light grey background, product centered, small product name at the bottom"},
  {nz:"城市夜游延时",ne:"City night timelapse",cz:"旅行",ce:"Travel",t:"video",dz:"车流光轨与霓虹交织的 6 秒延时，适合做旅行 vlog 的转场。",de:"Six seconds of light trails and neon — a ready-made transition for travel vlogs.",pz:"生成一段城市十字路口的夜景延时视频，车流形成光轨，镜头缓慢推进",pe:"Generate a night timelapse of a city crossroads, car lights forming trails, slow push-in"},
@@ -872,7 +930,13 @@ const CASES=[
  {nz:"三日旅行行程页",ne:"3-day trip itinerary",cz:"旅行",ce:"Travel",t:"code",dz:"按天分组的行程单页，带预算小计，发给同伴就能用。",de:"A one-page itinerary grouped by day with budget subtotals — send it straight to your travel buddies.",pz:"把这份大理三日游计划做成一个行程网页，按天分组，每天有景点、交通和预算小计",pe:"Turn this 3-day Dali trip plan into an itinerary web page, grouped by day with sights, transport and a budget subtotal for each day"},
  {nz:"楼盘宣传短片",ne:"Property promo clip",cz:"生活",ce:"Lifestyle",t:"video",dz:"从外立面推到样板间，15 秒看完一个家的样子。",de:"From the facade into the show flat — the feel of a home in 15 seconds.",pz:"做一段 15 秒楼盘宣传视频，从建筑外立面缓慢推近到明亮的样板间客厅，配舒缓音乐",pe:"Make a 15-second property promo video: slow push from the building facade into a bright show-flat living room, gentle music"},
  {nz:"用户反馈分析",ne:"Feedback analysis deck",cz:"职场",ce:"Workplace",t:"ppt",dz:"把几千条评论归成几个主题，好话坏话都标了出处。",de:"Thousands of comments sorted into a handful of themes, praise and complaints alike with sources tagged.",pz:"把这份用户评论数据做成分析 PPT，按主题归类，正负面分开统计，每类挑两条典型评论",pe:"Turn this user review data into an analysis deck: group by theme, split positive and negative, pick two typical comments per theme"},
- {nz:"美妆教程短片",ne:"Beauty tutorial short",cz:"自媒体",ce:"Creator",t:"video",dz:"竖屏分步特写，字幕位和产品位都留好了。",de:"Vertical step-by-step close-ups with space reserved for captions and the product shot.",pz:"做一段竖屏美妆教程短片，分步骤特写手法，画面下方留字幕位，节奏明快",pe:"Make a vertical beauty tutorial short: step-by-step close-ups, caption space at the bottom, snappy pace"}
+ {nz:"美妆教程短片",ne:"Beauty tutorial short",cz:"自媒体",ce:"Creator",t:"video",dz:"竖屏分步特写，字幕位和产品位都留好了。",de:"Vertical step-by-step close-ups with space reserved for captions and the product shot.",pz:"做一段竖屏美妆教程短片，分步骤特写手法，画面下方留字幕位，节奏明快",pe:"Make a vertical beauty tutorial short: step-by-step close-ups, caption space at the bottom, snappy pace"},
+ {nz:"山湖日出",ne:"Lake sunrise",cz:"风光",ce:"Landscape",t:"image",gm:"Seedream 4.5",dz:"雪山、湖面与日出同框，倒影和晨雾都留了呼吸感。",de:"Snow peaks, still water and first light in one frame — reflections with room to breathe.",pz:"清晨的山湖日出，雪山倒映在平静的湖面，天空从深蓝渐变到暖金色，前景有松树剪影，画面通透宁静",pe:"A mountain lake at sunrise, snow peaks mirrored in still water, the sky grading from deep blue to warm gold, pine silhouettes in the foreground, clear and serene"},
+ {nz:"茶壶静物",ne:"Teapot still life",cz:"静物",ce:"Still life",t:"image",gm:"Nano Banana Pro",dz:"窗边柔光里的一壶茶，陶瓷的釉面和一缕蒸汽都恰到好处。",de:"A pot of tea in soft window light — glazed ceramic and one wisp of steam, just right.",pz:"窗边木桌上的一把白色陶瓷茶壶和茶杯，柔和的自然光，淡淡蒸汽升起，米色背景，静物摄影感",pe:"A white ceramic teapot and cup on a wooden table by a window, soft natural light, a wisp of steam rising, beige backdrop, still-life photography feel"},
+ {nz:"霓虹雨夜",ne:"Neon rain night",cz:"城市",ce:"City",t:"image",gm:"GPT Image",dz:"雨夜街道与霓虹倒影，蓝粉交织的电影色调。",de:"A rainy street and neon reflections in a cinematic blue-pink grade.",pz:"雨夜的城市街道，霓虹灯牌的光倒映在湿漉漉的地面上，一个人打着伞走过，蓝粉色调，电影感构图",pe:"A city street on a rainy night, neon light reflecting on wet pavement, a lone figure with an umbrella crossing, blue-pink palette, cinematic framing"},
+ {nz:"海岸航拍",ne:"Coast aerial",cz:"风光",ce:"Landscape",t:"video",gm:"Seedance 1.5",dz:"俯瞰弧形海岸，浪花边缘像一条会动的蕾丝。",de:"The shoreline from above, its foam edge moving like lace.",pz:"航拍俯瞰一段弧形海岸，青绿色海水一层层拍上沙滩，浪花形成白色边缘，镜头缓慢向前推进",pe:"Aerial top-down of a curved coastline, turquoise waves layering onto the sand, white foam tracing the edge, slow forward drift"},
+ {nz:"林间小屋",ne:"Forest cabin",cz:"场景",ce:"Scene",t:"image",gm:"Flux Pro",dz:"黄昏林间的一间小木屋，窗里透着暖光，萤火虫刚醒。",de:"A small cabin in the woods at dusk, warm light in the window, fireflies just waking.",pz:"黄昏时分森林里的一间小木屋，窗户透出暖黄色灯光，周围是高大的松树，空气里有萤火虫，画面温暖安静",pe:"A small wooden cabin in a forest at dusk, warm yellow light glowing from the window, tall pines around it, fireflies in the air, warm and quiet"},
+ {nz:"银河延时",ne:"Milky way timelapse",cz:"风光",ce:"Landscape",t:"video",gm:"Wan 2.5",dz:"银河在山脊上空缓慢流转，天生的片头空镜。",de:"The Milky Way drifting over a ridge — an opening shot that sets the tone.",pz:"夜空延时摄影，银河横跨山脊上空缓慢移动，前景有一顶亮着灯的小帐篷，偶尔有流星划过",pe:"A night-sky timelapse, the Milky Way sweeping slowly over a mountain ridge, a small lit tent in the foreground, an occasional shooting star"}
 ];
 /* ---------- 案例视觉：原创内联 SVG 实样（与 CASES 一一对应，非占位图） ---------- */
 const _SO = '<svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">';
@@ -933,7 +997,19 @@ _SO + '<rect width="300" height="220" fill="#f3e8d8"/><rect x="26" y="38" width=
 /* 22 用户反馈分析 */
 _slide(false, '<rect x="58" y="52" width="98" height="10" rx="4" fill="#26221e"/><rect x="198" y="50" width="44" height="13" rx="6.5" fill="#FF5C1A"/><g><rect x="58" y="78" width="118" height="9" rx="4.5" fill="#2f9e63"/><rect x="180" y="78" width="62" height="9" rx="4.5" fill="#e0492f" opacity=".7"/><rect x="58" y="98" width="86" height="9" rx="4.5" fill="#2f9e63"/><rect x="148" y="98" width="94" height="9" rx="4.5" fill="#e0492f" opacity=".7"/><rect x="58" y="118" width="104" height="9" rx="4.5" fill="#2f9e63"/><rect x="166" y="118" width="76" height="9" rx="4.5" fill="#e0492f" opacity=".7"/></g><rect x="58" y="142" width="150" height="5" rx="2.5" fill="#d8d5cd"/><rect x="58" y="153" width="118" height="5" rx="2.5" fill="#d8d5cd"/>'),
 /* 23 美妆教程短片 */
-_SO + '<rect width="300" height="220" fill="#f6d9e0"/><rect x="104" y="14" width="92" height="192" rx="14" fill="#ffffff" stroke="#e5c3cd" stroke-width="2"/><circle cx="150" cy="84" r="24" fill="#f6c79b"/><path d="M124 82a26 26 0 0 1 52 0l0-9a26 20 0 0 0-52 0z" fill="#5a3a2e"/><rect x="139" y="114" width="22" height="7" rx="3.5" fill="#e0492f"/><rect x="196" y="118" width="10" height="34" rx="3" fill="#26221e"/><rect x="197.5" y="107" width="7" height="12" rx="2" fill="#e0492f"/><rect x="118" y="150" width="64" height="6" rx="3" fill="#e5c3cd"/><rect x="126" y="163" width="48" height="5" rx="2.5" fill="#eedde2"/><circle cx="182" cy="188" r="10" fill="rgba(20,20,20,.6)"/><path d="M179 182l9 6-9 6z" fill="#ffffff"/><g fill="#e87fae"><circle cx="52" cy="52" r="4"/><circle cx="252" cy="40" r="3"/><circle cx="262" cy="170" r="4"/><circle cx="44" cy="150" r="3"/></g></svg>'
+_SO + '<rect width="300" height="220" fill="#f6d9e0"/><rect x="104" y="14" width="92" height="192" rx="14" fill="#ffffff" stroke="#e5c3cd" stroke-width="2"/><circle cx="150" cy="84" r="24" fill="#f6c79b"/><path d="M124 82a26 26 0 0 1 52 0l0-9a26 20 0 0 0-52 0z" fill="#5a3a2e"/><rect x="139" y="114" width="22" height="7" rx="3.5" fill="#e0492f"/><rect x="196" y="118" width="10" height="34" rx="3" fill="#26221e"/><rect x="197.5" y="107" width="7" height="12" rx="2" fill="#e0492f"/><rect x="118" y="150" width="64" height="6" rx="3" fill="#e5c3cd"/><rect x="126" y="163" width="48" height="5" rx="2.5" fill="#eedde2"/><circle cx="182" cy="188" r="10" fill="rgba(20,20,20,.6)"/><path d="M179 182l9 6-9 6z" fill="#ffffff"/><g fill="#e87fae"><circle cx="52" cy="52" r="4"/><circle cx="252" cy="40" r="3"/><circle cx="262" cy="170" r="4"/><circle cx="44" cy="150" r="3"/></g></svg>',
+/* 24 山湖日出 */
+'<svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gg1sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e4a7d"/><stop offset=".55" stop-color="#7d94c4"/><stop offset="1" stop-color="#f7c873"/></linearGradient><linearGradient id="gg1lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfae62"/><stop offset="1" stop-color="#3d5a80"/></linearGradient><radialGradient id="gg1sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff3d6"/><stop offset=".35" stop-color="#ffd76e" stop-opacity=".8"/><stop offset="1" stop-color="#ffd76e" stop-opacity="0"/></radialGradient></defs><rect width="300" height="134" fill="url(#gg1sky)"/><circle cx="150" cy="120" r="48" fill="url(#gg1sun)"/><circle cx="150" cy="120" r="16" fill="#fff3d6"/><path d="M0 134 L52 84 L98 134 Z" fill="#5a7396"/><path d="M58 134 L128 64 L198 134 Z" fill="#41597c"/><path d="M117 81 L128 64 L141 83 L133 90 L124 89 Z" fill="#eef3fa"/><path d="M158 134 L226 76 L300 134 Z" fill="#31465f"/><rect y="134" width="300" height="86" fill="url(#gg1lake)"/><ellipse cx="150" cy="142" rx="30" ry="4" fill="#ffd76e" opacity=".5"/><g stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity=".45"><path d="M28 158h44"/><path d="M96 170h58"/><path d="M198 160h64"/><path d="M52 188h40"/><path d="M170 192h72"/><path d="M108 206h54"/></g><g fill="#22344d"><path d="M6 204 L24 160 L42 204Z"/><path d="M12 182 L24 150 L36 182Z"/><rect x="22" y="200" width="4.5" height="20"/><path d="M263 208 L279 170 L295 208Z"/><path d="M268 190 L279 164 L290 190Z"/><rect x="277" y="204" width="4" height="16"/></g></svg>',
+/* 25 茶壶静物 */
+'<svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gg2bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5e9d5"/><stop offset="1" stop-color="#e2cfae"/></linearGradient><linearGradient id="gg2pot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffdf8"/><stop offset="1" stop-color="#d8d0bf"/></linearGradient></defs><rect width="300" height="220" fill="url(#gg2bg)"/><path d="M-10 0 L118 0 L58 220 L-10 220Z" fill="#ffffff" opacity=".26"/><rect y="170" width="300" height="50" fill="#c9ad83"/><rect y="170" width="300" height="3" fill="#b1905f"/><ellipse cx="138" cy="176" rx="76" ry="7" fill="#a1804f" opacity=".4"/><path d="M86 116 Q72 108 76 92 Q92 96 96 108 Q94 118 86 116Z" fill="url(#gg2pot)"/><ellipse cx="140" cy="136" rx="54" ry="38" fill="url(#gg2pot)"/><path d="M188 118 a26 26 0 1 1 -6 22" fill="none" stroke="#cfc6b2" stroke-width="7" stroke-linecap="round"/><path d="M106 102 Q140 88 174 102 L170 110 Q140 99 110 110Z" fill="#e7dfcd"/><circle cx="140" cy="92" r="6" fill="#b09a6d"/><ellipse cx="120" cy="122" rx="15" ry="9" fill="#ffffff" opacity=".55" transform="rotate(-18 120 122)"/><path d="M126 66 q-6-10 0-18 q6-8 0-16M152 68 q-6-10 0-18 q6-8 0-16" stroke="#ffffff" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".7"/><ellipse cx="238" cy="176" rx="30" ry="5" fill="#a1804f" opacity=".35"/><path d="M218 152 h40 l-5 20 h-30Z" fill="url(#gg2pot)"/><path d="M258 156 q14 2 10 12 q-3 8-13 6" fill="none" stroke="#cfc6b2" stroke-width="5"/><rect x="222" y="156" width="32" height="4" fill="#c96f4a" opacity=".75"/></svg>',
+/* 26 霓虹雨夜 */
+'<svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gg3bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1530"/><stop offset="1" stop-color="#1d2b52"/></linearGradient></defs><rect width="300" height="220" fill="url(#gg3bg)"/><g fill="#0a1024"><rect x="6" y="30" width="52" height="118"/><rect x="66" y="14" width="44" height="134"/><rect x="196" y="22" width="46" height="126"/><rect x="250" y="44" width="44" height="104"/></g><g fill="#ffd76e" opacity=".85"><rect x="16" y="44" width="6" height="8"/><rect x="30" y="66" width="6" height="8"/><rect x="76" y="30" width="6" height="8"/><rect x="90" y="56" width="6" height="8"/><rect x="206" y="38" width="6" height="8"/><rect x="220" y="62" width="6" height="8"/><rect x="262" y="60" width="6" height="8"/><rect x="18" y="92" width="6" height="8"/></g><rect x="70" y="66" width="34" height="52" rx="4" fill="#e87fae" opacity=".28"/><rect x="74" y="70" width="26" height="44" rx="3" fill="none" stroke="#ff9dc4" stroke-width="2.5"/><circle cx="87" cy="86" r="7" fill="none" stroke="#ffe9a8" stroke-width="2.5"/><rect x="80" y="100" width="14" height="3.5" rx="1.75" fill="#ffe9a8"/><rect x="204" y="76" width="30" height="40" rx="4" fill="#57c8e8" opacity=".25"/><rect x="208" y="80" width="22" height="32" rx="3" fill="none" stroke="#8fe0f5" stroke-width="2.5"/><path d="M213 102 l6-12 6 8 5-6" stroke="#8fe0f5" stroke-width="2.5" fill="none"/><rect y="148" width="300" height="72" fill="#0a0f22"/><g opacity=".5"><rect x="80" y="152" width="5" height="34" fill="#ff9dc4"/><rect x="92" y="152" width="4" height="24" fill="#ffe9a8"/><rect x="212" y="152" width="5" height="28" fill="#8fe0f5"/><rect x="30" y="156" width="4" height="18" fill="#ffd76e"/><rect x="258" y="156" width="4" height="16" fill="#ffd76e"/></g><path d="M118 148 a32 32 0 0 1 64 0Z" fill="#131c38" stroke="#3d5a8c" stroke-width="2"/><rect x="148" y="146" width="4" height="4" fill="#3d5a8c"/><path d="M150 150 v18" stroke="#0a0f22" stroke-width="5"/><ellipse cx="150" cy="196" rx="34" ry="4" fill="#57c8e8" opacity=".18"/><g stroke="#cfe4ff" stroke-width="1.4" opacity=".28" stroke-linecap="round"><path d="M22 18 l-6 14M58 8 l-6 14M120 14 l-6 14M176 6 l-6 14M238 12 l-6 14M282 26 l-6 14M96 44 l-6 14M206 40 l-6 14M44 66 l-6 14M262 74 l-6 14"/></g></svg>',
+/* 27 海岸航拍（视频） */
+'<svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gg4sea" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fe0d8"/><stop offset=".5" stop-color="#3fb3ac"/><stop offset="1" stop-color="#1d7d8c"/></linearGradient></defs><rect width="300" height="220" fill="url(#gg4sea)"/><path d="M300 0 L300 220 L196 220 Q226 150 204 96 Q186 50 226 0Z" fill="#f2e2b8"/><path d="M226 0 Q186 50 204 96 Q226 150 196 220" fill="none" stroke="#ffffff" stroke-width="7" opacity=".85"/><path d="M238 6 Q198 54 214 98 Q234 148 208 214" fill="none" stroke="#ffffff" stroke-width="3" opacity=".45"/><g fill="#ffffff" opacity=".5"><circle cx="70" cy="52" r="3"/><circle cx="110" cy="88" r="2.4"/><circle cx="52" cy="128" r="2.6"/><circle cx="140" cy="150" r="2.2"/><circle cx="88" cy="186" r="2.8"/><circle cx="160" cy="42" r="2.2"/></g><g><circle cx="248" cy="66" r="11" fill="#e2693a"/><path d="M248 55 v22 M237 66 h22 M240 58 l16 16 M256 58 l-16 16" stroke="#f7e3a1" stroke-width="2.4"/></g><g><circle cx="262" cy="128" r="9" fill="#4a74b8"/><path d="M262 119 v18 M253 128 h18 M256 122 l12 12 M268 122 l-12 12" stroke="#dbe7fa" stroke-width="2"/></g><rect x="238" y="92" width="20" height="9" rx="3" fill="#f6c3d9"/><rect x="252" y="152" width="17" height="8" rx="3" fill="#a9c29f"/>' + _PLAY + _PBW + '</svg>',
+/* 28 林间小屋 */
+'<svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gg5bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d94a8"/><stop offset=".6" stop-color="#c9b189"/><stop offset="1" stop-color="#e8cf9e"/></linearGradient><radialGradient id="gg5win" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd76e" stop-opacity=".9"/><stop offset="1" stop-color="#ffd76e" stop-opacity="0"/></radialGradient></defs><rect width="300" height="220" fill="url(#gg5bg)"/><circle cx="52" cy="38" r="15" fill="#f7e3a1" opacity=".8"/><path d="M0 220 L0 150 Q150 118 300 152 L300 220Z" fill="#5d7d54"/><path d="M0 220 L0 178 Q150 152 300 180 L300 220Z" fill="#4a6a42"/><g fill="#39543a"><path d="M22 168 L34 118 L46 168Z"/><path d="M28 140 L40 104 L52 140Z"/><path d="M248 172 L261 116 L274 172Z"/><path d="M256 146 L268 108 L280 146Z"/><path d="M196 158 L205 124 L214 158Z"/></g><circle cx="150" cy="128" r="44" fill="url(#gg5win)"/><rect x="112" y="128" width="76" height="50" rx="3" fill="#8a5f3c"/><rect x="112" y="140" width="76" height="4" fill="#755031"/><rect x="112" y="156" width="76" height="4" fill="#755031"/><path d="M102 130 L150 98 L198 130Z" fill="#4c3a28"/><rect x="168" y="106" width="10" height="20" fill="#6e4f30"/><path d="M176 100 q6-6 1-12 q-4-5 1-10" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".55"/><rect x="126" y="140" width="17" height="17" fill="#ffd76e"/><path d="M126 148 h17 M134 140 v17" stroke="#8a5f3c" stroke-width="2"/><rect x="158" y="146" width="14" height="32" fill="#5d4126"/><circle cx="168" cy="163" r="1.8" fill="#ffd76e"/><g fill="#d8c49a"><ellipse cx="140" cy="196" rx="5" ry="3"/><ellipse cx="156" cy="206" rx="6" ry="3"/><ellipse cx="146" cy="216" rx="5" ry="3"/></g><g fill="#ffe9a8"><circle cx="66" cy="150" r="2.2"/><circle cx="96" cy="128" r="1.8"/><circle cx="222" cy="140" r="2"/><circle cx="238" cy="168" r="1.7"/><circle cx="182" cy="118" r="1.6"/><circle cx="44" cy="182" r="1.8"/></g></svg>',
+/* 29 银河延时（视频） */
+'<svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gg6bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1030"/><stop offset=".7" stop-color="#1d2b52"/><stop offset="1" stop-color="#2c4a6e"/></linearGradient></defs><rect width="300" height="220" fill="url(#gg6bg)"/><g transform="rotate(-18 150 90)"><ellipse cx="150" cy="90" rx="190" ry="26" fill="#ffffff" opacity=".07"/><ellipse cx="150" cy="90" rx="180" ry="15" fill="#cfd8ff" opacity=".1"/><g fill="#ffffff"><circle cx="40" cy="86" r="1.6"/><circle cx="78" cy="94" r="1.2"/><circle cx="116" cy="82" r="1.8"/><circle cx="150" cy="92" r="1.3"/><circle cx="186" cy="84" r="1.7"/><circle cx="222" cy="93" r="1.2"/><circle cx="256" cy="85" r="1.6"/><circle cx="96" cy="90" r="1"/><circle cx="204" cy="90" r="1"/></g></g><g fill="#ffffff"><circle cx="30" cy="30" r="1.5"/><circle cx="88" cy="18" r="1.1"/><circle cx="140" cy="34" r="1.3"/><circle cx="196" cy="16" r="1.5"/><circle cx="248" cy="36" r="1.1"/><circle cx="278" cy="14" r="1.4"/><circle cx="58" cy="58" r="1"/><circle cx="228" cy="62" r="1.2"/><circle cx="112" cy="52" r="1"/><circle cx="268" cy="88" r="1"/></g><path d="M216 26 l26 14" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/><circle cx="214" cy="25" r="2.4" fill="#ffffff"/><path d="M0 220 L0 168 L60 138 L118 166 L172 132 L236 164 L300 144 L300 220Z" fill="#131f38"/><path d="M0 220 L0 190 L84 164 L160 190 L228 168 L300 188 L300 220Z" fill="#0a1226"/><path d="M132 190 L150 168 L168 190Z" fill="#e2693a"/><path d="M150 168 L168 190 L132 190Z" fill="#c4532a"/><rect x="145" y="180" width="10" height="7" fill="#ffd76e"/><ellipse cx="150" cy="193" rx="20" ry="3" fill="#ffd76e" opacity=".22"/>' + _PLAY + _PBW + '</svg>'
 ];
 const MODEL_LIST=[
  ["GPT-5.1","chat"],["GPT-5 mini","chat"],["Claude Sonnet 4.5","chat"],["Claude Opus 4.5","chat"],["Gemini 3 Pro","chat"],["Gemini 3 Flash","chat"],["DeepSeek V3.2","chat"],["DeepSeek R1","chat"],["Qwen3 Max","chat"],["Qwen3 Coder","chat"],["Kimi K2","chat"],["GLM-4.6","chat"],["Grok 4","chat"],["MiniMax M2","chat"],["Llama 4 Maverick","chat"],["Mistral Large","chat"],["豆包 Seed 1.6","chat"],["文心 5.0","chat"],["混元 Large","chat"],
@@ -996,7 +1072,7 @@ function goChat(q, mode){
 }
 function renderModes(){
   $("#heroModes").innerHTML = t("modes").map(([label, m], i)=>
-    `<button type="button" class="chip${i===0 ? " free" : ""}" data-mode="${m}">${label}</button>`).join("");
+    `<button type="button" class="chip${i===0 ? " free" : ""}" data-mode="${m}">${label}${m==="video" ? '<i class="newb">NEW</i>' : ""}</button>`).join("");
   $$("#heroModes .chip").forEach(c => c.addEventListener("click", ()=>{
     const q = $("#heroInput").value.trim();
     goChat(q, c.dataset.mode);
@@ -1090,7 +1166,7 @@ function applyLang(){
   $$("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
   $("#langSel").value = lang;
   renderModes(); renderAudTabs(); playDemo(0);
-  renderChart(); renderCases(); renderFaq(); renderModels();
+  renderChart(); renderCases(); renderFaq(); renderModels(); if(window.renderGallery) renderGallery();
   startRot(); startType();
 }
 /* ---------- 初始化 ---------- */
@@ -1116,11 +1192,33 @@ $("#cookieOk").addEventListener("click", ()=>{ localStorage.setItem("poko_cookie
 </script>
 
 <script>
+/* 第七轮补键：三步上手 + 视觉灵感画廊（五语） */
+Object.assign(I18N.zh,{"how_title":"三步，把活交出去","how_sub":"不用学提示词工程，也不用先挑模型。从开口到拿到文件，就三步。","how_s1t":"说清你要什么","how_s1d":"一句话描述目标，能附文件就附上——数据表、旧文档、参考图都可以，Poko 自己会读。","how_s2t":"它自己拆步干活","how_s2d":"Poko 按任务挑合适的模型，把活拆成几步依次做完，每一步都看得见，不用你盯着。","how_s3t":"拿走成品文件","how_s3d":"PPT、表格、海报、网页直接下载就能用；不满意就再说一句，接着改到你点头。","gal_title":"视觉灵感画廊","gal_sub":"图片和视频也能一句话生成。每张作品都标了所用模型和完整提示词——点开看大图，喜欢就做同款。","gal_note":"画廊作品为风格示意，由站内原创图形绘制；接入图像与视频模型后，这里会换成真实生成的结果。","gal_prompt":"提示词"});
+Object.assign(I18N.en,{"how_title":"Hand it over in three steps","how_sub":"No prompt engineering to learn, no model to pick first. From one sentence to a finished file in three steps.","how_s1t":"Say what you need","how_s1d":"Describe the goal in one sentence and attach files if you have them — spreadsheets, old docs, reference images. Poko reads them itself.","how_s2t":"It breaks the work down","how_s2d":"Poko picks a fitting model for the task and works through the steps one by one — every step visible, nothing for you to babysit.","how_s3t":"Take the finished file","how_s3d":"Decks, sheets, posters and pages you can download and use right away. Not happy? Say one more sentence and it keeps refining.","gal_title":"Visual inspiration gallery","gal_sub":"Images and videos start from one sentence too. Every piece names its model and shows the full prompt — open it, and make your own version.","gal_note":"Gallery pieces are style samples drawn with original in-house graphics; once image and video models are connected, real generations will live here.","gal_prompt":"PROMPT"});
+Object.assign(I18N.ja,{"how_title":"3ステップで、仕事を任せる","how_sub":"プロンプトの書き方を学ぶ必要も、モデル選びも不要。話してからファイルを受け取るまで、3ステップだけ。","how_s1t":"欲しいものを伝える","how_s1d":"目標を一文で。ファイルがあれば添付を——表計算、古い文書、参考画像まで、Poko が自分で読み取ります。","how_s2t":"自分で分解して進める","how_s2d":"タスクに合うモデルを選び、手順に分けて順に実行。進み具合はすべて見えるので、見張る必要はありません。","how_s3t":"完成ファイルを受け取る","how_s3d":"スライド、表、ポスター、Web ページをそのままダウンロードして使えます。気になれば、もう一言で直し続けます。","gal_title":"ビジュアル・インスピレーション","gal_sub":"画像も動画も一文から。各作品に使用モデルとプロンプト全文を明記——開いて、気に入れば同じ作風で。","gal_note":"ギャラリーの作品は自社オリジナル図形で描いたスタイルサンプルです。画像・動画モデル接続後は、実際の生成結果に置き換わります。","gal_prompt":"プロンプト"});
+Object.assign(I18N.ko,{"how_title":"세 단계로 일을 맡기세요","how_sub":"프롬프트 작성법을 배울 필요도, 모델을 먼저 고를 필요도 없습니다. 말 한마디에서 완성 파일까지 세 단계뿐입니다.","how_s1t":"원하는 것을 말하기","how_s1d":"목표를 한 문장으로 설명하고 파일이 있으면 첨부하세요 — 스프레드시트, 기존 문서, 참고 이미지까지 Poko가 직접 읽습니다.","how_s2t":"스스로 나눠서 처리","how_s2d":"작업에 맞는 모델을 골라 단계를 나눠 차례로 실행합니다. 모든 단계가 보이니 지켜볼 필요가 없습니다.","how_s3t":"완성 파일 가져가기","how_s3d":"PPT, 표, 포스터, 웹페이지를 바로 내려받아 쓸 수 있습니다. 마음에 들지 않으면 한 마디 더, 계속 다듬습니다.","gal_title":"비주얼 영감 갤러리","gal_sub":"이미지와 영상도 한 문장에서 시작합니다. 모든 작품에 사용 모델과 전체 프롬프트를 표기했어요 — 열어 보고, 마음에 들면 같은 스타일로 만들어 보세요.","gal_note":"갤러리 작품은 자체 제작한 오리지널 그래픽으로 그린 스타일 샘플입니다. 이미지·영상 모델이 연결되면 실제 생성 결과로 교체됩니다.","gal_prompt":"프롬프트"});
+Object.assign(I18N.es,{"how_title":"Delega el trabajo en tres pasos","how_sub":"Sin aprender ingeniería de prompts y sin elegir modelo antes. De una frase al archivo terminado en tres pasos.","how_s1t":"Di qué necesitas","how_s1d":"Describe el objetivo en una frase y adjunta archivos si los tienes: hojas de cálculo, documentos, imágenes de referencia. Poko los lee solo.","how_s2t":"Lo divide y lo ejecuta","how_s2d":"Poko elige un modelo adecuado y avanza paso a paso; cada paso es visible y no tienes que supervisar nada.","how_s3t":"Llévate el archivo terminado","how_s3d":"Presentaciones, tablas, pósteres y páginas listos para descargar y usar. ¿No te convence? Di una frase más y sigue puliéndolo.","gal_title":"Galería de inspiración visual","gal_sub":"Las imágenes y los vídeos también nacen de una frase. Cada obra indica su modelo y muestra el prompt completo: ábrela y crea tu versión.","gal_note":"Las obras de la galería son muestras de estilo dibujadas con gráficos originales propios; cuando se conecten los modelos de imagen y vídeo, aquí vivirán los resultados reales.","gal_prompt":"PROMPT"});
+function renderGallery(){
+  const start = CASES.length - 6;
+  $("#galGrid").innerHTML = CASES.slice(start).map((c, k)=>{
+    const i = start + k;
+    return `<div class="gcard" data-i="${i}" role="button" tabindex="0" aria-label="${caseName(c)}"><div class="gart">${ART[i]}<div class="gprompt"><b>${t("gal_prompt")}</b><span>${casePrompt(c)}</span></div></div><div class="gcap"><span><span class="gn">${caseName(c)}</span><span class="gt">${t("type_"+c.t)} · ${caseCat(c)}</span></span><span class="gmodel">${c.gm}</span></div></div>`;
+  }).join("");
+  $$("#galGrid .gcard").forEach(el=>{
+    el.addEventListener("click", ()=> openCase(+el.dataset.i));
+    el.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openCase(+el.dataset.i); } });
+  });
+}
+renderGallery();
+$$("[data-i18n]").forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+</script>
+
+<script>
 /* 滚动渐入（Design System v2）：无 IntersectionObserver / 减少动态时内容直接可见 */
 (function(){try{
   if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   if(!("IntersectionObserver" in window))return;
-  var els=[].slice.call(document.querySelectorAll(".sec-head,.page-head,.hero .wrap,.bcard,.cap,.ind,.dcard,.casecard,.faqitem,.chart,.demo,.aud-tabs,.mrow,.newcard,.cta,footer .foot-grid"));
+  var els=[].slice.call(document.querySelectorAll(".sec-head,.page-head,.hero .wrap,.bcard,.cap,.ind,.dcard,.casecard,.howcard,.gcard,.faqitem,.chart,.demo,.aud-tabs,.mrow,.newcard,.cta,footer .foot-grid"));
   if(!els.length)return;
   document.documentElement.classList.add("jsrv");
   els.forEach(function(el){el.classList.add("rv")});
