@@ -188,6 +188,21 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
 .genimg img{width:100%;display:block;border-radius:16px;border:1px solid var(--line)}
 .genimg .dl{display:inline-block;margin-top:8px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--ink);text-decoration:none}
 .genimg .dl:hover{border-color:var(--brand);color:var(--brand)}
+.genimg .cap{margin-top:8px;font-size:13px;color:var(--sub)}
+</style>
+<style id="r14">
+/* ===== 修复2：文档附件 chip / 气泡内附件 / csv→xlsx 下载按钮 ===== */
+.docchip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:12.5px;line-height:1.3;box-shadow:var(--shadow-sm)}
+.docchip b{font-weight:700;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.docchip .docmeta{color:var(--sub);white-space:nowrap}
+.docchip .attx{position:static;flex:none}
+.udocs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.udoc{display:inline-flex;align-items:center;gap:6px;border-radius:8px;padding:5px 9px;font-size:12px;line-height:1.3;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25)}
+.udoc b{font-weight:700;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.udoc span{opacity:.75;white-space:nowrap}
+.csvdl{margin-top:12px}
+.dlbtn{display:inline-block;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;font-family:inherit}
+.dlbtn:hover{border-color:var(--brand);color:var(--brand)}
 </style>
 </head>
 <body>
@@ -254,6 +269,7 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
   </div>
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" onerror="window.__xlsxFailed=true"></script>
 <script>
 /* =====================================================================
    Poko Chat 前端
@@ -429,6 +445,9 @@ const historyMsgs = []; // 真实 API 模式下的上下文
 /* 第十三轮：附件与图像。pendingImages = 待发送图片 [{name, dataUrl}]（已压缩）；
    lastUsedModelId = 本次回复实际使用的模型（视觉改派/图生图时与所选不同，注脚据实标注） */
 let pendingImages = [];
+/* 修复2：待发送文档附件 [{name, kind:"sheet"|"text"|"unparsed", text, sheets?, rows?, lines?, truncated?}]
+   sheet/text 的 text 是已解析并截断后的正文，发送时并入该条 user 消息；unparsed 为 SheetJS 缺失/解析失败的回退 */
+let pendingDocs = [];
 let lastUsedModelId = null;
 const VISION_MODELS = new Set(["gemini-3-pro-preview","gemini-3.8-flash","gpt-5.6","claude-sonnet-5","qwen4-max","kimi-k3","nano-banana-pro"]);
 
@@ -493,7 +512,7 @@ function detectIntent(text){
 /* ================= 消息渲染 ================= */
 function scrollBottom(){ const m = $("#msgs"); m.scrollTop = m.scrollHeight; }
 function hideWelcome(){ const w = $("#welcome"); if(w) w.remove(); }
-function addUserMsg(text, images){
+function addUserMsg(text, images, docs){
   hideWelcome();
   const d = document.createElement("div");
   d.className = "msg-u";
@@ -504,6 +523,21 @@ function addUserMsg(text, images){
       const img = document.createElement("img");
       img.src = im.dataUrl; img.alt = im.name || "";
       row.appendChild(img);
+    });
+    d.appendChild(row);
+  }
+  if(docs && docs.length){
+    const row = document.createElement("div");
+    row.className = "udocs";
+    docs.forEach(doc => {
+      const chip = document.createElement("span");
+      chip.className = "udoc";
+      const nm = document.createElement("b");
+      nm.textContent = doc.name;
+      const meta = document.createElement("span");
+      meta.textContent = docMetaText(doc);
+      chip.appendChild(nm); chip.appendChild(meta);
+      row.appendChild(chip);
     });
     d.appendChild(row);
   }
@@ -567,23 +601,85 @@ function proxiedImgSrc(u){
   if(u && u.startsWith("http://")) return POKO_API_BASE.replace(/\/+$/,"") + "/api/img?u=" + encodeURIComponent(u);
   return u;
 }
-function addReplyImage(wrap, src, dlName){
+function addReplyImage(wrap, src, dlName, alt){
   const card = document.createElement("div");
   card.className = "genimg";
   const img = document.createElement("img");
-  img.src = src; img.alt = "";
+  img.src = src; img.alt = alt || "";
+  card.appendChild(img);
+  if(alt){
+    const cap = document.createElement("div");
+    cap.className = "cap"; cap.textContent = alt;
+    card.appendChild(cap);
+  }
   const a = document.createElement("a");
   a.href = src; a.download = dlName || "poko-image.png"; a.className = "dl"; a.textContent = t("dl");
-  card.appendChild(img); card.appendChild(a);
+  card.appendChild(a);
   wrap.appendChild(card);
 }
-// 从模型回复文本里提取图片：Markdown 图片语法 + 裸图片 URL；返回 {urls, cleaned}
+// 从模型回复文本里提取图片，四种形式：
+//   ① Markdown 图片 + data URI（图生图 nano-banana-pro 的实际返回：![Generated image 1](data:image/jpeg;base64,…)）
+//   ② Markdown 图片 + http(s) URL
+//   ③ 裸 http(s) 图片 URL
+//   ④ 裸 data URI
+// 返回 {urls, images:[{src, alt, ext}], cleaned}：cleaned 里不残留任何图片数据（含 base64 长串），
+// alt 文本保留在 images[].alt 里，由 addReplyImage 渲染为图片说明。urls 为 src 列表（兼容旧调用）。
 function extractReplyImages(full){
-  const urls = [];
-  let cleaned = full.replace(/!\[[^\]]*\]\((https?:\/\/[^\s)]+)\)/g, (m, u) => { urls.push(u); return ""; });
+  const images = [];
+  const dataUriRe = "data:image\\/[a-zA-Z0-9.+-]+;base64,[A-Za-z0-9+/=]+";
+  const extOf = src => {
+    const m = /^data:image\/([a-zA-Z0-9.+-]+);/.exec(src);
+    if(m){ const st = m[1].toLowerCase(); return st === "jpeg" ? "jpg" : st; }
+    return "jpg"; // http(s) 成品图沿用旧口径
+  };
+  const push = (src, alt) => { images.push({src, alt: alt || "", ext: extOf(src)}); };
+  let cleaned = full
+    .replace(new RegExp("!\\[([^\\]]*)\\]\\((" + dataUriRe + ")\\)", "g"),
+      (m, alt, u) => { push(u, alt); return ""; })
+    .replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g,
+      (m, alt, u) => { push(u, alt); return ""; });
   cleaned = cleaned.replace(/(^|\s)(https?:\/\/[^\s)]+?\.(?:png|jpe?g|webp|gif))(?=\s|$)/gi,
-    (m, pre, u) => { urls.push(u); return pre; });
-  return {urls, cleaned: cleaned.trim()};
+    (m, pre, u) => { push(u, ""); return pre; });
+  cleaned = cleaned.replace(new RegExp(dataUriRe, "g"),
+    m => { push(m, ""); return ""; });
+  return {urls: images.map(im => im.src), images, cleaned: cleaned.trim()};
+}
+/* ================= 修复2：回复 ```csv 代码块 → 真 .xlsx 下载 ================= */
+function extractCsvBlocks(text){
+  const blocks = [];
+  const re = /```csv\s*\r?\n([\s\S]*?)```/gi;
+  let m;
+  while((m = re.exec(text)) !== null){
+    const c = m[1].trim();
+    if(c) blocks.push(c);
+  }
+  return blocks;
+}
+function downloadCsvAsXlsx(csv){
+  if(window.XLSX){
+    try{
+      const wb = XLSX.read(csv, {type: "string"});
+      XLSX.writeFile(wb, "poko-table.xlsx");
+      return;
+    }catch(e){ /* 转换失败落到 .csv 原文兜底 */ }
+  }
+  const blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "poko-table.csv";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+function addCsvDownloads(wrap, full){
+  extractCsvBlocks(full).forEach(csv => {
+    const row = document.createElement("div");
+    row.className = "csvdl";
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "dlbtn"; b.textContent = t("dl_xlsx");
+    b.addEventListener("click", () => downloadCsvAsXlsx(csv));
+    row.appendChild(b);
+    wrap.appendChild(row);
+  });
 }
 // 附件图片真读：FileReader 读为 data URL，再用 canvas 压到最长边 ≤1024（格式保持 png/jpeg，quality 0.85）
 function readImageFile(file){
@@ -626,7 +722,71 @@ function renderAttachBar(){
     chip.appendChild(img); chip.appendChild(x);
     bar.appendChild(chip);
   });
-  bar.hidden = pendingImages.length === 0;
+  pendingDocs.forEach((doc, i) => {
+    const chip = document.createElement("span");
+    chip.className = "docchip";
+    const nm = document.createElement("b");
+    nm.textContent = doc.name;
+    const meta = document.createElement("span");
+    meta.className = "docmeta"; meta.textContent = docMetaText(doc);
+    const x = document.createElement("button");
+    x.type = "button"; x.className = "attx"; x.textContent = "×"; x.setAttribute("aria-label", "remove");
+    x.addEventListener("click", () => { pendingDocs.splice(i, 1); renderAttachBar(); });
+    chip.appendChild(nm); chip.appendChild(meta); chip.appendChild(x);
+    bar.appendChild(chip);
+  });
+  bar.hidden = pendingImages.length === 0 && pendingDocs.length === 0;
+}
+
+/* ================= 修复2：表格 / 文本附件真解析 =================
+   表格（xlsx/xls/csv）经 SheetJS 解析为 CSV 文本；文本（txt/md/json）直接读正文。
+   单文件正文上限约 12000 字符，超出截断并在末尾注明。解析结果只进待发送区，不落盘。 */
+const ATTACH_TEXT_LIMIT = 12000;
+const ATTACH_MAX_BYTES = 5 * 1024 * 1024;
+function capAttachText(text){
+  if(text.length <= ATTACH_TEXT_LIMIT) return {text, truncated: false};
+  return {text: text.slice(0, ATTACH_TEXT_LIMIT) + "\n" + t("trunc_note"), truncated: true};
+}
+function csvEscapeCell(v){
+  const s = v === null || v === undefined ? "" : String(v);
+  return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+}
+function docMetaText(doc){
+  if(doc.kind === "sheet") return t("attach_sheet_meta").replace("{sheets}", doc.sheets).replace("{rows}", doc.rows);
+  if(doc.kind === "text") return t("attach_text_meta").replace("{lines}", doc.lines);
+  return t("attach_unparsed_meta");
+}
+async function parseSpreadsheetFile(file){
+  const buf = await file.arrayBuffer();
+  const wb = XLSX.read(buf, {type: "array"});
+  const parts = [];
+  let totalRows = 0;
+  for(const sn of wb.SheetNames){
+    const ws = wb.Sheets[sn];
+    if(!ws) continue;
+    const aoa = XLSX.utils.sheet_to_json(ws, {header: 1, raw: false, defval: ""});
+    // 去掉尾部整行空白，避免格式撑大的空行灌进上下文
+    while(aoa.length && aoa[aoa.length - 1].every(c => c === "")) aoa.pop();
+    if(!aoa.length) continue;
+    const rows = aoa.slice(0, 200).map(r => r.slice(0, 30));
+    totalRows += rows.length;
+    parts.push("## " + sn + "\n" + rows.map(r => r.map(csvEscapeCell).join(",")).join("\n"));
+  }
+  const capped = capAttachText(parts.join("\n\n"));
+  return {name: file.name, kind: "sheet", text: capped.text,
+          sheets: parts.length, rows: totalRows, truncated: capped.truncated};
+}
+function readTextAttach(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const capped = capAttachText(String(reader.result || ""));
+      resolve({name: file.name, kind: "text", text: capped.text,
+               lines: capped.text ? capped.text.split("\n").length : 0, truncated: capped.truncated});
+    };
+    reader.onerror = reject;
+    reader.readAsText(file);
+  });
 }
 
 /* ================= 演示 Agent ================= */
@@ -694,7 +854,10 @@ async function runDemo(text){
 
 /* ================= 真实 API 模式（POKO_API_BASE 非空时） ================= */
 function apiPayload(modelOverride){
-  const p = {messages: historyMsgs};
+  let msgs = historyMsgs;
+  // 修复2：分析表格模式给该次请求附加 system 指令，要求表格结果以 ```csv 代码块输出（前端据此给真 xlsx 下载）
+  if(currentMode === "sheet") msgs = [{role: "system", content: t("sheet_sys")}].concat(historyMsgs);
+  const p = {messages: msgs};
   const m = modelOverride !== undefined ? modelOverride : currentModel;
   if(m) p.model = m; // 智能优选不传，后端用默认型号
   return p;
@@ -734,7 +897,12 @@ async function runAPI(text, opts){
         try{
           const j = JSON.parse(data);
           const delta = j.choices && j.choices[0] && j.choices[0].delta && j.choices[0].delta.content;
-          if(delta){ full += delta; body.textContent = full; scrollBottom(); }
+          if(delta){
+            full += delta;
+            // 含图片数据的回复（图生图）：base64 长串收完前不刷原文，先显示生成占位，完成后整体渲染
+            body.textContent = (opts.renderImages && /data:image|!\[Generated image/.test(full)) ? t("img_generating") : full;
+            scrollBottom();
+          }
         }catch(e){ /* 忽略不完整的 SSE 分片 */ }
       }
     }
@@ -742,11 +910,15 @@ async function runAPI(text, opts){
     historyMsgs.push({role:"assistant", content:full});
     if(opts.renderImages){
       const ex = extractReplyImages(full);
-      if(ex.urls.length){
+      if(ex.images.length){
         body.textContent = ex.cleaned;
-        ex.urls.forEach((u, i) => addReplyImage(wrap, proxiedImgSrc(u), "poko-image-" + (i + 1) + ".jpg"));
+        ex.images.forEach((im, i) => addReplyImage(wrap, proxiedImgSrc(im.src), "poko-image-" + (i + 1) + "." + im.ext, im.alt));
+      }else{
+        body.textContent = full; // 流式期若显示过生成占位，这里恢复全文
       }
     }
+    // 修复2：回复里的 ```csv 代码块下方给出真 xlsx 下载（SheetJS 缺失时降级为 .csv 原文）
+    addCsvDownloads(wrap, full);
   }catch(e){
     // 请求失败 → 回退演示模式，保证体验不断
     historyMsgs.pop();
@@ -796,15 +968,24 @@ async function send(){
   const text = input.value.trim();
   if(!text) return;
   const images = pendingImages.slice(); // 本条消息携带的图片（发送即消费）
+  const docs = pendingDocs.slice(); // 修复2：本条消息携带的文档附件（发送即消费）
   busy = true; $("#sendBtn").disabled = true;
   input.value = "";
-  pendingImages = []; renderAttachBar(); $("#attachName").textContent = "";
-  addUserMsg(text, images);
+  pendingImages = []; pendingDocs = []; renderAttachBar(); $("#attachName").textContent = "";
+  addUserMsg(text, images, docs);
+  // 修复2：文档解析文本并入本条消息正文（真实模式进 history；演示回退只看原文与气泡 chip）
+  let mergedText = text;
+  if(docs.length){
+    const blocks = docs.map(doc => doc.kind === "unparsed"
+      ? t("attach_unparsed_line").replace("{name}", doc.name)
+      : t("attach_label").replace("{name}", doc.name) + "\n" + doc.text);
+    mergedText = text + "\n\n" + blocks.join("\n\n");
+  }
   try{
     if(POKO_API_BASE){
       if(currentMode === "image" && images.length){
         // 图生图：nano-banana-pro（A6），图片以 image_url parts 随消息发送，回复图片提取渲染
-        const parts = [{type:"text", text}].concat(images.map(im => ({type:"image_url", image_url:{url: im.dataUrl}})));
+        const parts = [{type:"text", text: mergedText}].concat(images.map(im => ({type:"image_url", image_url:{url: im.dataUrl}})));
         await runAPI(text, {model:"nano-banana-pro", content: parts, renderImages: true});
       } else if(currentMode === "image"){
         // 文生图：/api/image（gpt-image-2）
@@ -812,8 +993,11 @@ async function send(){
       } else if(images.length){
         // 视觉理解：所选模型不在视觉集合时自动改派 Gemini 3 Pro，注脚据实标注实际模型
         const used = VISION_MODELS.has(usedModelId()) ? usedModelId() : "gemini-3-pro-preview";
-        const parts = [{type:"text", text}].concat(images.map(im => ({type:"image_url", image_url:{url: im.dataUrl}})));
+        const parts = [{type:"text", text: mergedText}].concat(images.map(im => ({type:"image_url", image_url:{url: im.dataUrl}})));
         await runAPI(text, {model: used, content: parts});
+      } else if(docs.length){
+        // 纯文档附件：解析文本已并入 mergedText，作为本条 user 消息发送
+        await runAPI(text, {content: mergedText});
       } else {
         await runAPI(text);
       }
@@ -843,19 +1027,36 @@ $("#attachBtn").addEventListener("click", ()=> $("#fileInput").click());
 $("#fileInput").addEventListener("change", async e => {
   const files = Array.from(e.target.files || []);
   const others = [];
+  const notices = [];
   for(const f of files){
+    const ext = (f.name.split(".").pop() || "").toLowerCase();
+    const isSheet = ["xlsx", "xls", "csv"].includes(ext);
+    const isText = ["txt", "md", "json"].includes(ext);
     if(f.type && f.type.startsWith("image/")){
       try{
         const dataUrl = await readImageFile(f);
         pendingImages.push({name: f.name, dataUrl});
       }catch(err){ others.push(f.name); }
+    } else if(isSheet || isText){
+      // 修复2：表格/文本附件真解析（单文件上限 5MB，超限拒绝并提示）
+      if(f.size > ATTACH_MAX_BYTES){ notices.push(t("attach_too_big").replace("{name}", f.name)); continue; }
+      if(isSheet && !window.XLSX){
+        // SheetJS 未加载成功（CDN 失败）：回退为只记文件名，发送时注明未解析，不报错
+        pendingDocs.push({name: f.name, kind: "unparsed", text: ""});
+      } else if(isSheet){
+        try{ pendingDocs.push(await parseSpreadsheetFile(f)); }
+        catch(err){ pendingDocs.push({name: f.name, kind: "unparsed", text: ""}); }
+      } else {
+        try{ pendingDocs.push(await readTextAttach(f)); }
+        catch(err){ others.push(f.name); }
+      }
     } else {
-      // 非图片文件本轮仍只显示文件名、发送时不附带（表格解析在下一轮接）
+      // 其他类型仍只显示文件名、发送时不附带
       others.push(f.name);
     }
   }
   renderAttachBar();
-  $("#attachName").textContent = others.join("、");
+  $("#attachName").textContent = notices.concat(others).join("、");
   e.target.value = ""; // 清空以便同一文件可再次选择
 });
 
@@ -880,6 +1081,12 @@ Object.assign(I18N.en,{fu_label:"Follow up",kb_hint:"Enter to send · Shift + En
 Object.assign(I18N.ja,{fu_label:"続けて聞く",kb_hint:"Enter で送信 · Shift + Enter で改行"});
 Object.assign(I18N.ko,{fu_label:"이어서 묻기",kb_hint:"Enter 전송 · Shift + Enter 줄바꿈"});
 Object.assign(I18N.es,{fu_label:"Seguir preguntando",kb_hint:"Enter para enviar · Shift + Enter para una nueva línea"});
+/* 修复2补键：表格/文本附件真解析 + 分析表格真产出（五语） */
+Object.assign(I18N.zh,{attach_sheet_meta:"{sheets} 个工作表 · 共 {rows} 行",attach_text_meta:"{lines} 行文本",attach_unparsed_meta:"未解析",attach_too_big:"文件超过 5MB，未添加：{name}",attach_label:"[附件：{name}]",attach_unparsed_line:"[附件：{name}（未能解析，模型看不到内容）]",trunc_note:"（已截断）",dl_xlsx:"下载为 Excel (.xlsx)",sheet_sys:"你正在协助用户分析表格数据。当你给出表格形式的结果时，请把完整数据表放在 ```csv 代码块中输出：第一行是表头，每行一条记录，字段之间用英文逗号分隔，不要省略任何行。"});
+Object.assign(I18N.en,{attach_sheet_meta:"{sheets} sheets · {rows} rows total",attach_text_meta:"{lines} lines of text",attach_unparsed_meta:"not parsed",attach_too_big:"Over the 5 MB limit, not added: {name}",attach_label:"[Attachment: {name}]",attach_unparsed_line:"[Attachment: {name} (could not be parsed; the model cannot see its contents)]",trunc_note:"(truncated)",dl_xlsx:"Download as Excel (.xlsx)",sheet_sys:"You are helping the user analyze spreadsheet data. Whenever you present results in table form, output the complete data table inside a ```csv code block: the first row is the header, one record per line, fields separated by commas, and do not omit any rows."});
+Object.assign(I18N.ja,{attach_sheet_meta:"{sheets} シート · 全 {rows} 行",attach_text_meta:"{lines} 行のテキスト",attach_unparsed_meta:"未解析",attach_too_big:"5MB を超えているため追加できません：{name}",attach_label:"[添付ファイル：{name}]",attach_unparsed_line:"[添付ファイル：{name}（解析できなかったため、モデルは内容を見られません）]",trunc_note:"（以下、切り捨て）",dl_xlsx:"Excel (.xlsx) としてダウンロード",sheet_sys:"あなたはユーザーの表データ分析を手伝っています。結果を表形式で示すときは、完全なデータ表を ```csv コードブロックで出力してください：1 行目がヘッダー、1 行に 1 レコード、フィールドはカンマ区切りとし、行を省略しないでください。"});
+Object.assign(I18N.ko,{attach_sheet_meta:"시트 {sheets}개 · 총 {rows}행",attach_text_meta:"텍스트 {lines}줄",attach_unparsed_meta:"파싱 안 됨",attach_too_big:"5MB를 초과하여 추가하지 않음: {name}",attach_label:"[첨부 파일: {name}]",attach_unparsed_line:"[첨부 파일: {name} (파싱에 실패해 모델이 내용을 볼 수 없음)]",trunc_note:"(이하 잘림)",dl_xlsx:"Excel(.xlsx)로 다운로드",sheet_sys:"사용자의 표 데이터 분석을 돕고 있습니다. 결과를 표 형태로 제시할 때는 완전한 데이터 표를 ```csv 코드 블록으로 출력하세요: 첫 행은 헤더, 한 줄에 한 레코드, 필드는 쉼표로 구분하고, 어떤 행도 생략하지 마세요."});
+Object.assign(I18N.es,{attach_sheet_meta:"{sheets} hojas · {rows} filas en total",attach_text_meta:"{lines} líneas de texto",attach_unparsed_meta:"sin analizar",attach_too_big:"Supera el límite de 5 MB, no añadido: {name}",attach_label:"[Archivo adjunto: {name}]",attach_unparsed_line:"[Archivo adjunto: {name} (no se pudo analizar; el modelo no puede ver su contenido)]",trunc_note:"(truncado)",dl_xlsx:"Descargar como Excel (.xlsx)",sheet_sys:"Estás ayudando al usuario a analizar datos de hojas de cálculo. Cuando presentes resultados en forma de tabla, muestra la tabla de datos completa dentro de un bloque de código ```csv: la primera fila es el encabezado, un registro por línea, campos separados por comas, y no omitas ninguna fila."});
 const FOLLOWUPS = {
   zh:{
     ppt:["换成深色风格","加一页数据图表","压缩到 6 页"],
