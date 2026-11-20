@@ -270,6 +270,7 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" onerror="window.__xlsxFailed=true"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.js" onerror="window.__pptxFailed=true"></script>
 <script>
 /* =====================================================================
    Poko Chat 前端
@@ -345,7 +346,7 @@ es:{new_chat:"Nuevo chat",history:"Historial",hist1:"Presentación de revisión 
 const SCRIPTS = {
 zh:{
  web:{steps:["理解页面需求与结构","生成页面布局与样式","组装成可打开的网页文件"],reply:"网页做好了，下面可以直接预览，文件也能下载下来部署到任何静态托管。页面包含首屏卖点、核心指标和内容区，文案先用了占位内容，换成你的真实信息即可上线。"},
- ppt:{steps:["梳理主题与汇报逻辑","生成逐页标题与要点","排版成演示文稿大纲"],reply:"PPT 的大纲做好了：共 10 页，从封面、目录、核心结论到行动计划都排好了，每页都写了标题和要点。演示模式下先给你一份 Markdown 大纲文件，接入真实模型后会直接生成可编辑的 .pptx。"},
+ ppt:{steps:["梳理主题与汇报逻辑","生成逐页标题与要点","排版成演示文稿大纲"],reply:"PPT 做好了：共 10 页，从封面、目录、核心结论到行动计划都排好了，每页都写了标题和要点。演示模式下这份 .pptx 由示例大纲生成，接入真实模型后会按你的主题和内容生成。"},
  sheet:{steps:["读取并清洗数据","计算关键指标与分布","生成可下载的表格文件"],reply:"表格生成好了：一份示例销售数据，包含月份、区域、销售额和同比增长，已经按区域汇总。接入真实模型后，你上传的真实文件会被同样处理，公式和原始数据都能追溯。"},
  report:{steps:["明确文档结构与读者","撰写正文并组织小标题","生成可下载的文档文件"],reply:"文档写好了，Markdown 格式，包含摘要、正文三部分和结论。下载后可以直接用，也能粘贴到 Word 或文档工具里继续编辑。"},
  media:{steps:["提炼画面主题与风格","生成画面构图","渲染并检查细节"],reply:"画面生成好了（演示模式下是占位图）。接入图像模型后，这里会换成按你的描述真正生成的海报或图片，可以继续让我调整风格、尺寸和文案。"},
@@ -354,7 +355,7 @@ zh:{
 },
 en:{
  web:{steps:["Understand the page requirements","Generate layout and styles","Assemble a ready-to-open web file"],reply:"Your web page is ready — preview it below or download the file and host it anywhere. It includes a hero section, key metrics and content blocks with placeholder copy you can swap for the real thing."},
- ppt:{steps:["Structure the topic and narrative","Write slide titles and bullets","Lay out the deck outline"],reply:"Your deck outline is ready: 10 slides from cover and agenda to key takeaways and next steps, each with a title and bullets. In demo mode you get a Markdown outline; with a real model connected, Poko generates an editable .pptx directly."},
+ ppt:{steps:["Structure the topic and narrative","Write slide titles and bullets","Lay out the deck outline"],reply:"Your deck is ready: 10 slides from cover and agenda to key takeaways and next steps, each with a title and bullets. In demo mode this .pptx is generated from a sample outline; with a real model connected, Poko builds the deck from your own topic and content."},
  sheet:{steps:["Read and clean the data","Compute key metrics and distributions","Generate a downloadable spreadsheet"],reply:"Your spreadsheet is ready: sample sales data with month, region, revenue and growth, already grouped by region. With a real model connected, your uploaded file gets the same treatment, with formulas and source data fully traceable."},
  report:{steps:["Plan the document structure","Draft the body with clear headings","Generate a downloadable document"],reply:"Your document is written in Markdown — abstract, three body sections and a conclusion. Download it as-is, or paste it into Word or your docs tool to keep editing."},
  media:{steps:["Distill the visual theme and style","Compose the layout","Render and check the details"],reply:"Your visual is ready (a placeholder in demo mode). Once an image model is connected, this becomes a real poster or image generated from your description — and you can keep asking for style, size and copy tweaks."},
@@ -387,18 +388,23 @@ function buildCsv(){
   + "2026-08,华东,3512000,43960,26.4%\n2026-08,华北,2218000,29410,13.5%\n2026-08,华南,2073000,27320,16.1%\n2026-08,西南,1012000,13450,9.8%\n"
   + "2026-09,华东,3865000,47890,31.2%\n2026-09,华北,2304000,30280,14.2%\n2026-09,华南,2198000,28960,17.4%\n2026-09,西南,1087000,14230,11.3%\n";
 }
-function buildPptOutline(promptText){
-  return "# 演示文稿大纲（演示占位）\n\n主题：" + (promptText || "未命名主题") + "\n\n"
-  + "## 第 1 页 · 封面\n- 标题 + 副标题 + 汇报人/日期\n\n"
-  + "## 第 2 页 · 目录\n- 背景 / 核心结论 / 数据拆解 / 问题与风险 / 行动计划\n\n"
-  + "## 第 3 页 · 一页讲清核心结论\n- 三个关键结论，各配一个支撑数字\n\n"
-  + "## 第 4 页 · 背景与目标\n- 业务背景、阶段目标、衡量口径\n\n"
-  + "## 第 5 页 · 整体数据概览\n- 核心指标卡 + 趋势图\n\n"
-  + "## 第 6 页 · 亮点拆解\n- 增长最快的板块，原因分析\n\n"
-  + "## 第 7 页 · 问题拆解\n- 掉队板块与根因假设\n\n"
-  + "## 第 8 页 · 风险与应对\n- 已识别风险及预案\n\n"
-  + "## 第 9 页 · 行动计划\n- 下阶段动作、负责人、时间点\n\n"
-  + "## 第 10 页 · 总结与讨论\n- 一句话总结 + 需要拍板的事项\n";
+/* 修复3：演示模式的示例大纲改为结构化数据，与真实路径共用同一 .pptx 生成器
+   （封面由生成器按 title 生成，故 slides 不含封面页：9 页内容 + 封面 = 10 页） */
+function buildPptDemoData(promptText){
+  return {
+    title: (promptText || "未命名主题").slice(0, 60),
+    slides: [
+      {title:"目录", bullets:["背景","核心结论","数据拆解","问题与风险","行动计划"]},
+      {title:"一页讲清核心结论", bullets:["三个关键结论，各配一个支撑数字"]},
+      {title:"背景与目标", bullets:["业务背景","阶段目标","衡量口径"]},
+      {title:"整体数据概览", bullets:["核心指标卡","趋势图"]},
+      {title:"亮点拆解", bullets:["增长最快的板块，原因分析"]},
+      {title:"问题拆解", bullets:["掉队板块与根因假设"]},
+      {title:"风险与应对", bullets:["已识别风险及预案"]},
+      {title:"行动计划", bullets:["下阶段动作","负责人","时间点"]},
+      {title:"总结与讨论", bullets:["一句话总结","需要拍板的事项"]}
+    ]
+  };
 }
 function buildReport(promptText){
   return "# 报告（演示示例）\n\n主题：" + (promptText || "未命名主题") + "\n\n"
@@ -681,6 +687,110 @@ function addCsvDownloads(wrap, full){
     wrap.appendChild(row);
   });
 }
+/* ================= 修复3：回复 ```ppt 代码块（严格 JSON）→ 真 .pptx 下载 ================= */
+function normalizePptData(raw){
+  if(!raw || typeof raw !== "object") return null;
+  const title = typeof raw.title === "string" ? raw.title.trim() : "";
+  if(!Array.isArray(raw.slides)) return null;
+  const slides = [];
+  for(const s of raw.slides){
+    if(!s || typeof s !== "object") continue;
+    const st = typeof s.title === "string" ? s.title.trim() : "";
+    const bullets = Array.isArray(s.bullets)
+      ? s.bullets.map(b => String(b == null ? "" : b).trim()).filter(Boolean).slice(0, 12)
+      : [];
+    if(st || bullets.length) slides.push({title: st || "—", bullets});
+    if(slides.length >= 30) break;
+  }
+  if(!slides.length) return null;
+  return {title: title || slides[0].title, slides};
+}
+function extractPptBlocks(text){
+  const out = [];
+  const re = /```ppt\s*\r?\n([\s\S]*?)```/gi;
+  let m;
+  while((m = re.exec(text)) !== null){
+    try{
+      const data = normalizePptData(JSON.parse(m[1].trim()));
+      if(data) out.push(data);
+    }catch(e){ /* JSON 不合法：不显示按钮，原文保留在回复中，不吞内容 */ }
+  }
+  return out;
+}
+function pptDataToMd(data){
+  return "# " + data.title + "\n\n" + data.slides.map((s, i) =>
+    "## " + (i + 1) + ". " + s.title + "\n" + s.bullets.map(b => "- " + b).join("\n")
+  ).join("\n\n") + "\n";
+}
+function downloadPptMd(data){
+  const blob = new Blob([pptDataToMd(data)], {type: "text/markdown;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "poko-presentation-outline.md";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+/* PptxGenJS 生成 16:9 .pptx：封面（大标题 + Poko 副标）+ 内容页（品牌橙标题 + 装饰条 + 项目符号正文） */
+async function generatePptx(data){
+  const pptx = new PptxGenJS();
+  pptx.defineLayout({name: "POKO_WIDE", width: 13.333, height: 7.5});
+  pptx.layout = "POKO_WIDE";
+  const RECT = (pptx.ShapeType && pptx.ShapeType.rect) || (pptx.shapes && pptx.shapes.RECTANGLE) || "rect";
+  const BRAND = "F43D0A", INK = "26221E", SUB = "6D675C";
+  const cover = pptx.addSlide();
+  cover.background = {color: "FFFFFF"};
+  cover.addShape(RECT, {x: 0, y: 0, w: 13.333, h: 0.16, fill: {color: BRAND}});
+  cover.addText(data.title, {x: 0.9, y: 2.05, w: 11.53, h: 1.9, fontSize: 44, bold: true, color: BRAND, align: "center", valign: "middle"});
+  cover.addText("Poko", {x: 0.9, y: 4.25, w: 11.53, h: 0.6, fontSize: 20, bold: true, color: SUB, align: "center", charSpacing: 6});
+  for(const s of data.slides){
+    const slide = pptx.addSlide();
+    slide.background = {color: "FFFFFF"};
+    slide.addShape(RECT, {x: 0.7, y: 0.6, w: 0.55, h: 0.09, fill: {color: BRAND}});
+    slide.addText(s.title, {x: 0.7, y: 0.82, w: 11.9, h: 0.95, fontSize: 30, bold: true, color: BRAND});
+    if(s.bullets.length){
+      slide.addText(s.bullets.map(b => ({text: b, options: {bullet: true, breakLine: true}})),
+        {x: 0.75, y: 2.0, w: 11.85, h: 4.9, fontSize: 17, color: INK, lineSpacingMultiple: 1.35, valign: "top"});
+    }
+  }
+  await pptx.writeFile({fileName: "poko-presentation.pptx"});
+}
+function addPptDownloads(wrap, full){
+  extractPptBlocks(full).forEach(data => {
+    const row = document.createElement("div");
+    row.className = "csvdl";
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "dlbtn";
+    if(window.PptxGenJS){
+      b.textContent = t("dl_pptx");
+      b.addEventListener("click", () => {
+        generatePptx(data).catch(() => {
+          if(!row.querySelector(".pptfail")){
+            const n = document.createElement("span");
+            n.className = "pptfail";
+            n.style.cssText = "margin-left:10px;color:var(--sub);font-size:13px";
+            n.textContent = t("ppt_gen_fail");
+            row.appendChild(n);
+          }
+        });
+      });
+    } else {
+      // PptxGenJS 加载失败：下载按钮降级为导出大纲 .md 并如实标注，不得假装是 pptx
+      b.textContent = t("dl_pptx_md");
+      b.addEventListener("click", () => downloadPptMd(data));
+    }
+    row.appendChild(b);
+    wrap.appendChild(row);
+  });
+}
+/* 演示文件卡中的 .pptx 下载按钮（沿用 addFileCard 的 .dl 样式） */
+function pptxCardBtn(data){
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "dl"; b.textContent = t("dl");
+  b.addEventListener("click", () => {
+    generatePptx(data).catch(() => { b.textContent = t("ppt_gen_fail"); });
+  });
+  return b;
+}
 // 附件图片真读：FileReader 读为 data URL，再用 canvas 压到最长边 ≤1024（格式保持 png/jpeg，quality 0.85）
 function readImageFile(file){
   return new Promise((resolve, reject) => {
@@ -822,9 +932,17 @@ async function runDemo(text){
     addFileCard(wrap, "HTML", "poko-page.html", lang === "zh" ? "网页 · 单文件" : "Web page · single file",
       downloadBtn("poko-page.html", html, "text/html"));
   } else if(intent === "ppt"){
-    addFileCard(wrap, "PPT", lang === "zh" ? "演示文稿.pptx（演示占位）" : "presentation.pptx (demo placeholder)",
-      lang === "zh" ? "下载得到 Markdown 大纲" : "Download gives a Markdown outline",
-      downloadBtn("presentation-outline.md", buildPptOutline(text), "text/markdown"));
+    // 修复3：演示模式也用同一生成器把示例大纲生成真 .pptx 下载；仅当 PptxGenJS 加载失败时才回退 Markdown 大纲，文件名如实标注
+    const demoDeck = buildPptDemoData(text);
+    if(window.PptxGenJS){
+      addFileCard(wrap, "PPT", lang === "zh" ? "演示文稿.pptx" : "presentation.pptx",
+        lang === "zh" ? "演示文稿 · 示例大纲" : "Deck · sample outline",
+        pptxCardBtn(demoDeck));
+    } else {
+      addFileCard(wrap, "MD", lang === "zh" ? "演示文稿大纲.md" : "presentation-outline.md",
+        lang === "zh" ? "演示文稿 · Markdown 大纲" : "Deck outline · Markdown",
+        downloadBtn("presentation-outline.md", pptDataToMd(demoDeck), "text/markdown"));
+    }
   } else if(intent === "sheet"){
     addFileCard(wrap, "CSV", "sales-summary.csv", lang === "zh" ? "表格 · 示例数据" : "Spreadsheet · sample data",
       downloadBtn("sales-summary.csv", buildCsv(), "text/csv"));
@@ -857,6 +975,8 @@ function apiPayload(modelOverride){
   let msgs = historyMsgs;
   // 修复2：分析表格模式给该次请求附加 system 指令，要求表格结果以 ```csv 代码块输出（前端据此给真 xlsx 下载）
   if(currentMode === "sheet") msgs = [{role: "system", content: t("sheet_sys")}].concat(historyMsgs);
+  // 修复3：做PPT 模式给该次请求附加 system 指令，要求演示内容以 ```ppt 代码块输出严格 JSON（前端据此生成真 .pptx）
+  if(currentMode === "ppt") msgs = [{role: "system", content: t("ppt_sys")}].concat(historyMsgs);
   const p = {messages: msgs};
   const m = modelOverride !== undefined ? modelOverride : currentModel;
   if(m) p.model = m; // 智能优选不传，后端用默认型号
@@ -919,6 +1039,8 @@ async function runAPI(text, opts){
     }
     // 修复2：回复里的 ```csv 代码块下方给出真 xlsx 下载（SheetJS 缺失时降级为 .csv 原文）
     addCsvDownloads(wrap, full);
+    // 修复3：回复里的 ```ppt 代码块（严格 JSON）下方给出真 .pptx 下载（PptxGenJS 缺失时降级为导出大纲 .md 并如实标注）
+    addPptDownloads(wrap, full);
   }catch(e){
     // 请求失败 → 回退演示模式，保证体验不断
     historyMsgs.pop();
@@ -1087,6 +1209,12 @@ Object.assign(I18N.en,{attach_sheet_meta:"{sheets} sheets · {rows} rows total",
 Object.assign(I18N.ja,{attach_sheet_meta:"{sheets} シート · 全 {rows} 行",attach_text_meta:"{lines} 行のテキスト",attach_unparsed_meta:"未解析",attach_too_big:"5MB を超えているため追加できません：{name}",attach_label:"[添付ファイル：{name}]",attach_unparsed_line:"[添付ファイル：{name}（解析できなかったため、モデルは内容を見られません）]",trunc_note:"（以下、切り捨て）",dl_xlsx:"Excel (.xlsx) としてダウンロード",sheet_sys:"あなたはユーザーの表データ分析を手伝っています。結果を表形式で示すときは、完全なデータ表を ```csv コードブロックで出力してください：1 行目がヘッダー、1 行に 1 レコード、フィールドはカンマ区切りとし、行を省略しないでください。"});
 Object.assign(I18N.ko,{attach_sheet_meta:"시트 {sheets}개 · 총 {rows}행",attach_text_meta:"텍스트 {lines}줄",attach_unparsed_meta:"파싱 안 됨",attach_too_big:"5MB를 초과하여 추가하지 않음: {name}",attach_label:"[첨부 파일: {name}]",attach_unparsed_line:"[첨부 파일: {name} (파싱에 실패해 모델이 내용을 볼 수 없음)]",trunc_note:"(이하 잘림)",dl_xlsx:"Excel(.xlsx)로 다운로드",sheet_sys:"사용자의 표 데이터 분석을 돕고 있습니다. 결과를 표 형태로 제시할 때는 완전한 데이터 표를 ```csv 코드 블록으로 출력하세요: 첫 행은 헤더, 한 줄에 한 레코드, 필드는 쉼표로 구분하고, 어떤 행도 생략하지 마세요."});
 Object.assign(I18N.es,{attach_sheet_meta:"{sheets} hojas · {rows} filas en total",attach_text_meta:"{lines} líneas de texto",attach_unparsed_meta:"sin analizar",attach_too_big:"Supera el límite de 5 MB, no añadido: {name}",attach_label:"[Archivo adjunto: {name}]",attach_unparsed_line:"[Archivo adjunto: {name} (no se pudo analizar; el modelo no puede ver su contenido)]",trunc_note:"(truncado)",dl_xlsx:"Descargar como Excel (.xlsx)",sheet_sys:"Estás ayudando al usuario a analizar datos de hojas de cálculo. Cuando presentes resultados en forma de tabla, muestra la tabla de datos completa dentro de un bloque de código ```csv: la primera fila es el encabezado, un registro por línea, campos separados por comas, y no omitas ninguna fila."});
+/* 修复3补键：做PPT 真生成 .pptx（五语） */
+Object.assign(I18N.zh,{dl_pptx:"下载 PPT (.pptx)",dl_pptx_md:"导出大纲 (.md)",ppt_gen_fail:"PPT 生成失败，请重试",ppt_sys:"你正在协助用户制作演示文稿（PPT）。请把演示内容放在 ```ppt 代码块中输出，代码块里必须是严格合法的 JSON（不要注释、不要尾随逗号），结构为：{\"title\":\"演示标题\",\"slides\":[{\"title\":\"页标题\",\"bullets\":[\"要点1\",\"要点2\"]}]}。页数按用户要求，未指定时 6–10 页；每页 3–6 条要点，每条简短。代码块前后可以有一两句简短说明，但 JSON 必须完整合法。"});
+Object.assign(I18N.en,{dl_pptx:"Download deck (.pptx)",dl_pptx_md:"Export outline (.md)",ppt_gen_fail:"Deck generation failed — please try again",ppt_sys:"You are helping the user create a presentation (PPT). Output the deck content inside a ```ppt code block containing strictly valid JSON (no comments, no trailing commas) with this shape: {\"title\":\"Deck title\",\"slides\":[{\"title\":\"Slide title\",\"bullets\":[\"Point 1\",\"Point 2\"]}]}. Use the number of slides the user asks for, or 6–10 slides if unspecified; 3–6 short bullets per slide. You may add a brief sentence before or after the code block, but the JSON must be complete and valid."});
+Object.assign(I18N.ja,{dl_pptx:"PPT (.pptx) をダウンロード",dl_pptx_md:"アウトライン (.md) を書き出す",ppt_gen_fail:"PPT の生成に失敗しました。もう一度お試しください",ppt_sys:"あなたはユーザーのプレゼンテーション（PPT）作成を手伝っています。スライドの内容は ```ppt コードブロックの中に、厳密に有効な JSON（コメントや末尾のカンマは禁止）で出力してください。構造は {\"title\":\"タイトル\",\"slides\":[{\"title\":\"スライドタイトル\",\"bullets\":[\"要点1\",\"要点2\"]}]} です。ページ数はユーザーの指定に従い、指定がなければ 6〜10 ページにしてください。各ページには短い要点を 3〜6 個入れてください。コードブロックの前後に短い説明を付けても構いませんが、JSON は完全で有効でなければなりません。"});
+Object.assign(I18N.ko,{dl_pptx:"PPT (.pptx) 다운로드",dl_pptx_md:"개요 내보내기 (.md)",ppt_gen_fail:"PPT 생성에 실패했습니다. 다시 시도해 주세요",ppt_sys:"사용자의 프레젠테이션(PPT) 제작을 돕고 있습니다. 슬라이드 내용을 ```ppt 코드 블록 안에 엄격히 유효한 JSON(주석과 후행 쉼표 금지)으로 출력하세요. 구조는 {\"title\":\"제목\",\"slides\":[{\"title\":\"슬라이드 제목\",\"bullets\":[\"요점1\",\"요점2\"]}]} 입니다. 페이지 수는 사용자 요청을 따르고, 지정이 없으면 6~10페이지로 하세요. 슬라이드마다 짧은 요점을 3~6개 넣으세요. 코드 블록 앞뒤에 짧은 설명을 붙여도 되지만, JSON은 완전하고 유효해야 합니다."});
+Object.assign(I18N.es,{dl_pptx:"Descargar presentación (.pptx)",dl_pptx_md:"Exportar esquema (.md)",ppt_gen_fail:"La generación falló; inténtalo de nuevo",ppt_sys:"Estás ayudando al usuario a crear una presentación (PPT). Muestra el contenido dentro de un bloque de código ```ppt con JSON estrictamente válido (sin comentarios ni comas finales), con esta estructura: {\"title\":\"Título\",\"slides\":[{\"title\":\"Título de diapositiva\",\"bullets\":[\"Punto 1\",\"Punto 2\"]}]}. Usa el número de diapositivas que pida el usuario, o 6–10 si no lo especifica; incluye 3–6 puntos breves por diapositiva. Puedes añadir una frase breve antes o después del bloque, pero el JSON debe estar completo y ser válido."});
 const FOLLOWUPS = {
   zh:{
     ppt:["换成深色风格","加一页数据图表","压缩到 6 页"],
