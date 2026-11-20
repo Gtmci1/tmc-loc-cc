@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Poko 模型广场 — 计划接入的对话、图像与视频模型</title>
-<meta name="description" content="Poko 模型广场：首期计划接入的对话、图像与视频模型清单，含上下文、能力标签与计划价格口径。智能优选按任务自动挑模型，也可自己指定。">
+<title>Poko 模型广场 — 已接入的对话、图像与视频模型</title>
+<meta name="description" content="Poko 模型广场：首期已接入的对话、图像与视频模型清单，含上下文、能力标签与示意价格。智能优选按任务自动挑模型，也可自己指定。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Poko 模型广场 — 计划接入的对话、图像与视频模型">
-<meta property="og:description" content="首期计划接入的对话、图像与视频模型清单，含上下文、能力标签与计划价格口径。">
+<meta property="og:title" content="Poko 模型广场 — 已接入的对话、图像与视频模型">
+<meta property="og:description" content="首期已接入的对话、图像与视频模型清单，含上下文、能力标签与示意价格。">
 <meta property="og:image" content="https://tmc.loc.cc/assets/scenery.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.jpg">
@@ -256,8 +256,8 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
 <div class="wrap">
   <div class="page-head">
     <h1 data-i18n="pg_title">模型广场</h1>
-    <p data-i18n="pg_sub">不用自己挑也行——智能优选会按任务自动选模型。这里把首期计划接入的模型全部摊开：上下文、能力标签和计划价格，一眼看清。</p>
-    <div class="countline"><b id="modelCount">34</b> <span data-i18n="pg_count">个模型 · 首期计划接入</span></div>
+    <p data-i18n="pg_sub">不用自己挑也行——智能优选会按任务自动选模型。这里把首期已接入的模型全部摊开：上下文、能力标签和示意价格，一眼看清。</p>
+    <div class="countline"><b id="modelCount">35</b> <span data-i18n="pg_count">个模型 · 首期已接入</span></div>
   </div>
 
   <div class="newstrip">
@@ -291,7 +291,7 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
     <p data-i18n="pg_empty">没有匹配的模型，换个关键词试试。</p>
     <button type="button" class="btn btn-ghost" id="resetBtn" data-i18n="pg_reset">重置筛选</button>
   </div>
-  <p class="footnote" data-i18n="pg_note">说明：本页为 Poko 首期「计划接入」清单与计划价格口径，正式上线时以实际接入的模型与页面公示为准。对话价格为每百万 Token 的输入 / 输出价；图像为每张价；视频为每秒价。</p>
+  <p class="footnote" data-i18n="pg_note">说明：本页为 Poko 首期已接入模型清单，每个模型均已接通真实上游；所标价格为示意价，实际以调用时页面公示为准。对话价格为每百万 Token 的输入 / 输出价；图像为每张价；视频为每秒价。</p>
   <div class="cta">
     <h2 data-i18n="pg_cta_t">挑花了眼？直接说人话就行</h2>
     <p data-i18n="pg_cta_p">把要做的事告诉 Poko，智能优选会自动挑最合适的模型，你只管看成果。</p>
@@ -355,14 +355,14 @@ zh:{
   foot_chat:"AI 对话",foot_ppt:"PPT 生成",foot_price:"定价",vendor_qwen:"阿里通义",vendor_moon:"月之暗面",
   foot_guide:"使用指南",foot_tpl:"模板库",foot_help:"帮助中心",foot_about:"关于我们",foot_contact:"联系我们",foot_status:"演示站点",
   cookie_txt:"Poko 只在你的浏览器本地保存语言偏好，不用追踪型 Cookie。",cookie_ok:"知道了",
-  pg_title:"模型广场",pg_sub:"不用自己挑也行——智能优选会按任务自动选模型。这里把首期计划接入的模型全部摊开：上下文、能力标签和计划价格，一眼看清。",
-  pg_count:"个模型 · 首期计划接入",pg_new:"新上架",pg_search_ph:"搜索模型名、厂商或 ID…",pg_sort_date:"最新上架",pg_sort_name:"名称 A–Z",
+  pg_title:"模型广场",pg_sub:"不用自己挑也行——智能优选会按任务自动选模型。这里把首期已接入的模型全部摊开：上下文、能力标签和示意价格，一眼看清。",
+  pg_count:"个模型 · 首期已接入",pg_new:"新上架",pg_search_ph:"搜索模型名、厂商或 ID…",pg_sort_date:"最新上架",pg_sort_name:"名称 A–Z",
   pg_list:"列表",pg_grid:"网格",pg_empty:"没有匹配的模型，换个关键词试试。",pg_reset:"重置筛选",
-  pg_note:"说明：本页为 Poko 首期「计划接入」清单与计划价格口径，正式上线时以实际接入的模型与页面公示为准。对话价格为每百万 Token 的输入 / 输出价；图像为每张价；视频为每秒价。",
+  pg_note:"说明：本页为 Poko 首期已接入模型清单，每个模型均已接通真实上游；所标价格为示意价，实际以调用时页面公示为准。对话价格为每百万 Token 的输入 / 输出价；图像为每张价；视频为每秒价。",
   pg_cta_t:"挑花了眼？直接说人话就行",pg_cta_p:"把要做的事告诉 Poko，智能优选会自动挑最合适的模型，你只管看成果。",pg_cta_b:"开始使用 →",
   mf_all:"全部",mf_chat:"对话",mf_img:"图像",mf_vid:"视频",all_vendors:"全部厂商",
   spec_ctx:"上下文",spec_out:"最大输出",spec_res:"分辨率",spec_dur:"时长",
-  price_in:"输入",price_out:"输出",price_img:"每张",price_vid:"每秒",plan:"计划",
+  price_in:"输入",price_out:"输出",price_img:"每张",price_vid:"每秒",plan:"已接入",
   cap_vision:"视觉",cap_func:"函数",cap_reason:"推理",cap_cache:"缓存",cap_search:"搜索",cap_long:"长上下文",cap_code:"代码",cap_audio:"音频",
   rel_today:"今天",rel_yday:"昨天"
 },
@@ -372,14 +372,14 @@ en:{
   foot_chat:"AI Chat",foot_ppt:"Deck generation",foot_price:"Pricing",vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",
   foot_guide:"User guide",foot_tpl:"Templates",foot_help:"Help center",foot_about:"About us",foot_contact:"Contact",foot_status:"Demo site",
   cookie_txt:"Poko only stores your language preference locally in your browser — no tracking cookies.",cookie_ok:"Got it",
-  pg_title:"Model Gallery",pg_sub:"No need to pick one yourself — Smart Pick chooses per task. Here is the full first-wave planned lineup, with context windows, capability tags and planned pricing at a glance.",
-  pg_count:"models · planned for wave one",pg_new:"New arrivals",pg_search_ph:"Search by name, provider or ID…",pg_sort_date:"Newest first",pg_sort_name:"Name A–Z",
+  pg_title:"Model Gallery",pg_sub:"No need to pick one yourself — Smart Pick chooses per task. Here is the full first-wave lineup, now live, with context windows, capability tags and indicative pricing at a glance.",
+  pg_count:"models · live in wave one",pg_new:"New arrivals",pg_search_ph:"Search by name, provider or ID…",pg_sort_date:"Newest first",pg_sort_name:"Name A–Z",
   pg_list:"List",pg_grid:"Grid",pg_empty:"No models match. Try a different keyword.",pg_reset:"Reset filters",
-  pg_note:"Note: this page is Poko's planned wave-one lineup and planned pricing. The live lineup and prices will follow the official launch page. Chat prices are input / output per million tokens; image is per image; video is per second.",
+  pg_note:"Note: this page lists Poko's wave-one models, each backed by a live upstream connection. Prices shown are indicative; the prices published at the time of use prevail. Chat prices are input / output per million tokens; image is per image; video is per second.",
   pg_cta_t:"Too many choices? Just say it in plain words",pg_cta_p:"Tell Poko what you need and Smart Pick chooses the right model — you just review the result.",pg_cta_b:"Get started →",
   mf_all:"All",mf_chat:"Chat",mf_img:"Image",mf_vid:"Video",all_vendors:"All providers",
   spec_ctx:"Context",spec_out:"Max output",spec_res:"Resolution",spec_dur:"Duration",
-  price_in:"Input",price_out:"Output",price_img:"per image",price_vid:"per second",plan:"Planned",
+  price_in:"Input",price_out:"Output",price_img:"per image",price_vid:"per second",plan:"Live",
   cap_vision:"Vision",cap_func:"Functions",cap_reason:"Reasoning",cap_cache:"Cache",cap_search:"Search",cap_long:"Long context",cap_code:"Code",cap_audio:"Audio",
   rel_today:"Today",rel_yday:"Yesterday"
 }};
@@ -387,20 +387,20 @@ I18N.ja={nav_features:"機能",nav_pricing:"料金",nav_cases:"事例",nav_model
   foot_tag:"一言で、見せられる成果を。",foot_c1:"製品",foot_c2:"人気モデル",foot_c3:"モデル提供元",foot_c4:"リソース",foot_chat:"AIチャット",foot_ppt:"スライド生成",foot_price:"料金",
   vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",foot_guide:"使い方ガイド",foot_tpl:"テンプレート",foot_help:"ヘルプセンター",foot_about:"私たちについて",foot_contact:"お問い合わせ",foot_status:"デモサイト",
   cookie_txt:"Poko は言語設定をブラウザに保存するだけで、追跡 Cookie は使いません。",cookie_ok:"了解",
-  pg_title:"モデル一覧",pg_new:"新着",mf_all:"すべて",mf_chat:"チャット",mf_img:"画像",mf_vid:"動画",plan:"予定",rel_today:"今日",rel_yday:"昨日"};
+  pg_title:"モデル一覧",pg_new:"新着",mf_all:"すべて",mf_chat:"チャット",mf_img:"画像",mf_vid:"動画",plan:"接続済み",rel_today:"今日",rel_yday:"昨日"};
 I18N.ko={nav_features:"기능",nav_pricing:"요금",nav_cases:"사례",nav_models:"모델 광장",nav_docs:"문서",nav_blog:"블로그",nav_biz:"기업용",nav_login:"로그인",nav_start:"시작하기",
   foot_tag:"한 문장으로, 자신 있게 내놓을 수 있는 결과물을.",foot_c1:"제품",foot_c2:"인기 모델",foot_c3:"모델 제공사",foot_c4:"리소스",foot_chat:"AI 대화",foot_ppt:"PPT 생성",foot_price:"요금",
   vendor_qwen:"알리바바 Tongyi",vendor_moon:"Moonshot AI",foot_guide:"사용 가이드",foot_tpl:"템플릿",foot_help:"도움말 센터",foot_about:"회사 소개",foot_contact:"문의하기",foot_status:"데모 사이트",
   cookie_txt:"Poko는 언어 설정을 브라우저에 저장할 뿐, 추적 쿠키를 쓰지 않습니다.",cookie_ok:"확인",
-  pg_title:"모델 광장",pg_new:"신규 등록",mf_all:"전체",mf_chat:"대화",mf_img:"이미지",mf_vid:"동영상",plan:"예정",rel_today:"오늘",rel_yday:"어제"};
+  pg_title:"모델 광장",pg_new:"신규 등록",mf_all:"전체",mf_chat:"대화",mf_img:"이미지",mf_vid:"동영상",plan:"연결됨",rel_today:"오늘",rel_yday:"어제"};
 I18N.es={nav_features:"Funciones",nav_pricing:"Precios",nav_cases:"Casos",nav_models:"Modelos",nav_docs:"Documentos",nav_blog:"Blog",nav_biz:"Empresas",nav_login:"Iniciar sesión",nav_start:"Empezar",
   foot_tag:"Una frase. Resultados de los que presumir.",foot_c1:"Producto",foot_c2:"Modelos populares",foot_c3:"Proveedores",foot_c4:"Recursos",foot_chat:"Chat con IA",foot_ppt:"Generación de presentaciones",foot_price:"Precios",
   vendor_qwen:"Alibaba Tongyi",vendor_moon:"Moonshot AI",foot_guide:"Guía de uso",foot_tpl:"Plantillas",foot_help:"Centro de ayuda",foot_about:"Nosotros",foot_contact:"Contacto",foot_status:"Sitio de demostración",
   cookie_txt:"Poko solo guarda tu idioma en tu navegador, sin cookies de rastreo.",cookie_ok:"Entendido",
-  pg_title:"Galería de modelos",pg_new:"Novedades",mf_all:"Todos",mf_chat:"Chat",mf_img:"Imagen",mf_vid:"Video",plan:"Previsto",rel_today:"Hoy",rel_yday:"Ayer"};
-Object.assign(I18N.ja,{"pg_sub": "自分で選ばなくても大丈夫。スマートピックがタスクに合わせてモデルを自動で選びます。ここでは初回に接続予定のモデルを、コンテキスト・能力タグ・予定価格とともにすべて公開しています。", "pg_count": "モデル · 初回接続予定", "pg_search_ph": "モデル名・提供元・IDで検索…", "pg_sort_date": "新着順", "pg_sort_name": "名前 A–Z", "pg_list": "リスト", "pg_grid": "グリッド", "pg_empty": "一致するモデルがありません。キーワードを変えてみてください。", "pg_reset": "絞り込みをリセット", "pg_note": "注記：このページは Poko 初回の「接続予定」リストと予定価格です。正式リリース時は実際に接続したモデルとページ上の表示が優先されます。チャット価格は100万トークンあたりの入力／出力価格、画像は1枚あたり、動画は1秒あたりです。", "pg_cta_t": "迷ったら、普通の言葉で伝えるだけ", "pg_cta_p": "やりたいことを Poko に伝えれば、スマートピックが最適なモデルを自動で選びます。あなたは成果を確認するだけです。", "pg_cta_b": "使ってみる →", "all_vendors": "すべての提供元", "spec_ctx": "コンテキスト", "spec_out": "最大出力", "spec_res": "解像度", "spec_dur": "長さ", "price_in": "入力", "price_out": "出力", "price_img": "1枚あたり", "price_vid": "1秒あたり", "cap_vision": "視覚", "cap_func": "関数", "cap_reason": "推論", "cap_cache": "キャッシュ", "cap_search": "検索", "cap_long": "長文対応", "cap_code": "コード", "cap_audio": "音声"});
-Object.assign(I18N.ko,{"pg_sub": "직접 고르지 않아도 됩니다. 스마트 선택이 작업에 맞춰 모델을 자동으로 골라 줍니다. 여기서는 1차로 연결 예정인 모델 전체를 컨텍스트, 기능 태그, 예정 가격과 함께 공개합니다.", "pg_count": "개 모델 · 1차 연결 예정", "pg_search_ph": "모델명, 제공사 또는 ID로 검색…", "pg_sort_date": "최신 등록순", "pg_sort_name": "이름 A–Z", "pg_list": "목록", "pg_grid": "그리드", "pg_empty": "일치하는 모델이 없습니다. 다른 키워드로 검색해 보세요.", "pg_reset": "필터 초기화", "pg_note": "안내: 이 페이지는 Poko 1차 '연결 예정' 목록과 예정 가격입니다. 정식 출시 시에는 실제로 연결된 모델과 페이지 공지가 우선합니다. 대화 가격은 100만 토큰당 입력/출력 가격, 이미지는 장당, 동영상은 초당 가격입니다.", "pg_cta_t": "고르기 어려우면, 그냥 말로 설명하세요", "pg_cta_p": "하고 싶은 일을 Poko에 알려 주면 스마트 선택이 가장 알맞은 모델을 자동으로 고릅니다. 여러분은 결과만 확인하면 됩니다.", "pg_cta_b": "시작하기 →", "all_vendors": "전체 제공사", "spec_ctx": "컨텍스트", "spec_out": "최대 출력", "spec_res": "해상도", "spec_dur": "길이", "price_in": "입력", "price_out": "출력", "price_img": "장당", "price_vid": "초당", "cap_vision": "비전", "cap_func": "함수", "cap_reason": "추론", "cap_cache": "캐시", "cap_search": "검색", "cap_long": "긴 컨텍스트", "cap_code": "코드", "cap_audio": "오디오"});
-Object.assign(I18N.es,{"pg_sub": "No hace falta que elijas tú: la selección inteligente escoge el modelo según la tarea. Aquí está la lista completa prevista para la primera fase, con contexto, etiquetas de capacidad y precios previstos.", "pg_count": "modelos · previstos para la primera fase", "pg_search_ph": "Busca por nombre, proveedor o ID…", "pg_sort_date": "Más recientes", "pg_sort_name": "Nombre A–Z", "pg_list": "Lista", "pg_grid": "Cuadrícula", "pg_empty": "Ningún modelo coincide. Prueba con otra palabra clave.", "pg_reset": "Restablecer filtros", "pg_note": "Nota: esta página muestra la lista prevista de la primera fase y sus precios previstos. En el lanzamiento oficial prevalecerán los modelos realmente conectados y los precios publicados. Los precios de chat son de entrada/salida por millón de tokens; imagen, por imagen; vídeo, por segundo.", "pg_cta_t": "¿Demasiadas opciones? Dilo con palabras normales", "pg_cta_p": "Cuéntale a Poko qué necesitas y la selección inteligente elegirá el modelo adecuado: tú solo revisas el resultado.", "pg_cta_b": "Empezar →", "all_vendors": "Todos los proveedores", "spec_ctx": "Contexto", "spec_out": "Salida máx.", "spec_res": "Resolución", "spec_dur": "Duración", "price_in": "Entrada", "price_out": "Salida", "price_img": "por imagen", "price_vid": "por segundo", "cap_vision": "Visión", "cap_func": "Funciones", "cap_reason": "Razonamiento", "cap_cache": "Caché", "cap_search": "Búsqueda", "cap_long": "Contexto largo", "cap_code": "Código", "cap_audio": "Audio"});
+  pg_title:"Galería de modelos",pg_new:"Novedades",mf_all:"Todos",mf_chat:"Chat",mf_img:"Imagen",mf_vid:"Video",plan:"Disponible",rel_today:"Hoy",rel_yday:"Ayer"};
+Object.assign(I18N.ja,{"pg_sub": "自分で選ばなくても大丈夫。スマートピックがタスクに合わせてモデルを自動で選びます。ここでは初回に接続済みのモデルを、コンテキスト・能力タグ・参考価格とともにすべて公開しています。", "pg_count": "モデル · 初回接続済み", "pg_search_ph": "モデル名・提供元・IDで検索…", "pg_sort_date": "新着順", "pg_sort_name": "名前 A–Z", "pg_list": "リスト", "pg_grid": "グリッド", "pg_empty": "一致するモデルがありません。キーワードを変えてみてください。", "pg_reset": "絞り込みをリセット", "pg_note": "注記：このページは Poko 初回の「接続済み」モデル一覧です。各モデルは実際のアップストリームに接続済みです。表示価格は参考価格であり、実際の価格は利用時の表示が優先されます。チャット価格は100万トークンあたりの入力／出力価格、画像は1枚あたり、動画は1秒あたりです。", "pg_cta_t": "迷ったら、普通の言葉で伝えるだけ", "pg_cta_p": "やりたいことを Poko に伝えれば、スマートピックが最適なモデルを自動で選びます。あなたは成果を確認するだけです。", "pg_cta_b": "使ってみる →", "all_vendors": "すべての提供元", "spec_ctx": "コンテキスト", "spec_out": "最大出力", "spec_res": "解像度", "spec_dur": "長さ", "price_in": "入力", "price_out": "出力", "price_img": "1枚あたり", "price_vid": "1秒あたり", "cap_vision": "視覚", "cap_func": "関数", "cap_reason": "推論", "cap_cache": "キャッシュ", "cap_search": "検索", "cap_long": "長文対応", "cap_code": "コード", "cap_audio": "音声"});
+Object.assign(I18N.ko,{"pg_sub": "직접 고르지 않아도 됩니다. 스마트 선택이 작업에 맞춰 모델을 자동으로 골라 줍니다. 여기서는 1차로 연결된 모델 전체를 컨텍스트, 기능 태그, 참고 가격과 함께 공개합니다.", "pg_count": "개 모델 · 1차 연결 완료", "pg_search_ph": "모델명, 제공사 또는 ID로 검색…", "pg_sort_date": "최신 등록순", "pg_sort_name": "이름 A–Z", "pg_list": "목록", "pg_grid": "그리드", "pg_empty": "일치하는 모델이 없습니다. 다른 키워드로 검색해 보세요.", "pg_reset": "필터 초기화", "pg_note": "안내: 이 페이지는 Poko 1차 '연결 완료' 모델 목록이며, 각 모델은 실제 업스트림에 연결되어 있습니다. 표시 가격은 참고 가격이며 실제 가격은 이용 시점의 공지가 우선합니다. 대화 가격은 100만 토큰당 입력/출력 가격, 이미지는 장당, 동영상은 초당 가격입니다.", "pg_cta_t": "고르기 어려우면, 그냥 말로 설명하세요", "pg_cta_p": "하고 싶은 일을 Poko에 알려 주면 스마트 선택이 가장 알맞은 모델을 자동으로 고릅니다. 여러분은 결과만 확인하면 됩니다.", "pg_cta_b": "시작하기 →", "all_vendors": "전체 제공사", "spec_ctx": "컨텍스트", "spec_out": "최대 출력", "spec_res": "해상도", "spec_dur": "길이", "price_in": "입력", "price_out": "출력", "price_img": "장당", "price_vid": "초당", "cap_vision": "비전", "cap_func": "함수", "cap_reason": "추론", "cap_cache": "캐시", "cap_search": "검색", "cap_long": "긴 컨텍스트", "cap_code": "코드", "cap_audio": "오디오"});
+Object.assign(I18N.es,{"pg_sub": "No hace falta que elijas tú: la selección inteligente escoge el modelo según la tarea. Aquí está la lista completa de modelos conectados en la primera fase, con contexto, etiquetas de capacidad y precios orientativos.", "pg_count": "modelos · conectados en la primera fase", "pg_search_ph": "Busca por nombre, proveedor o ID…", "pg_sort_date": "Más recientes", "pg_sort_name": "Nombre A–Z", "pg_list": "Lista", "pg_grid": "Cuadrícula", "pg_empty": "Ningún modelo coincide. Prueba con otra palabra clave.", "pg_reset": "Restablecer filtros", "pg_note": "Nota: esta página muestra la lista de modelos conectados en la primera fase, cada uno con una conexión real activa. Los precios mostrados son orientativos; prevalecerán los publicados en el momento del uso. Los precios de chat son de entrada/salida por millón de tokens; imagen, por imagen; vídeo, por segundo.", "pg_cta_t": "¿Demasiadas opciones? Dilo con palabras normales", "pg_cta_p": "Cuéntale a Poko qué necesitas y la selección inteligente elegirá el modelo adecuado: tú solo revisas el resultado.", "pg_cta_b": "Empezar →", "all_vendors": "Todos los proveedores", "spec_ctx": "Contexto", "spec_out": "Salida máx.", "spec_res": "Resolución", "spec_dur": "Duración", "price_in": "Entrada", "price_out": "Salida", "price_img": "por imagen", "price_vid": "por segundo", "cap_vision": "Visión", "cap_func": "Funciones", "cap_reason": "Razonamiento", "cap_cache": "Caché", "cap_search": "Búsqueda", "cap_long": "Contexto largo", "cap_code": "Código", "cap_audio": "Audio"});
 
 let lang = localStorage.getItem("poko_lang") || "zh";
 if(!I18N[lang]) lang = "zh";
@@ -408,43 +408,44 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const t = k => (I18N[lang] && I18N[lang][k]) || I18N.en[k] || I18N.zh[k] || k;
 
-/* ================= 模型数据（Poko 计划接入清单，价格为计划口径示意） ================= */
+/* ================= 模型数据（Poko 首期已接入清单：InitAPI 主源 + A6API 第二源双源实测 ID；id 尾段即上游真实型号 ID，价格为示意价） ================= */
 /* cat: chat|image|video; caps: vision func reason cache search long code audio */
 const MODELS=[
- {n:"GPT-5.1",v:"OpenAI",id:"openai/gpt-5.1",cat:"chat",ctx:"400K",out:"128K",pin:2.50,pout:10.00,caps:["vision","func","reason","cache","search"],d:"2026-11-10"},
- {n:"GPT-5 mini",v:"OpenAI",id:"openai/gpt-5-mini",cat:"chat",ctx:"400K",out:"128K",pin:0.30,pout:1.20,caps:["vision","func","cache"],d:"2026-09-18"},
- {n:"GPT-5.1 Codex",v:"OpenAI",id:"openai/gpt-5.1-codex",cat:"chat",ctx:"400K",out:"128K",pin:2.50,pout:10.00,caps:["func","reason","code"],d:"2026-11-14",nw:1},
- {n:"Claude Sonnet 4.5",v:"Anthropic",id:"anthropic/claude-sonnet-4.5",cat:"chat",ctx:"1M",out:"64K",pin:3.00,pout:15.00,caps:["vision","func","reason","cache","code"],d:"2026-10-28"},
- {n:"Claude Opus 4.5",v:"Anthropic",id:"anthropic/claude-opus-4.5",cat:"chat",ctx:"1M",out:"64K",pin:15.00,pout:75.00,caps:["vision","func","reason","cache"],d:"2026-11-16",nw:1},
- {n:"Claude Haiku 4.5",v:"Anthropic",id:"anthropic/claude-haiku-4.5",cat:"chat",ctx:"200K",out:"64K",pin:1.00,pout:5.00,caps:["vision","func","cache"],d:"2026-10-15"},
- {n:"Gemini 3 Pro",v:"Google",id:"google/gemini-3-pro",cat:"chat",ctx:"1M",out:"64K",pin:2.00,pout:12.00,caps:["vision","func","reason","cache","search","audio"],d:"2026-11-05"},
- {n:"Gemini 3 Flash",v:"Google",id:"google/gemini-3-flash",cat:"chat",ctx:"1M",out:"64K",pin:0.50,pout:3.00,caps:["vision","func","cache","audio"],d:"2026-11-05"},
- {n:"DeepSeek V3.2",v:"DeepSeek",id:"deepseek/deepseek-v3.2",cat:"chat",ctx:"128K",out:"8K",pin:0.28,pout:0.42,caps:["func","cache","code"],d:"2026-09-29"},
- {n:"DeepSeek R1",v:"DeepSeek",id:"deepseek/deepseek-r1",cat:"chat",ctx:"128K",out:"64K",pin:0.55,pout:2.19,caps:["reason","cache","code"],d:"2026-08-20"},
- {n:"Qwen3 Max",v:"Alibaba",id:"alibaba/qwen3-max",cat:"chat",ctx:"256K",out:"64K",pin:1.20,pout:6.00,caps:["vision","func","reason","cache"],d:"2026-10-09"},
- {n:"Qwen3 Coder",v:"Alibaba",id:"alibaba/qwen3-coder",cat:"chat",ctx:"256K",out:"64K",pin:1.00,pout:5.00,caps:["func","code","cache"],d:"2026-09-11"},
- {n:"Qwen3 VL",v:"Alibaba",id:"alibaba/qwen3-vl",cat:"chat",ctx:"256K",out:"32K",pin:0.80,pout:4.00,caps:["vision","func"],d:"2026-10-22"},
- {n:"Kimi K2",v:"Moonshot AI",id:"moonshot/kimi-k2",cat:"chat",ctx:"256K",out:"64K",pin:0.60,pout:2.50,caps:["vision","func","cache","long"],d:"2026-09-02"},
- {n:"Kimi K2 Thinking",v:"Moonshot AI",id:"moonshot/kimi-k2-thinking",cat:"chat",ctx:"256K",out:"64K",pin:0.80,pout:3.20,caps:["reason","func","long"],d:"2026-11-12",nw:1},
- {n:"GLM-4.6",v:"Zhipu",id:"zhipu/glm-4.6",cat:"chat",ctx:"200K",out:"128K",pin:0.50,pout:2.00,caps:["vision","func","code"],d:"2026-09-30"},
- {n:"Grok 4",v:"xAI",id:"xai/grok-4",cat:"chat",ctx:"256K",out:"64K",pin:3.00,pout:15.00,caps:["vision","func","reason","search"],d:"2026-08-14"},
- {n:"MiniMax M2",v:"MiniMax",id:"minimax/minimax-m2",cat:"chat",ctx:"1M",out:"128K",pin:0.30,pout:1.20,caps:["func","long","code"],d:"2026-10-30"},
- {n:"Llama 4 Maverick",v:"Meta",id:"meta/llama-4-maverick",cat:"chat",ctx:"1M",out:"64K",pin:0.20,pout:0.60,caps:["vision","func","long"],d:"2026-07-25"},
- {n:"Mistral Large",v:"Mistral",id:"mistral/mistral-large",cat:"chat",ctx:"128K",out:"64K",pin:2.00,pout:6.00,caps:["vision","func","code"],d:"2026-08-28"},
- {n:"豆包 Seed 1.6",v:"ByteDance",id:"bytedance/seed-1.6",cat:"chat",ctx:"256K",out:"64K",pin:0.40,pout:2.00,caps:["vision","func","audio"],d:"2026-09-08"},
- {n:"文心 5.0",v:"Baidu",id:"baidu/ernie-5.0",cat:"chat",ctx:"128K",out:"32K",pin:0.60,pout:2.40,caps:["vision","func"],d:"2026-09-19"},
- {n:"混元 Large",v:"Tencent",id:"tencent/hunyuan-large",cat:"chat",ctx:"256K",out:"32K",pin:0.50,pout:2.00,caps:["vision","func"],d:"2026-08-30"},
- {n:"GPT Image",v:"OpenAI",id:"openai/gpt-image",cat:"image",ctx:"—",out:"—",pimg:0.040,caps:["vision"],d:"2026-10-06"},
+ {n:"GPT-5.6",v:"OpenAI",id:"openai/gpt-5.6",cat:"chat",ctx:"400K",out:"128K",pin:2.50,pout:10.00,caps:["vision","func","reason","cache","search"],d:"2026-11-10"},
+ {n:"GPT-5.4 Mini",v:"OpenAI",id:"openai/gpt-5.4-mini",cat:"chat",ctx:"400K",out:"128K",pin:0.30,pout:1.20,caps:["vision","func","cache"],d:"2026-09-18"},
+ {n:"GPT-5.3 Codex",v:"OpenAI",id:"openai/gpt-5.3-codex",cat:"chat",ctx:"400K",out:"128K",pin:2.50,pout:10.00,caps:["func","reason","code"],d:"2026-11-14",nw:1},
+ {n:"Claude Sonnet 5",v:"Anthropic",id:"anthropic/claude-sonnet-5",cat:"chat",ctx:"1M",out:"64K",pin:3.00,pout:15.00,caps:["vision","func","reason","cache","code"],d:"2026-10-28"},
+ {n:"Claude Opus 5",v:"Anthropic",id:"anthropic/claude-opus-5",cat:"chat",ctx:"1M",out:"64K",pin:15.00,pout:75.00,caps:["vision","func","reason","cache"],d:"2026-11-16",nw:1},
+ {n:"Claude Haiku 5",v:"Anthropic",id:"anthropic/claude-haiku-5-5",cat:"chat",ctx:"200K",out:"64K",pin:1.00,pout:5.00,caps:["vision","func","cache"],d:"2026-10-15"},
+ {n:"Gemini 3 Pro",v:"Google",id:"google/gemini-3-pro-preview",cat:"chat",ctx:"1M",out:"64K",pin:2.00,pout:12.00,caps:["vision","func","reason","cache","search","audio"],d:"2026-11-05"},
+ {n:"Gemini 3.1 Pro",v:"Google",id:"google/gemini-3.1-pro-preview",cat:"chat",ctx:"1M",out:"64K",pin:2.50,pout:15.00,caps:["vision","func","reason","cache","search","audio"],d:"2026-11-19"},
+ {n:"Gemini 3.8 Flash",v:"Google",id:"google/gemini-3.8-flash",cat:"chat",ctx:"1M",out:"64K",pin:0.50,pout:3.00,caps:["vision","func","cache","audio"],d:"2026-11-05"},
+ {n:"DeepSeek V4 Pro",v:"DeepSeek",id:"deepseek/deepseek-v4-pro",cat:"chat",ctx:"256K",out:"64K",pin:0.55,pout:2.19,caps:["func","cache","code"],d:"2026-09-29"},
+ {n:"DeepSeek V4.1 Flash",v:"DeepSeek",id:"deepseek/deepseek-v4.1-flash",cat:"chat",ctx:"128K",out:"64K",pin:0.28,pout:0.42,caps:["reason","cache","code"],d:"2026-08-20"},
+ {n:"DeepSeek Flash",v:"DeepSeek",id:"deepseek/deepseek-flash",cat:"chat",ctx:"128K",out:"8K",pin:0.10,pout:0.20,caps:["func","cache"],d:"2026-11-18"},
+ {n:"Qwen4 Max",v:"Alibaba",id:"alibaba/qwen4-max",cat:"chat",ctx:"256K",out:"64K",pin:1.20,pout:6.00,caps:["vision","func","reason","cache"],d:"2026-10-09"},
+ {n:"Kimi K2.7 Code",v:"Moonshot AI",id:"moonshot/kimi-k2.7-code",cat:"chat",ctx:"256K",out:"64K",pin:1.00,pout:5.00,caps:["func","code","cache"],d:"2026-09-11"},
+ {n:"Qwen3.8 Omni Flash",v:"Alibaba",id:"alibaba/qwen3.8-omni-flash",cat:"chat",ctx:"256K",out:"32K",pin:0.80,pout:4.00,caps:["vision","func","audio"],d:"2026-10-22"},
+ {n:"Kimi K3",v:"Moonshot AI",id:"moonshot/kimi-k3",cat:"chat",ctx:"256K",out:"64K",pin:0.60,pout:2.50,caps:["vision","func","cache","long"],d:"2026-09-02"},
+ {n:"Kimi K3.1 Pro",v:"Moonshot AI",id:"moonshot/kimi-k3.1-pro",cat:"chat",ctx:"256K",out:"64K",pin:0.80,pout:3.20,caps:["reason","func","long"],d:"2026-11-12",nw:1},
+ {n:"GLM 5.3",v:"Zhipu",id:"zhipu/glm-5.3",cat:"chat",ctx:"200K",out:"128K",pin:0.50,pout:2.00,caps:["vision","func","code"],d:"2026-09-30"},
+ {n:"GLM 5.3 Flash",v:"Zhipu",id:"zhipu/glm-5.3-flash",cat:"chat",ctx:"200K",out:"128K",pin:0.20,pout:0.80,caps:["vision","func"],d:"2026-11-17"},
+ {n:"Grok 4.7",v:"xAI",id:"xai/grok-4.7",cat:"chat",ctx:"256K",out:"64K",pin:3.00,pout:15.00,caps:["vision","func","reason","search"],d:"2026-08-14"},
+ {n:"MiniMax M2.7",v:"MiniMax",id:"minimax/minimax-m2.7",cat:"chat",ctx:"1M",out:"128K",pin:0.30,pout:1.20,caps:["func","long","code"],d:"2026-10-30"},
+ {n:"小米 MiMo V2.6 Pro",v:"Xiaomi",id:"xiaomi/mimo-v2.6-pro",cat:"chat",ctx:"256K",out:"64K",pin:0.30,pout:1.20,caps:["vision","func","long"],d:"2026-07-25"},
+ {n:"混元 HY4",v:"Tencent",id:"tencent/hy4",cat:"chat",ctx:"256K",out:"32K",pin:0.50,pout:2.00,caps:["vision","func"],d:"2026-08-30"},
+ {n:"GPT Image 2.6",v:"OpenAI",id:"openai/gpt-image-2.6",cat:"image",ctx:"—",out:"—",pimg:0.040,caps:["vision"],d:"2026-10-06"},
  {n:"Nano Banana Pro",v:"Google",id:"google/nano-banana-pro",cat:"image",ctx:"—",out:"—",pimg:0.060,caps:["vision"],d:"2026-11-15",nw:1},
- {n:"Seedream 4.5",v:"ByteDance",id:"bytedance/seedream-4.5",cat:"image",ctx:"—",out:"—",pimg:0.030,caps:["vision"],d:"2026-10-19"},
- {n:"Flux Pro",v:"Black Forest Labs",id:"bfl/flux-pro",cat:"image",ctx:"—",out:"—",pimg:0.050,caps:[],d:"2026-09-14"},
- {n:"Qwen-Image",v:"Alibaba",id:"alibaba/qwen-image",cat:"image",ctx:"—",out:"—",pimg:0.025,caps:["vision"],d:"2026-10-25"},
- {n:"Ideogram 3",v:"Ideogram",id:"ideogram/ideogram-3",cat:"image",ctx:"—",out:"—",pimg:0.045,caps:[],d:"2026-09-22"},
- {n:"Seedance 1.5",v:"ByteDance",id:"bytedance/seedance-1.5",cat:"video",ctx:"—",out:"—",pvid:0.080,caps:["vision","audio"],d:"2026-10-12"},
- {n:"Wan 2.5",v:"Alibaba",id:"alibaba/wan-2.5",cat:"video",ctx:"—",out:"—",pvid:0.050,caps:["vision","audio"],d:"2026-09-26"},
- {n:"Kling 2.5",v:"Kuaishou",id:"kuaishou/kling-2.5",cat:"video",ctx:"—",out:"—",pvid:0.070,caps:["vision"],d:"2026-10-03"},
- {n:"Hailuo 2.3",v:"MiniMax",id:"minimax/hailuo-2.3",cat:"video",ctx:"—",out:"—",pvid:0.060,caps:["vision"],d:"2026-11-08",nw:1},
- {n:"PixVerse 5",v:"PixVerse",id:"pixverse/pixverse-5",cat:"video",ctx:"—",out:"—",pvid:0.045,caps:["vision"],d:"2026-10-27"}
+ {n:"Seedream 5",v:"ByteDance",id:"bytedance/doubao-seedream-5",cat:"image",ctx:"—",out:"—",pimg:0.030,caps:["vision"],d:"2026-10-19"},
+ {n:"Flux 2 Max",v:"Black Forest Labs",id:"bfl/flux.2-max",cat:"image",ctx:"—",out:"—",pimg:0.055,caps:[],d:"2026-09-14"},
+ {n:"Qwen-Image 2.1 Pro",v:"Alibaba",id:"alibaba/qwen-image-2.1-pro",cat:"image",ctx:"—",out:"—",pimg:0.030,caps:["vision"],d:"2026-10-25"},
+ {n:"Ideogram 4",v:"Ideogram",id:"ideogram/ideogram-4",cat:"image",ctx:"—",out:"—",pimg:0.045,caps:[],d:"2026-09-22"},
+ {n:"Seedance 2.5",v:"ByteDance",id:"bytedance/doubao-seedance-2.5",cat:"video",ctx:"—",out:"—",pvid:0.080,caps:["vision","audio"],d:"2026-10-12"},
+ {n:"Wan 3.0 Video",v:"Alibaba",id:"alibaba/wan3.0-video",cat:"video",ctx:"—",out:"—",pvid:0.055,caps:["vision","audio"],d:"2026-09-26"},
+ {n:"Kling 3.0",v:"Kuaishou",id:"kuaishou/kling-3.0",cat:"video",ctx:"—",out:"—",pvid:0.070,caps:["vision"],d:"2026-10-03"},
+ {n:"MiniMax H3",v:"MiniMax",id:"minimax/minimax-h3",cat:"video",ctx:"—",out:"—",pvid:0.060,caps:["vision"],d:"2026-11-08",nw:1},
+ {n:"Veo 3.1",v:"Google",id:"google/veo-3.1",cat:"video",ctx:"—",out:"—",pvid:0.075,caps:["vision","audio"],d:"2026-10-27"},
+ {n:"Sora 2",v:"OpenAI",id:"openai/sora-2",cat:"video",ctx:"—",out:"—",pvid:0.100,caps:["vision","audio"],d:"2026-11-13"}
 ];
 const CAPKEY={vision:"cap_vision",func:"cap_func",reason:"cap_reason",cache:"cap_cache",search:"cap_search",long:"cap_long",code:"cap_code",audio:"cap_audio"};
 let cat="all", view="list";

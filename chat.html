@@ -208,7 +208,7 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
 
 <main>
   <div class="topbar">
-    <label class="modelpick">✦ <select id="modelSel" aria-label="Model"><option value="smart" data-i18n="model_smart">智能优选</option><option value="deepseek-v4.1-flash">DeepSeek V4.1 Flash</option><option value="deepseek-v4-pro">DeepSeek V4 Pro</option><option value="claude-sonnet-5">Claude Sonnet 5</option><option value="gpt-5.6">GPT-5.6</option><option value="grok-4.7">Grok 4.7</option><option value="glm-5.3">GLM 5.3</option></select></label>
+    <label class="modelpick">✦ <select id="modelSel" aria-label="Model"><option value="" data-i18n="model_smart">智能优选</option><option value="deepseek-v4.1-flash">DeepSeek V4.1 Flash</option><option value="deepseek-v4-pro">DeepSeek V4 Pro</option><option value="claude-sonnet-5">Claude Sonnet 5</option><option value="gpt-5.6">GPT-5.6</option><option value="grok-4.7">Grok 4.7</option><option value="glm-5.3">GLM 5.3</option><option value="gemini-3-pro-preview">Gemini 3 Pro</option><option value="gemini-3.8-flash">Gemini 3.8 Flash</option><option value="qwen4-max">Qwen4 Max</option><option value="kimi-k3">Kimi K3</option><option value="minimax-m2.7">MiniMax M2.7</option><option value="hy4">腾讯混元 HY4</option></select></label>
     <span class="demobadge" id="modeBadge" data-i18n="demo_badge">演示模式</span>
     <span class="note" id="modeNote" data-i18n="demo_note">接入真实模型后自动切换</span>
   </div>
@@ -387,21 +387,27 @@ if(!I18N[lang]) lang = "zh";
 const $ = s => document.querySelector(s);
 const t = k => (I18N[lang] && I18N[lang][k]) || I18N.zh[k] || k;
 let currentMode = "free";
-let currentModel = "smart";
+let currentModel = ""; // "" = 智能优选：请求不带 model，后端用默认型号
 let busy = false;
-/* 真实型号表：value = InitAPI 模型 id；显示名是固定专名，不随界面语言变 */
+/* 真实型号表：value = 上游模型 id（InitAPI 主源 + A6API 第二源，后端按型号自动路由）；显示名是固定专名，不随界面语言变。智能优选不在此表，其显示名走 i18n 的 model_smart */
 const MODELS = {
   "deepseek-v4.1-flash":"DeepSeek V4.1 Flash",
   "deepseek-v4-pro":"DeepSeek V4 Pro",
   "claude-sonnet-5":"Claude Sonnet 5",
   "gpt-5.6":"GPT-5.6",
   "grok-4.7":"Grok 4.7",
-  "glm-5.3":"GLM 5.3"
+  "glm-5.3":"GLM 5.3",
+  "gemini-3-pro-preview":"Gemini 3 Pro",
+  "gemini-3.8-flash":"Gemini 3.8 Flash",
+  "qwen4-max":"Qwen4 Max",
+  "kimi-k3":"Kimi K3",
+  "minimax-m2.7":"MiniMax M2.7",
+  "hy4":"腾讯混元 HY4"
 };
 const BACKEND_DEFAULT_MODEL = "deepseek-v4.1-flash"; // 与后端 Worker 默认一致：智能优选时实际用的就是它
 const REAL_MODE = !!POKO_API_BASE; // 非空 = 已接真实后端，页面标注按真实模式渲染
 const modelDisplay = id => MODELS[id] || id;
-const usedModelId = () => currentModel !== "smart" ? currentModel : BACKEND_DEFAULT_MODEL;
+const usedModelId = () => currentModel !== "" ? currentModel : BACKEND_DEFAULT_MODEL;
 const historyMsgs = []; // 真实 API 模式下的上下文
 
 function applyLang(){
@@ -486,7 +492,7 @@ function addCostNote(parent, via){
     n.textContent = t("cost_note_real").replace("{model}", modelDisplay(usedModelId()));
   }else{
     // 演示路径（含 API 失败回退）：维持演示注脚，如实标注未调用真实模型
-    n.textContent = t("cost_note") + (currentModel !== "smart" ? " · " + modelDisplay(currentModel) : "");
+    n.textContent = t("cost_note") + (currentModel !== "" ? " · " + modelDisplay(currentModel) : "");
   }
   parent.appendChild(n);
 }
@@ -586,7 +592,7 @@ async function runDemo(text){
 /* ================= 真实 API 模式（POKO_API_BASE 非空时） ================= */
 function apiPayload(){
   const p = {messages: historyMsgs};
-  if(currentModel !== "smart") p.model = currentModel; // 智能优选不传，后端用默认型号
+  if(currentModel !== "") p.model = currentModel; // 智能优选不传，后端用默认型号
   return p;
 }
 async function runAPI(text){
