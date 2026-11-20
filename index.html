@@ -396,6 +396,8 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
 .gcap .gt{color:var(--sub);font-size:12px;margin-left:8px;font-weight:500}
 .gmodel{flex:none;font-size:11.5px;font-weight:700;color:var(--brand-dark);background:var(--brand-soft);border:1px solid #ffd9c4;border-radius:999px;padding:3px 9px}
 .galnote{margin-top:16px;text-align:center;color:var(--sub);font-size:13px}
+.demo{position:relative}
+.dembadge{position:absolute;top:14px;right:14px;z-index:2;background:#17130c;color:#fff;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.05em;pointer-events:none}
 .newb{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:var(--brand-grad);color:#fff;font-size:9.5px;font-style:normal;font-weight:800;letter-spacing:.08em;vertical-align:2px}
 </style>
 </head>
@@ -451,7 +453,7 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
         <label data-i18n="composer_label">描述你要做的事</label>
         <textarea id="heroInput" rows="2" data-i18n-ph="composer_ph" placeholder="例：把这份季度销售数据做成 12 页复盘 PPT，重点讲增长最快的区域，再配一张趋势图"></textarea>
         <div class="tools">
-          <button class="plusbtn" type="button" aria-label="Upload">＋</button>
+          <button class="plusbtn" type="button" id="heroPlus" aria-label="Chat">＋</button>
           <span class="modelpick">✦ <span data-i18n="model_smart">智能优选</span></span>
           <button class="sendbtn" type="button" id="heroSend" aria-label="Send">↑</button>
         </div>
@@ -475,6 +477,7 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
     <div class="aud">
       <div class="aud-tabs" id="audTabs"></div>
       <div class="demo" id="demoBox">
+        <span class="dembadge" data-i18n="demo_badge">演示</span>
         <div class="u-bubble" id="dUser"></div>
         <div class="attach" id="dAttach"><i id="dAttachType">XLSX</i><span id="dAttachName"></span></div>
         <div class="steps" id="dSteps"></div>
@@ -488,6 +491,7 @@ html{scrollbar-width:thin;scrollbar-color:#d8d0bf transparent}
         </div>
       </div>
     </div>
+    <p class="galnote" data-i18n="aud_note">本区为产品演示：对话、附件与文件卡均为示意，不代表真实产出；实际效果以你在对话页的真实结果为准。</p>
   </div>
 </section>
 
@@ -1176,7 +1180,14 @@ $("#langSel").addEventListener("change", e => {
   localStorage.setItem("poko_lang", lang);
   applyLang();
 });
+Object.assign(I18N.zh,{demo_badge:"演示",aud_note:"本区为产品演示：对话、附件与文件卡均为示意，不代表真实产出；实际效果以你在对话页的真实结果为准。"});
+Object.assign(I18N.en,{demo_badge:"Demo",aud_note:"This section is a product demo: the conversation, attachments and file cards are illustrative, not real outputs. Actual results are what you get on the chat page."});
+Object.assign(I18N.ja,{demo_badge:"デモ",aud_note:"このセクションは製品デモです：会話・添付ファイル・ファイルカードはいずれもイメージであり、実際の成果物ではありません。実際の結果はチャットページでの生成結果をご覧ください。"});
+Object.assign(I18N.ko,{demo_badge:"데모",aud_note:"이 영역은 제품 데모입니다: 대화, 첨부 파일, 파일 카드는 모두 예시이며 실제 결과물이 아닙니다. 실제 결과는 채팅 페이지에서 확인하세요."});
+Object.assign(I18N.es,{demo_badge:"Demostración",aud_note:"Esta sección es una demostración del producto: la conversación, los archivos adjuntos y las tarjetas de archivo son ilustrativos, no resultados reales. Los resultados reales son los que obtienes en la página de chat."});
 $("#heroSend").addEventListener("click", ()=> goChat($("#heroInput").value.trim(), ""));
+/* 修复4：Hero ＋按钮原为无监听的装饰按钮，改为真实入口——点击直达对话页（附件在对话页上传） */
+$("#heroPlus").addEventListener("click", ()=>{ location.href = "chat.html"; });
 $("#heroInput").addEventListener("keydown", e => {
   if(e.key === "Enter" && (e.metaKey || e.ctrlKey)) goChat($("#heroInput").value.trim(), "");
 });

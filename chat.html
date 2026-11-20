@@ -203,6 +203,7 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
 .csvdl{margin-top:12px}
 .dlbtn{display:inline-block;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;font-family:inherit}
 .dlbtn:hover{border-color:var(--brand);color:var(--brand)}
+.codeout{margin-top:10px;max-width:640px;background:#17130c;color:#e8e2d4;border-radius:12px;padding:12px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word;max-height:260px;overflow:auto}
 </style>
 </head>
 <body>
@@ -791,6 +792,131 @@ function pptxCardBtn(data){
   });
   return b;
 }
+/* ================= 修复4：写报告下载 / 网页预览 / JS 运行 ================= */
+function downloadTextFile(name, content, mime){
+  const blob = new Blob([content], {type: mime + ";charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+/* 写报告模式：把该条回复的 Markdown 原文下载为 poko-report.md（真实内容、真实文件） */
+function addReportDownload(wrap, full){
+  const row = document.createElement("div");
+  row.className = "csvdl";
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "dlbtn"; b.textContent = t("dl_report");
+  b.addEventListener("click", () => downloadTextFile("poko-report.md", full, "text/markdown"));
+  row.appendChild(b);
+  wrap.appendChild(row);
+}
+/* 提取回复里指定语言的代码块：lang 归一化（javascript→js），返回 [{lang, code}] */
+function extractCodeBlocks(text, langs){
+  const out = [];
+  const re = /```([a-zA-Z0-9+#.-]*)\s*\r?\n([\s\S]*?)```/g;
+  let m;
+  while((m = re.exec(text)) !== null){
+    let lg = (m[1] || "").toLowerCase();
+    if(lg === "javascript") lg = "js";
+    if(langs.includes(lg) && m[2].trim()) out.push({lang: lg, code: m[2].replace(/\s+$/, "")});
+  }
+  return out;
+}
+/* 网页模式：```html 块下方渲染「预览」+「下载网页 (.html)」。
+   预览用 sandboxed iframe（srcdoc）真渲染：只给 allow-scripts，绝不给 allow-same-origin，
+   预览页脚本与本站完全隔离（读不到本站 DOM/Cookie/存储）。 */
+function addHtmlBlocks(wrap, full){
+  extractCodeBlocks(full, ["html"]).forEach(({code}) => {
+    const row = document.createElement("div");
+    row.className = "csvdl";
+    const pv = document.createElement("button");
+    pv.type = "button"; pv.className = "dlbtn"; pv.textContent = t("web_preview");
+    const dl = document.createElement("button");
+    dl.type = "button"; dl.className = "dlbtn"; dl.textContent = t("dl_html");
+    dl.style.marginLeft = "8px";
+    dl.addEventListener("click", () => downloadTextFile("poko-page.html", code, "text/html"));
+    let box = null;
+    pv.addEventListener("click", () => {
+      if(box){ box.remove(); box = null; return; }
+      box = document.createElement("div");
+      box.className = "preview";
+      const head = document.createElement("div");
+      head.className = "pv-head"; head.textContent = t("web_preview");
+      const fr = document.createElement("iframe");
+      fr.setAttribute("sandbox", "allow-scripts");
+      fr.srcdoc = code;
+      box.appendChild(head); box.appendChild(fr);
+      row.appendChild(box);
+      scrollBottom();
+    });
+    row.appendChild(pv); row.appendChild(dl);
+    wrap.appendChild(row);
+  });
+}
+/* 跑代码模式：```js 块在 sandboxed iframe 里真执行。
+   harness（第一个 <script>）覆写 console.log/error/warn → postMessage 回传；
+   用户代码放第二个 <script>（含语法错误时 harness 的收尾计时器仍能回报）；
+   window.onerror 收集运行时/语法错误；600ms 后发 done（兼顾异步 log），父页 5 秒超时兜底。
+   sandbox 只有 allow-scripts、没有 allow-same-origin：代码在不透明源里跑，碰不到本站任何东西。 */
+function runJsSandboxed(code){
+  return new Promise(resolve => {
+    const id = "poko" + Math.random().toString(36).slice(2, 10);
+    const logs = [];
+    let settled = false;
+    const fr = document.createElement("iframe");
+    fr.setAttribute("sandbox", "allow-scripts");
+    fr.style.display = "none";
+    function finish(err){
+      if(settled) return; settled = true;
+      window.removeEventListener("message", onMsg);
+      fr.remove();
+      resolve({logs, error: err || null});
+    }
+    function onMsg(e){
+      const d = e.data;
+      if(!d || d.__pokoRun !== id) return;
+      if(d.type === "log") logs.push(d.text);
+      else if(d.type === "done") finish(d.error || null);
+    }
+    window.addEventListener("message", onMsg);
+    const harness =
+      "var __err=null;" +
+      "function __fmt(a){return a.map(function(x){if(typeof x==='string')return x;try{return JSON.stringify(x)}catch(e){return String(x)}}).join(' ')}" +
+      "console.log=function(){parent.postMessage({__pokoRun:" + JSON.stringify(id) + ",type:'log',text:__fmt([].slice.call(arguments))},'*')};" +
+      "console.error=console.log;console.warn=console.log;" +
+      "window.onerror=function(m){if(__err===null)__err=String(m)};" +
+      "setTimeout(function(){parent.postMessage({__pokoRun:" + JSON.stringify(id) + ",type:'done',error:__err},'*')},600);";
+    const safe = code.replace(/<\/script/gi, "<\\/script");
+    fr.srcdoc = "<!doctype html><meta charset='utf-8'><script>" + harness + "<\/script><script>" + safe + "<\/script>";
+    document.body.appendChild(fr);
+    setTimeout(() => finish(null), 5000);
+  });
+}
+function addJsRuns(wrap, full){
+  extractCodeBlocks(full, ["js"]).forEach(({code}) => {
+    const row = document.createElement("div");
+    row.className = "csvdl";
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "dlbtn"; b.textContent = t("code_run");
+    let out = null;
+    b.addEventListener("click", async () => {
+      b.disabled = true;
+      const r = await runJsSandboxed(code);
+      b.disabled = false;
+      if(out) out.remove();
+      out = document.createElement("pre");
+      out.className = "codeout";
+      const lines = r.logs.slice();
+      if(r.error) lines.push("Error: " + r.error);
+      out.textContent = lines.length ? lines.join("\n") : t("code_no_output");
+      row.appendChild(out);
+      scrollBottom();
+    });
+    row.appendChild(b);
+    wrap.appendChild(row);
+  });
+}
 // 附件图片真读：FileReader 读为 data URL，再用 canvas 压到最长边 ≤1024（格式保持 png/jpeg，quality 0.85）
 function readImageFile(file){
   return new Promise((resolve, reject) => {
@@ -971,12 +1097,17 @@ async function runDemo(text){
 }
 
 /* ================= 真实 API 模式（POKO_API_BASE 非空时） ================= */
-function apiPayload(modelOverride){
+function apiPayload(modelOverride, sysKey){
   let msgs = historyMsgs;
   // 修复2：分析表格模式给该次请求附加 system 指令，要求表格结果以 ```csv 代码块输出（前端据此给真 xlsx 下载）
   if(currentMode === "sheet") msgs = [{role: "system", content: t("sheet_sys")}].concat(historyMsgs);
   // 修复3：做PPT 模式给该次请求附加 system 指令，要求演示内容以 ```ppt 代码块输出严格 JSON（前端据此生成真 .pptx）
   if(currentMode === "ppt") msgs = [{role: "system", content: t("ppt_sys")}].concat(historyMsgs);
+  // 修复4：写报告 / 跑代码模式同款注入（结构化 Markdown 报告 / 单一语言代码块），同样只附加于该次请求、不入 history
+  if(currentMode === "report") msgs = [{role: "system", content: t("report_sys")}].concat(historyMsgs);
+  if(currentMode === "code") msgs = [{role: "system", content: t("code_sys")}].concat(historyMsgs);
+  // 修复4：网页意图（自由模式下关键词命中 web）由 runAPI 传入 sysKey="web_sys"，该次请求附加网页 system
+  if(sysKey) msgs = [{role: "system", content: t(sysKey)}].concat(historyMsgs);
   const p = {messages: msgs};
   const m = modelOverride !== undefined ? modelOverride : currentModel;
   if(m) p.model = m; // 智能优选不传，后端用默认型号
@@ -988,6 +1119,9 @@ function apiPayload(modelOverride){
 async function runAPI(text, opts){
   opts = opts || {};
   const model = opts.model !== undefined ? opts.model : currentModel;
+  // 修复4：记录发送瞬间的模式（回复后处理据此挂报告下载）；自由模式下命中网页意图时该次请求附加 web_sys
+  const modeUsed = currentMode;
+  const extraSys = (modeUsed === "free" && detectIntent(text) === "web") ? "web_sys" : null;
   lastUsedModelId = model || BACKEND_DEFAULT_MODEL;
   historyMsgs.push({role:"user", content: opts.content || text});
   const wrap = addAgentShell();
@@ -997,7 +1131,7 @@ async function runAPI(text, opts){
     const res = await fetch(POKO_API_BASE.replace(/\/+$/,"") + "/api/chat", {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(apiPayload(model))
+      body: JSON.stringify(apiPayload(model, extraSys))
     });
     if(!res.ok || !res.body) throw new Error("bad response");
     wrap.innerHTML = ""; wrap.appendChild(body);
@@ -1041,6 +1175,12 @@ async function runAPI(text, opts){
     addCsvDownloads(wrap, full);
     // 修复3：回复里的 ```ppt 代码块（严格 JSON）下方给出真 .pptx 下载（PptxGenJS 缺失时降级为导出大纲 .md 并如实标注）
     addPptDownloads(wrap, full);
+    // 修复4：写报告模式给该条回复挂「下载报告 (.md)」，内容为该条回复的 Markdown 原文
+    if(modeUsed === "report") addReportDownload(wrap, full);
+    // 修复4：回复里的 ```html 代码块下方给真预览（sandboxed iframe）+「下载网页 (.html)」
+    addHtmlBlocks(wrap, full);
+    // 修复4：回复里的 ```js 代码块下方给「运行」按钮（sandboxed iframe 真执行并回显 console 输出）
+    addJsRuns(wrap, full);
   }catch(e){
     // 请求失败 → 回退演示模式，保证体验不断
     historyMsgs.pop();
@@ -1215,6 +1355,11 @@ Object.assign(I18N.en,{dl_pptx:"Download deck (.pptx)",dl_pptx_md:"Export outlin
 Object.assign(I18N.ja,{dl_pptx:"PPT (.pptx) をダウンロード",dl_pptx_md:"アウトライン (.md) を書き出す",ppt_gen_fail:"PPT の生成に失敗しました。もう一度お試しください",ppt_sys:"あなたはユーザーのプレゼンテーション（PPT）作成を手伝っています。スライドの内容は ```ppt コードブロックの中に、厳密に有効な JSON（コメントや末尾のカンマは禁止）で出力してください。構造は {\"title\":\"タイトル\",\"slides\":[{\"title\":\"スライドタイトル\",\"bullets\":[\"要点1\",\"要点2\"]}]} です。ページ数はユーザーの指定に従い、指定がなければ 6〜10 ページにしてください。各ページには短い要点を 3〜6 個入れてください。コードブロックの前後に短い説明を付けても構いませんが、JSON は完全で有効でなければなりません。"});
 Object.assign(I18N.ko,{dl_pptx:"PPT (.pptx) 다운로드",dl_pptx_md:"개요 내보내기 (.md)",ppt_gen_fail:"PPT 생성에 실패했습니다. 다시 시도해 주세요",ppt_sys:"사용자의 프레젠테이션(PPT) 제작을 돕고 있습니다. 슬라이드 내용을 ```ppt 코드 블록 안에 엄격히 유효한 JSON(주석과 후행 쉼표 금지)으로 출력하세요. 구조는 {\"title\":\"제목\",\"slides\":[{\"title\":\"슬라이드 제목\",\"bullets\":[\"요점1\",\"요점2\"]}]} 입니다. 페이지 수는 사용자 요청을 따르고, 지정이 없으면 6~10페이지로 하세요. 슬라이드마다 짧은 요점을 3~6개 넣으세요. 코드 블록 앞뒤에 짧은 설명을 붙여도 되지만, JSON은 완전하고 유효해야 합니다."});
 Object.assign(I18N.es,{dl_pptx:"Descargar presentación (.pptx)",dl_pptx_md:"Exportar esquema (.md)",ppt_gen_fail:"La generación falló; inténtalo de nuevo",ppt_sys:"Estás ayudando al usuario a crear una presentación (PPT). Muestra el contenido dentro de un bloque de código ```ppt con JSON estrictamente válido (sin comentarios ni comas finales), con esta estructura: {\"title\":\"Título\",\"slides\":[{\"title\":\"Título de diapositiva\",\"bullets\":[\"Punto 1\",\"Punto 2\"]}]}. Usa el número de diapositivas que pida el usuario, o 6–10 si no lo especifica; incluye 3–6 puntos breves por diapositiva. Puedes añadir una frase breve antes o después del bloque, pero el JSON debe estar completo y ser válido."});
+Object.assign(I18N.zh,{dl_report:"下载报告 (.md)",web_preview:"预览",dl_html:"下载网页 (.html)",code_run:"运行",code_no_output:"（无输出）",report_sys:"你正在「写报告」模式下工作。请用 Markdown 写出一份结构完整的报告，严格按以下结构输出：一级标题（#）作为报告标题；「摘要」小节（二级标题，3–5 句概括全文）；正文（按主题分成若干小节，用二级/三级小标题，内容具体、条理清楚）；「结论」小节（二级标题，给出明确结论与建议）。只输出报告本身，不要加与报告无关的闲聊或解释。",web_sys:"你正在「网页」模式下工作。请把用户要的网页写成一个完整、自包含的单文件 HTML，并把全部代码只放在一个 ```html 代码块中输出：CSS 写在 <style> 里、JS 写在 <script> 里，不引用任何外部资源，保存为 .html 即可直接打开运行。代码块前后只写一两句简短说明，不要把代码拆到多个代码块。",code_sys:"你正在「跑代码」模式下工作。请把完整、可独立运行的代码只放在一个标注语言的代码块中输出（JavaScript 用 ```js，HTML 用 ```html，Python 用 ```python），代码块前后附简短说明（用途与预期结果）。代码要自包含，不依赖用户本地文件或未说明的外部服务；JavaScript 代码请把结果用 console.log 输出，方便直接运行查看。"});
+Object.assign(I18N.en,{dl_report:"Download report (.md)",web_preview:"Preview",dl_html:"Download page (.html)",code_run:"Run",code_no_output:"(no output)",report_sys:"You are working in Write-a-report mode. Write a complete, well-structured report in Markdown, following this structure exactly: a level-1 heading (#) as the report title; an \"Abstract\" section (level-2 heading, 3-5 sentences summarizing the whole report); the body, split into topical sections with level-2/level-3 headings, specific and clearly organized; and a \"Conclusion\" section (level-2 heading) with clear conclusions and recommendations. Output only the report itself — no unrelated chatter or meta explanation.",web_sys:"You are working in Web page mode. Write the page the user wants as one complete, self-contained single-file HTML document, and output all of the code inside a single ```html code block: CSS in a <style> tag, JS in a <script> tag, no external resources, so it runs as-is when saved as .html. Add only a brief sentence or two before or after the block, and never split the code across multiple blocks.",code_sys:"You are working in Run-code mode. Output the complete, independently runnable code inside a single code block tagged with its language (```js for JavaScript, ```html for HTML, ```python for Python), with a brief explanation before or after the block (what it does and the expected result). Keep the code self-contained — no reliance on the user's local files or unspecified external services. For JavaScript, print results with console.log so they can be seen when the code runs."});
+Object.assign(I18N.ja,{dl_report:"レポート (.md) をダウンロード",web_preview:"プレビュー",dl_html:"Webページ (.html) をダウンロード",code_run:"実行",code_no_output:"（出力なし）",report_sys:"あなたは「レポート作成」モードで作業しています。Markdown で構造の整った完全なレポートを、次の構成で厳密に出力してください：レポートタイトルは見出し1（#）；「概要」セクション（見出し2、全体を 3〜5 文で要約）；本文（テーマごとに分け、見出し2/3 を付け、具体的で整理された内容）；「結論」セクション（見出し2、明確な結論と提案）。レポート本体のみを出力し、関係のない雑談や説明は加えないでください。",web_sys:"あなたは「Webページ」モードで作業しています。ユーザーが求めるページを、完全で自己完結した単一ファイル HTML として書き、コード全体を 1 つの ```html コードブロックの中だけに出力してください：CSS は <style>、JS は <script> に書き、外部リソースは参照せず、.html として保存すればそのまま動くようにしてください。前後に短い説明を一、二文添えるだけにし、コードを複数のブロックに分けないでください。",code_sys:"あなたは「コード実行」モードで作業しています。完全で単独実行できるコードを、言語を指定した 1 つのコードブロックの中だけに出力してください（JavaScript は ```js、HTML は ```html、Python は ```python）。前後に用途と期待される結果を短く説明してください。コードは自己完結させ、ユーザーのローカルファイルや不明な外部サービスに依存させないでください。JavaScript では結果を console.log で出力してください。"});
+Object.assign(I18N.ko,{dl_report:"보고서 (.md) 다운로드",web_preview:"미리보기",dl_html:"웹페이지 (.html) 다운로드",code_run:"실행",code_no_output:"(출력 없음)",report_sys:"「보고서 작성」 모드로 작업 중입니다. Markdown으로 구조가 완결된 보고서를 다음 구성에 따라 엄격히 출력하세요: 보고서 제목은 1단계 제목(#); 「요약」 섹션(2단계 제목, 전체를 3~5문장으로 요약); 본문(주제별로 나누고 2/3단계 제목을 달며, 구체적이고 체계적으로); 「결론」 섹션(2단계 제목, 명확한 결론과 제언). 보고서 본문만 출력하고, 관련 없는 잡담이나 설명은 넣지 마세요.",web_sys:"「웹페이지」 모드로 작업 중입니다. 사용자가 원하는 페이지를 완전하고 자기완결적인 단일 파일 HTML로 작성하고, 전체 코드를 하나의 ```html 코드 블록 안에만 출력하세요: CSS는 <style>에, JS는 <script>에 넣고, 외부 리소스를 참조하지 않아 .html로 저장하면 바로 실행되게 하세요. 앞뒤에는 짧은 설명 한두 문장만 붙이고, 코드를 여러 블록으로 나누지 마세요.",code_sys:"「코드 실행」 모드로 작업 중입니다. 완전하고 독립 실행 가능한 코드를 언어가 표시된 하나의 코드 블록 안에만 출력하세요(JavaScript는 ```js, HTML은 ```html, Python은 ```python). 앞뒤에 용도와 예상 결과를 짧게 설명하세요. 코드는 자기완결적으로 작성하고, 사용자의 로컬 파일이나 명시되지 않은 외부 서비스에 의존하지 마세요. JavaScript는 결과를 console.log로 출력하세요."});
+Object.assign(I18N.es,{dl_report:"Descargar informe (.md)",web_preview:"Vista previa",dl_html:"Descargar página (.html)",code_run:"Ejecutar",code_no_output:"(sin salida)",report_sys:"Estás trabajando en el modo «Escribir informe». Redacta un informe completo y bien estructurado en Markdown, siguiendo exactamente esta estructura: un título de nivel 1 (#) como título del informe; una sección «Resumen» (título de nivel 2, de 3 a 5 frases que resuman todo); el cuerpo, dividido en secciones temáticas con títulos de nivel 2/3, concreto y bien organizado; y una sección «Conclusión» (título de nivel 2) con conclusiones y recomendaciones claras. Muestra solo el informe, sin charla ajena ni explicaciones sobre la tarea.",web_sys:"Estás trabajando en el modo «Página web». Escribe la página que pide el usuario como un único archivo HTML completo y autónomo, y muestra todo el código dentro de un solo bloque de código ```html: el CSS en una etiqueta <style> y el JS en una <script>, sin recursos externos, de modo que al guardarlo como .html funcione tal cual. Añade solo una o dos frases breves antes o después del bloque y no repartas el código en varios bloques.",code_sys:"Estás trabajando en el modo «Ejecutar código». Muestra el código completo y ejecutable por sí solo dentro de un único bloque de código con su lenguaje (```js para JavaScript, ```html para HTML, ```python para Python), con una breve explicación antes o después del bloque (qué hace y el resultado esperado). El código debe ser autónomo: no depender de archivos locales del usuario ni de servicios externos no especificados. En JavaScript, imprime los resultados con console.log."});
 const FOLLOWUPS = {
   zh:{
     ppt:["换成深色风格","加一页数据图表","压缩到 6 页"],
