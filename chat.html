@@ -175,6 +175,20 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
 /* ===== 第十一轮：真实模式徽章（绿） ===== */
 .demobadge.real{background:#e7f6ee;color:#177245;border-color:#bfe6cf}
 </style>
+<style id="r13">
+/* 第十三轮：附件缩略图条 / 用户气泡图片 / 生成图渲染 */
+.attachbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
+.attachbar[hidden]{display:none}
+.attchip{position:relative;display:inline-block;line-height:0}
+.attchip img{width:52px;height:52px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.attx{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:13px;line-height:1;cursor:pointer;padding:0}
+.uimgs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.uimgs img{width:110px;height:110px;object-fit:cover;border-radius:10px;display:block}
+.genimg{margin-top:14px;max-width:460px}
+.genimg img{width:100%;display:block;border-radius:16px;border:1px solid var(--line)}
+.genimg .dl{display:inline-block;margin-top:8px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--ink);text-decoration:none}
+.genimg .dl:hover{border-color:var(--brand);color:var(--brand)}
+</style>
 </head>
 <body>
 <aside>
@@ -224,6 +238,7 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
   <div class="inputzone">
     <div class="inputcol">
       <div class="modechips" id="modeChips"></div>
+      <div class="attachbar" id="attachBar" hidden></div>
       <div class="composer">
         <textarea id="input" rows="2" data-i18n-ph="input_ph" placeholder="描述你要做的事，例如：把这份销售数据做成 10 页汇报 PPT"></textarea>
         <div class="tools">
@@ -259,7 +274,7 @@ zh:{new_chat:"新对话",history:"历史对话",hist1:"季度销售复盘 PPT",h
  input_ph:"描述你要做的事，例如：把这份销售数据做成 10 页汇报 PPT",
  hint:"演示模式下不会调用真实模型，产出文件为示例内容。",
  steps_done:"完成 3 个步骤",cost_note:"本次约 $0.00 · 演示模式，未调用真实模型",dl:"下载",preview:"预览",
- img_tag:"演示占位图",thinking:"Poko 正在处理",
+ img_tag:"演示占位图",thinking:"Poko 正在处理",img_generating:"正在生成图片…真实出图大约需要半分钟到一分半，请稍等，不要走开。",
  modes:[["免费试用","free"],["写报告","report"],["分析表格","sheet"],["做PPT","ppt"],["生成视频","video"],["图像生成","image"],["跑代码","code"]],
  try_label:"试试这些",tpl_label:"常用模板",
  examples:[["把季度销售数据做成 12 页复盘 PPT","ppt"],["分析这份问卷数据，给我一张统计表","sheet"],["给新品桂花乌龙做一张上市海报","image"],["给我的咖啡馆做一个菜单网页","free"]],
@@ -270,7 +285,7 @@ en:{new_chat:"New chat",history:"History",hist1:"Quarterly sales review deck",hi
  input_ph:"Describe what you want to make, e.g. Turn this sales data into a 10-slide report deck",
  hint:"Demo mode never calls a real model; generated files contain sample content.",
  steps_done:"3 steps completed",cost_note:"This reply: ~$0.00 · Demo mode, no real model was called",dl:"Download",preview:"Preview",
- img_tag:"Demo placeholder",thinking:"Poko is working",
+ img_tag:"Demo placeholder",thinking:"Poko is working",img_generating:"Generating your image… Real generation takes about 30–90 seconds — hang tight.",
  modes:[["Free trial","free"],["Write a report","report"],["Analyze sheets","sheet"],["Make a deck","ppt"],["Make a video","video"],["Generate images","image"],["Run code","code"]],
  try_label:"Try one of these",tpl_label:"Templates",
  examples:[["Turn quarterly sales data into a 12-slide review deck","ppt"],["Analyze this survey data and give me a statistics table","sheet"],["Make a launch poster for a new osmanthus oolong tea","image"],["Build a menu web page for my café","free"]],
@@ -281,7 +296,7 @@ ja:{new_chat:"新しいチャット",history:"履歴",hist1:"四半期売上レ�
  input_ph:"作りたいものを入力してください。例：この売上データを10ページの報告スライドにして",
  hint:"デモモードでは実モデルを呼び出さず、生成ファイルはサンプル内容です。",
  steps_done:"3ステップ完了",cost_note:"今回 約 $0.00 · デモモード（実モデル未使用）",dl:"ダウンロード",preview:"プレビュー",
- img_tag:"デモ用プレースホルダー",thinking:"Poko が処理中",
+ img_tag:"デモ用プレースホルダー",thinking:"Poko が処理中",img_generating:"画像を生成中です…実際の生成には30〜90秒ほどかかります。そのままお待ちください。",
  modes:[["無料で試す","free"],["レポート作成","report"],["表を分析","sheet"],["スライド作成","ppt"],["動画生成","video"],["画像生成","image"],["コード実行","code"]],
  try_label:"まずはこれを試して",tpl_label:"よく使うテンプレート",
  examples:[["四半期の売上データを12ページの振り返りスライドにして","ppt"],["このアンケートデータを分析して統計表を作って","sheet"],["新商品のキンモクセイ烏龍茶の発売ポスターを作って","image"],["私のカフェのメニューページを作って","free"]],
@@ -292,7 +307,7 @@ ko:{new_chat:"새 대화",history:"기록",hist1:"분기 매출 회고 PPT",hist
  input_ph:"만들고 싶은 것을 적어 주세요. 예: 이 매출 데이터를 10페이지 보고 PPT로 만들어 줘",
  hint:"데모 모드에서는 실제 모델을 호출하지 않으며, 생성 파일은 예시 내용입니다.",
  steps_done:"3단계 완료",cost_note:"이번 비용 약 $0.00 · 데모 모드, 실제 모델 미호출",dl:"다운로드",preview:"미리보기",
- img_tag:"데모용 자리 표시 이미지",thinking:"Poko가 처리 중",
+ img_tag:"데모용 자리 표시 이미지",thinking:"Poko가 처리 중",img_generating:"이미지를 생성 중입니다… 실제 생성에는 30~90초 정도 걸리니 잠시만 기다려 주세요.",
  modes:[["무료 체험","free"],["보고서 작성","report"],["표 분석","sheet"],["PPT 만들기","ppt"],["동영상 생성","video"],["이미지 생성","image"],["코드 실행","code"]],
  try_label:"이렇게 시작해 보세요",tpl_label:"자주 쓰는 템플릿",
  examples:[["분기 매출 데이터를 12페이지 회고 PPT로 만들어 줘","ppt"],["이 설문 데이터를 분석해서 통계표를 만들어 줘","sheet"],["신제품 계화 우롱차 출시 포스터를 만들어 줘","image"],["우리 카페 메뉴 웹페이지를 만들어 줘","free"]],
@@ -303,7 +318,7 @@ es:{new_chat:"Nuevo chat",history:"Historial",hist1:"Presentación de revisión 
  input_ph:"Describe lo que quieres crear, ej.: Convierte estos datos de ventas en una presentación de 10 diapositivas",
  hint:"En modo demo no se llama a ningún modelo real; los archivos generados contienen contenido de ejemplo.",
  steps_done:"3 pasos completados",cost_note:"Esta respuesta: ~$0.00 · Modo demo, sin modelo real",dl:"Descargar",preview:"Vista previa",
- img_tag:"Imagen de demostración",thinking:"Poko está trabajando",
+ img_tag:"Imagen de demostración",thinking:"Poko está trabajando",img_generating:"Generando tu imagen… La generación real tarda entre 30 y 90 segundos, un momento.",
  modes:[["Prueba gratis","free"],["Escribir informe","report"],["Analizar hojas","sheet"],["Crear presentación","ppt"],["Crear vídeo","video"],["Generar imágenes","image"],["Ejecutar código","code"]],
  try_label:"Prueba con esto",tpl_label:"Plantillas frecuentes",
  examples:[["Convierte los datos de ventas del trimestre en una presentación de 12 diapositivas","ppt"],["Analiza los datos de esta encuesta y dame una tabla de estadísticas","sheet"],["Haz un póster de lanzamiento para un nuevo té oolong de osmanthus","image"],["Crea una página de menú para mi cafetería","free"]],
@@ -402,13 +417,20 @@ const MODELS = {
   "qwen4-max":"Qwen4 Max",
   "kimi-k3":"Kimi K3",
   "minimax-m2.7":"MiniMax M2.7",
-  "hy4":"腾讯混元 HY4"
+  "hy4":"腾讯混元 HY4",
+  "nano-banana-pro":"Nano Banana Pro",
+  "gpt-image-2":"GPT Image 2"
 };
 const BACKEND_DEFAULT_MODEL = "deepseek-v4.1-flash"; // 与后端 Worker 默认一致：智能优选时实际用的就是它
 const REAL_MODE = !!POKO_API_BASE; // 非空 = 已接真实后端，页面标注按真实模式渲染
 const modelDisplay = id => MODELS[id] || id;
 const usedModelId = () => currentModel !== "" ? currentModel : BACKEND_DEFAULT_MODEL;
 const historyMsgs = []; // 真实 API 模式下的上下文
+/* 第十三轮：附件与图像。pendingImages = 待发送图片 [{name, dataUrl}]（已压缩）；
+   lastUsedModelId = 本次回复实际使用的模型（视觉改派/图生图时与所选不同，注脚据实标注） */
+let pendingImages = [];
+let lastUsedModelId = null;
+const VISION_MODELS = new Set(["gemini-3-pro-preview","gemini-3.8-flash","gpt-5.6","claude-sonnet-5","qwen4-max","kimi-k3","nano-banana-pro"]);
 
 function applyLang(){
   document.documentElement.lang = {zh:"zh-CN", en:"en", ja:"ja", ko:"ko", es:"es"}[lang];
@@ -471,10 +493,23 @@ function detectIntent(text){
 /* ================= 消息渲染 ================= */
 function scrollBottom(){ const m = $("#msgs"); m.scrollTop = m.scrollHeight; }
 function hideWelcome(){ const w = $("#welcome"); if(w) w.remove(); }
-function addUserMsg(text){
+function addUserMsg(text, images){
   hideWelcome();
   const d = document.createElement("div");
-  d.className = "msg-u"; d.textContent = text;
+  d.className = "msg-u";
+  if(images && images.length){
+    const row = document.createElement("div");
+    row.className = "uimgs";
+    images.forEach(im => {
+      const img = document.createElement("img");
+      img.src = im.dataUrl; img.alt = im.name || "";
+      row.appendChild(img);
+    });
+    d.appendChild(row);
+  }
+  const span = document.createElement("span");
+  span.textContent = text;
+  d.appendChild(span);
   $("#msgCol").appendChild(d); scrollBottom();
 }
 function addAgentShell(){
@@ -488,8 +523,8 @@ function addCostNote(parent, via){
   const n = document.createElement("div");
   n.className = "costnote";
   if(via === "api"){
-    // 真实路径（含智能优选）：注脚写实际使用的型号显示名
-    n.textContent = t("cost_note_real").replace("{model}", modelDisplay(usedModelId()));
+    // 真实路径（含智能优选）：注脚写实际使用的型号显示名（视觉改派/图生图以 lastUsedModelId 为准）
+    n.textContent = t("cost_note_real").replace("{model}", modelDisplay(lastUsedModelId || usedModelId()));
   }else{
     // 演示路径（含 API 失败回退）：维持演示注脚，如实标注未调用真实模型
     n.textContent = t("cost_note") + (currentModel !== "" ? " · " + modelDisplay(currentModel) : "");
@@ -525,6 +560,74 @@ function typeText(el, text, done){
   }, 18);
 }
 const wait = ms => new Promise(r => setTimeout(r, ms));
+
+/* ================= 第十三轮：图片渲染 / 附件读取 ================= */
+// http 裸图（nano-banana-pro 的成品图地址）在 https 页面会被浏览器拦截，改走 Worker 的 /api/img 代理
+function proxiedImgSrc(u){
+  if(u && u.startsWith("http://")) return POKO_API_BASE.replace(/\/+$/,"") + "/api/img?u=" + encodeURIComponent(u);
+  return u;
+}
+function addReplyImage(wrap, src, dlName){
+  const card = document.createElement("div");
+  card.className = "genimg";
+  const img = document.createElement("img");
+  img.src = src; img.alt = "";
+  const a = document.createElement("a");
+  a.href = src; a.download = dlName || "poko-image.png"; a.className = "dl"; a.textContent = t("dl");
+  card.appendChild(img); card.appendChild(a);
+  wrap.appendChild(card);
+}
+// 从模型回复文本里提取图片：Markdown 图片语法 + 裸图片 URL；返回 {urls, cleaned}
+function extractReplyImages(full){
+  const urls = [];
+  let cleaned = full.replace(/!\[[^\]]*\]\((https?:\/\/[^\s)]+)\)/g, (m, u) => { urls.push(u); return ""; });
+  cleaned = cleaned.replace(/(^|\s)(https?:\/\/[^\s)]+?\.(?:png|jpe?g|webp|gif))(?=\s|$)/gi,
+    (m, pre, u) => { urls.push(u); return pre; });
+  return {urls, cleaned: cleaned.trim()};
+}
+// 附件图片真读：FileReader 读为 data URL，再用 canvas 压到最长边 ≤1024（格式保持 png/jpeg，quality 0.85）
+function readImageFile(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const raw = reader.result;
+      const img = new Image();
+      img.onload = () => {
+        try{
+          const MAX = 1024;
+          const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+          if(scale >= 1){ resolve(raw); return; }
+          const c = document.createElement("canvas");
+          c.width = Math.round(img.width * scale);
+          c.height = Math.round(img.height * scale);
+          c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+          resolve(c.toDataURL(file.type === "image/png" ? "image/png" : "image/jpeg", 0.85));
+        }catch(e){ resolve(raw); }
+      };
+      img.onerror = () => resolve(raw);
+      img.src = raw;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+function renderAttachBar(){
+  const bar = $("#attachBar");
+  if(!bar) return;
+  bar.innerHTML = "";
+  pendingImages.forEach((im, i) => {
+    const chip = document.createElement("span");
+    chip.className = "attchip";
+    const img = document.createElement("img");
+    img.src = im.dataUrl; img.alt = im.name || "";
+    const x = document.createElement("button");
+    x.type = "button"; x.className = "attx"; x.textContent = "×"; x.setAttribute("aria-label", "remove");
+    x.addEventListener("click", () => { pendingImages.splice(i, 1); renderAttachBar(); });
+    chip.appendChild(img); chip.appendChild(x);
+    bar.appendChild(chip);
+  });
+  bar.hidden = pendingImages.length === 0;
+}
 
 /* ================= 演示 Agent ================= */
 async function runDemo(text){
@@ -590,13 +693,20 @@ async function runDemo(text){
 }
 
 /* ================= 真实 API 模式（POKO_API_BASE 非空时） ================= */
-function apiPayload(){
+function apiPayload(modelOverride){
   const p = {messages: historyMsgs};
-  if(currentModel !== "") p.model = currentModel; // 智能优选不传，后端用默认型号
+  const m = modelOverride !== undefined ? modelOverride : currentModel;
+  if(m) p.model = m; // 智能优选不传，后端用默认型号
   return p;
 }
-async function runAPI(text){
-  historyMsgs.push({role:"user", content:text});
+/* opts: {model, content, renderImages}
+   model/content 缺省 = 沿用所选模型与纯文本；content 可为多模态 parts 数组（视觉/图生图）；
+   renderImages=true 时把回复里的图片 URL 提取出来渲染成 <img>（图生图 nano-banana-pro 用） */
+async function runAPI(text, opts){
+  opts = opts || {};
+  const model = opts.model !== undefined ? opts.model : currentModel;
+  lastUsedModelId = model || BACKEND_DEFAULT_MODEL;
+  historyMsgs.push({role:"user", content: opts.content || text});
   const wrap = addAgentShell();
   const body = document.createElement("div");
   body.className = "a-text";
@@ -604,7 +714,7 @@ async function runAPI(text){
     const res = await fetch(POKO_API_BASE.replace(/\/+$/,"") + "/api/chat", {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(apiPayload())
+      body: JSON.stringify(apiPayload(model))
     });
     if(!res.ok || !res.body) throw new Error("bad response");
     wrap.innerHTML = ""; wrap.appendChild(body);
@@ -630,6 +740,13 @@ async function runAPI(text){
     }
     if(!full) throw new Error("empty stream");
     historyMsgs.push({role:"assistant", content:full});
+    if(opts.renderImages){
+      const ex = extractReplyImages(full);
+      if(ex.urls.length){
+        body.textContent = ex.cleaned;
+        ex.urls.forEach((u, i) => addReplyImage(wrap, proxiedImgSrc(u), "poko-image-" + (i + 1) + ".jpg"));
+      }
+    }
   }catch(e){
     // 请求失败 → 回退演示模式，保证体验不断
     historyMsgs.pop();
@@ -642,17 +759,65 @@ async function runAPI(text){
   scrollBottom();
 }
 
+/* 文生图：图像生成模式且无附件时走 Worker /api/image（默认 InitAPI gpt-image-2，非流式）。
+   真实出图要 30–90 秒：占位文案先行、发送按钮由 send() 的 busy 锁禁用；失败回退演示并如实标注。 */
+async function runImageGen(text){
+  const wrap = addAgentShell();
+  const ph = document.createElement("div");
+  ph.className = "a-text"; ph.textContent = t("img_generating");
+  wrap.innerHTML = ""; wrap.appendChild(ph); scrollBottom();
+  try{
+    const res = await fetch(POKO_API_BASE.replace(/\/+$/,"") + "/api/image", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({prompt: text})
+    });
+    if(!res.ok) throw new Error("image request failed");
+    const j = await res.json();
+    const src = j && (j.data_url || j.url);
+    if(!src) throw new Error("no image in response");
+    lastUsedModelId = j.model || "gpt-image-2";
+    ph.remove();
+    addReplyImage(wrap, proxiedImgSrc(src), "poko-image.png");
+  }catch(e){
+    wrap.remove();
+    await runDemo(text);
+    return;
+  }
+  addCostNote(wrap, "api");
+  addFollowUps(wrap, "media");
+  scrollBottom();
+}
+
 /* ================= 发送流程 ================= */
 async function send(){
   if(busy) return;
   const input = $("#input");
   const text = input.value.trim();
   if(!text) return;
+  const images = pendingImages.slice(); // 本条消息携带的图片（发送即消费）
   busy = true; $("#sendBtn").disabled = true;
   input.value = "";
-  addUserMsg(text);
+  pendingImages = []; renderAttachBar(); $("#attachName").textContent = "";
+  addUserMsg(text, images);
   try{
-    if(POKO_API_BASE) await runAPI(text);
+    if(POKO_API_BASE){
+      if(currentMode === "image" && images.length){
+        // 图生图：nano-banana-pro（A6），图片以 image_url parts 随消息发送，回复图片提取渲染
+        const parts = [{type:"text", text}].concat(images.map(im => ({type:"image_url", image_url:{url: im.dataUrl}})));
+        await runAPI(text, {model:"nano-banana-pro", content: parts, renderImages: true});
+      } else if(currentMode === "image"){
+        // 文生图：/api/image（gpt-image-2）
+        await runImageGen(text);
+      } else if(images.length){
+        // 视觉理解：所选模型不在视觉集合时自动改派 Gemini 3 Pro，注脚据实标注实际模型
+        const used = VISION_MODELS.has(usedModelId()) ? usedModelId() : "gemini-3-pro-preview";
+        const parts = [{type:"text", text}].concat(images.map(im => ({type:"image_url", image_url:{url: im.dataUrl}})));
+        await runAPI(text, {model: used, content: parts});
+      } else {
+        await runAPI(text);
+      }
+    }
     else await runDemo(text);
   } finally {
     busy = false; $("#sendBtn").disabled = false; input.focus();
@@ -675,9 +840,23 @@ document.querySelectorAll("#histList a").forEach(a => a.addEventListener("click"
   a.classList.add("on");
 }));
 $("#attachBtn").addEventListener("click", ()=> $("#fileInput").click());
-$("#fileInput").addEventListener("change", e => {
-  const names = Array.from(e.target.files).map(f => f.name);
-  $("#attachName").textContent = names.join("、");
+$("#fileInput").addEventListener("change", async e => {
+  const files = Array.from(e.target.files || []);
+  const others = [];
+  for(const f of files){
+    if(f.type && f.type.startsWith("image/")){
+      try{
+        const dataUrl = await readImageFile(f);
+        pendingImages.push({name: f.name, dataUrl});
+      }catch(err){ others.push(f.name); }
+    } else {
+      // 非图片文件本轮仍只显示文件名、发送时不附带（表格解析在下一轮接）
+      others.push(f.name);
+    }
+  }
+  renderAttachBar();
+  $("#attachName").textContent = others.join("、");
+  e.target.value = ""; // 清空以便同一文件可再次选择
 });
 
 /* ================= 初始化：语言 + URL 参数 ================= */
