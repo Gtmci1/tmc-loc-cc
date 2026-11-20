@@ -186,6 +186,8 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
 .uimgs img{width:110px;height:110px;object-fit:cover;border-radius:10px;display:block}
 .genimg{margin-top:14px;max-width:460px}
 .genimg img{width:100%;display:block;border-radius:16px;border:1px solid var(--line)}
+.genimg video{width:100%;display:block;border-radius:16px;border:1px solid var(--line);background:#000}
+.vidnote{margin-top:10px;font-size:12.5px;color:var(--sub)}
 .genimg .dl{display:inline-block;margin-top:8px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--ink);text-decoration:none}
 .genimg .dl:hover{border-color:var(--brand);color:var(--brand)}
 .genimg .cap{margin-top:8px;font-size:13px;color:var(--sub)}
@@ -442,7 +444,8 @@ const MODELS = {
   "minimax-m2.7":"MiniMax M2.7",
   "hy4":"腾讯混元 HY4",
   "nano-banana-pro":"Nano Banana Pro",
-  "gpt-image-2":"GPT Image 2"
+  "gpt-image-2":"GPT Image 2",
+  "doubao-seedance-2.5":"Seedance 2.5"
 };
 const BACKEND_DEFAULT_MODEL = "deepseek-v4.1-flash"; // 与后端 Worker 默认一致：智能优选时实际用的就是它
 const REAL_MODE = !!POKO_API_BASE; // 非空 = 已接真实后端，页面标注按真实模式渲染
@@ -1223,6 +1226,82 @@ async function runImageGen(text){
   scrollBottom();
 }
 
+/* 生成视频：视频模式走 Worker /api/video 异步任务（A6 doubao-seedance-2.5）。
+   创建任务 → 每 15 秒轮询 GET /api/video?id=，最长等 7 分钟；等待态复用图像的
+   .a-text 占位样式，文案为视频版并每秒刷新已等待秒数（上游进度只有 0/50/100
+   三档，有进度时一并显示，不做平滑假进度）。成功后渲染 <video> + 下载链接，
+   注脚记真实型号；失败/超时回退演示并按演示规则如实标注。
+   本轮不支持图生视频：带图片附件时忽略图片，并在气泡下小字如实提示。
+   轮询是异步等待，期间页面可正常浏览；防重复提交沿用 send() 的 busy 锁。 */
+async function runVideoGen(text, hasImages){
+  const wrap = addAgentShell();
+  wrap.innerHTML = "";
+  if(hasImages){
+    const note = document.createElement("div");
+    note.className = "vidnote"; note.textContent = t("vid_img_ignored");
+    wrap.appendChild(note);
+  }
+  const ph = document.createElement("div");
+  ph.className = "a-text";
+  wrap.appendChild(ph); scrollBottom();
+  const started = Date.now();
+  let progress = 0;
+  const paint = () => {
+    const s = Math.floor((Date.now() - started) / 1000);
+    ph.textContent = t("vid_generating").replace("{s}", s) +
+      (progress > 0 ? t("vid_progress").replace("{p}", progress) : "");
+  };
+  paint();
+  const timer = setInterval(paint, 1000);
+  try{
+    const base = POKO_API_BASE.replace(/\/+$/, "");
+    const res = await fetch(base + "/api/video", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({prompt: text})
+    });
+    if(!res.ok) throw new Error("video create failed");
+    const cj = await res.json();
+    const taskId = cj && cj.task_id;
+    if(!taskId) throw new Error("no task id");
+    let videoUrl = null;
+    while(Date.now() - started < 7 * 60 * 1000){
+      await wait(15000);
+      const sr = await fetch(base + "/api/video?id=" + encodeURIComponent(taskId));
+      if(!sr.ok) continue; // 单次轮询失败不中断，继续等到总超时
+      const sj = await sr.json().catch(() => null);
+      if(!sj || !sj.ok) continue;
+      if(typeof sj.progress === "number") progress = sj.progress;
+      paint();
+      if(sj.status === "succeeded" && sj.video_url){ videoUrl = sj.video_url; break; }
+      if(sj.status === "failed") throw new Error("video task failed");
+    }
+    if(!videoUrl) throw new Error("video timeout");
+    clearInterval(timer);
+    lastUsedModelId = "doubao-seedance-2.5";
+    ph.remove();
+    const card = document.createElement("div");
+    card.className = "genimg";
+    const v = document.createElement("video");
+    v.controls = true; v.playsInline = true;
+    v.src = base + videoUrl;
+    card.appendChild(v);
+    const a = document.createElement("a");
+    a.href = base + videoUrl; a.download = "poko-video.mp4";
+    a.className = "dl"; a.textContent = t("vid_dl");
+    card.appendChild(a);
+    wrap.appendChild(card);
+  }catch(e){
+    clearInterval(timer);
+    wrap.remove();
+    await runDemo(text);
+    return;
+  }
+  addCostNote(wrap, "api");
+  addFollowUps(wrap, "media");
+  scrollBottom();
+}
+
 /* ================= 发送流程 ================= */
 async function send(){
   if(busy) return;
@@ -1252,6 +1331,9 @@ async function send(){
       } else if(currentMode === "image"){
         // 文生图：/api/image（gpt-image-2）
         await runImageGen(text);
+      } else if(currentMode === "video"){
+        // 生成视频：/api/video 异步任务链路（本轮不使用图片附件，runVideoGen 内如实提示）
+        await runVideoGen(text, images.length > 0);
       } else if(images.length){
         // 视觉理解：所选模型不在视觉集合时自动改派 Gemini 3 Pro，注脚据实标注实际模型
         const used = VISION_MODELS.has(usedModelId()) ? usedModelId() : "gemini-3-pro-preview";
@@ -1360,6 +1442,12 @@ Object.assign(I18N.en,{dl_report:"Download report (.md)",web_preview:"Preview",d
 Object.assign(I18N.ja,{dl_report:"レポート (.md) をダウンロード",web_preview:"プレビュー",dl_html:"Webページ (.html) をダウンロード",code_run:"実行",code_no_output:"（出力なし）",report_sys:"あなたは「レポート作成」モードで作業しています。Markdown で構造の整った完全なレポートを、次の構成で厳密に出力してください：レポートタイトルは見出し1（#）；「概要」セクション（見出し2、全体を 3〜5 文で要約）；本文（テーマごとに分け、見出し2/3 を付け、具体的で整理された内容）；「結論」セクション（見出し2、明確な結論と提案）。レポート本体のみを出力し、関係のない雑談や説明は加えないでください。",web_sys:"あなたは「Webページ」モードで作業しています。ユーザーが求めるページを、完全で自己完結した単一ファイル HTML として書き、コード全体を 1 つの ```html コードブロックの中だけに出力してください：CSS は <style>、JS は <script> に書き、外部リソースは参照せず、.html として保存すればそのまま動くようにしてください。前後に短い説明を一、二文添えるだけにし、コードを複数のブロックに分けないでください。",code_sys:"あなたは「コード実行」モードで作業しています。完全で単独実行できるコードを、言語を指定した 1 つのコードブロックの中だけに出力してください（JavaScript は ```js、HTML は ```html、Python は ```python）。前後に用途と期待される結果を短く説明してください。コードは自己完結させ、ユーザーのローカルファイルや不明な外部サービスに依存させないでください。JavaScript では結果を console.log で出力してください。"});
 Object.assign(I18N.ko,{dl_report:"보고서 (.md) 다운로드",web_preview:"미리보기",dl_html:"웹페이지 (.html) 다운로드",code_run:"실행",code_no_output:"(출력 없음)",report_sys:"「보고서 작성」 모드로 작업 중입니다. Markdown으로 구조가 완결된 보고서를 다음 구성에 따라 엄격히 출력하세요: 보고서 제목은 1단계 제목(#); 「요약」 섹션(2단계 제목, 전체를 3~5문장으로 요약); 본문(주제별로 나누고 2/3단계 제목을 달며, 구체적이고 체계적으로); 「결론」 섹션(2단계 제목, 명확한 결론과 제언). 보고서 본문만 출력하고, 관련 없는 잡담이나 설명은 넣지 마세요.",web_sys:"「웹페이지」 모드로 작업 중입니다. 사용자가 원하는 페이지를 완전하고 자기완결적인 단일 파일 HTML로 작성하고, 전체 코드를 하나의 ```html 코드 블록 안에만 출력하세요: CSS는 <style>에, JS는 <script>에 넣고, 외부 리소스를 참조하지 않아 .html로 저장하면 바로 실행되게 하세요. 앞뒤에는 짧은 설명 한두 문장만 붙이고, 코드를 여러 블록으로 나누지 마세요.",code_sys:"「코드 실행」 모드로 작업 중입니다. 완전하고 독립 실행 가능한 코드를 언어가 표시된 하나의 코드 블록 안에만 출력하세요(JavaScript는 ```js, HTML은 ```html, Python은 ```python). 앞뒤에 용도와 예상 결과를 짧게 설명하세요. 코드는 자기완결적으로 작성하고, 사용자의 로컬 파일이나 명시되지 않은 외부 서비스에 의존하지 마세요. JavaScript는 결과를 console.log로 출력하세요."});
 Object.assign(I18N.es,{dl_report:"Descargar informe (.md)",web_preview:"Vista previa",dl_html:"Descargar página (.html)",code_run:"Ejecutar",code_no_output:"(sin salida)",report_sys:"Estás trabajando en el modo «Escribir informe». Redacta un informe completo y bien estructurado en Markdown, siguiendo exactamente esta estructura: un título de nivel 1 (#) como título del informe; una sección «Resumen» (título de nivel 2, de 3 a 5 frases que resuman todo); el cuerpo, dividido en secciones temáticas con títulos de nivel 2/3, concreto y bien organizado; y una sección «Conclusión» (título de nivel 2) con conclusiones y recomendaciones claras. Muestra solo el informe, sin charla ajena ni explicaciones sobre la tarea.",web_sys:"Estás trabajando en el modo «Página web». Escribe la página que pide el usuario como un único archivo HTML completo y autónomo, y muestra todo el código dentro de un solo bloque de código ```html: el CSS en una etiqueta <style> y el JS en una <script>, sin recursos externos, de modo que al guardarlo como .html funcione tal cual. Añade solo una o dos frases breves antes o después del bloque y no repartas el código en varios bloques.",code_sys:"Estás trabajando en el modo «Ejecutar código». Muestra el código completo y ejecutable por sí solo dentro de un único bloque de código con su lenguaje (```js para JavaScript, ```html para HTML, ```python para Python), con una breve explicación antes o después del bloque (qué hace y el resultado esperado). El código debe ser autónomo: no depender de archivos locales del usuario ni de servicios externos no especificados. En JavaScript, imprime los resultados con console.log."});
+/* 视频接真补键：生成视频等待态 / 进度 / 下载 / 图片附件提示（五语） */
+Object.assign(I18N.zh,{vid_generating:"正在生成视频…已等待 {s} 秒。真实生成通常需要 2–4 分钟，请稍等，不要走开。",vid_progress:"（进度约 {p}%）",vid_dl:"下载视频",vid_img_ignored:"视频模式暂未使用图片附件"});
+Object.assign(I18N.en,{vid_generating:"Generating your video… {s}s elapsed. Real generation usually takes 2–4 minutes — hang tight.",vid_progress:" (about {p}% done)",vid_dl:"Download video",vid_img_ignored:"Video mode doesn't use image attachments yet"});
+Object.assign(I18N.ja,{vid_generating:"動画を生成中です…{s} 秒経過。実際の生成には通常 2〜4 分かかります。そのままお待ちください。",vid_progress:"（進捗 約 {p}%）",vid_dl:"動画をダウンロード",vid_img_ignored:"動画モードでは画像の添付はまだ使われません"});
+Object.assign(I18N.ko,{vid_generating:"동영상을 생성 중입니다… {s}초 경과. 실제 생성에는 보통 2~4분이 걸리니 잠시만 기다려 주세요.",vid_progress:" (진행률 약 {p}%)",vid_dl:"동영상 다운로드",vid_img_ignored:"동영상 모드에서는 아직 이미지 첨부를 사용하지 않습니다"});
+Object.assign(I18N.es,{vid_generating:"Generando tu vídeo… Han pasado {s} s. La generación real suele tardar 2–4 minutos, un momento.",vid_progress:" (progreso aprox. {p} %)",vid_dl:"Descargar vídeo",vid_img_ignored:"El modo vídeo aún no usa las imágenes adjuntas"});
 const FOLLOWUPS = {
   zh:{
     ppt:["换成深色风格","加一页数据图表","压缩到 6 页"],
