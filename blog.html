@@ -8,9 +8,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Poko 博客 — 教程、模型解读与使用技巧">
 <meta property="og:description" content="使用教程、产品动态、模型解读与使用技巧，帮你把一句话变成更好的成果。">
-<meta property="og:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<meta property="og:image" content="https://tmc.loc.cc/assets/scenery.webp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.webp">
 <link rel="canonical" href="https://tmc.loc.cc/blog.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z' fill='%233C9A5F'/%3E%3Ccircle cx='24' cy='26' r='19' fill='%23FF5C1A'/%3E%3Ccircle cx='17.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Ccircle cx='30.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Cpath d='M20 30.5q4 3.2 8 0' stroke='%237A2A08' stroke-width='2.1' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
@@ -394,7 +394,7 @@ function coverSvg(cat){
   return `<svg viewBox="0 0 220 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="220" height="150" fill="${bg}"/>${shapes[cat]||shapes.guide}</svg>`;
 }
 const POSTS=[
- {id:"a1",cat:"guide",feat:1,date:"2026-11-17",img:"assets/blog-ppt.jpg",tags:{zh:["PPT","入门"],en:["Decks","Basics"]},
+ {id:"a1",cat:"guide",feat:1,date:"2026-11-17",img:"assets/blog-ppt.webp",tags:{zh:["PPT","入门"],en:["Decks","Basics"]},
   title:{zh:"一句话做 PPT：从一句需求到一份能讲的演示",en:"Decks from one sentence: from a single ask to a presentable file"},
   ex:{zh:"页数、结构、配图、数据图一次到位。这篇把需求句式拆开讲：说什么、漏什么、怎么返工最少。",en:"Length, structure, visuals and charts in one pass. This guide breaks down the ask: what to say, what people forget, and how to iterate with the least rework."},
   body:{zh:["先说结论：一句话做 PPT 的质量，八成取决于那句话本身。不是要写得多专业，而是要把三件事说清——做什么、给谁看、重点是什么。比如「把这份季度销售数据做成 12 页复盘 PPT，给部门负责人看，重点讲增长最快的区域，再配一张趋势图」，信息密度足够，Poko 就能直接开工。",
@@ -405,7 +405,7 @@ const POSTS=[
     "Most rework comes from skipping length and audience. No length, and the default may not fit; no audience, and a deck for your boss reads very differently from one for a client. Ten extra seconds up front beats fixing slides one by one later.",
     "Unsure about structure? Add “show me an outline first.” Review the outline like a table of contents, confirm the order and cuts, then let it generate. Afterwards, point at a slide number and say what to change — Poko edits the same file.",
     "For visuals and charts, drop the raw data file into the chat instead of describing numbers out loud, and give one style reference — “minimal keynote style”, “use our brand color” — rather than a pile of adjectives. A sentence isn't a spell; it's a brief. Good brief, steady result."]}},
- {id:"a2",cat:"models",feat:1,date:"2026-11-15",img:"assets/blog-models.jpg",tags:{zh:["模型","成本"],en:["Models","Cost"]},
+ {id:"a2",cat:"models",feat:1,date:"2026-11-15",img:"assets/blog-models.webp",tags:{zh:["模型","成本"],en:["Models","Cost"]},
   title:{zh:"旗舰还是性价比？给任务挑模型的四个判断",en:"Flagship or value? Four checks for picking a model per task"},
   ex:{zh:"不是越贵越好，也不是越便宜越划算。按任务难度、出错代价、批量大小和时效要求，四个维度快速定档。",en:"Pricier isn't always better, and cheaper isn't always smarter. Difficulty, cost of errors, batch size and deadlines — four dimensions to place a task fast."},
   body:{zh:["第一个判断是出错代价。要拿去见客户、见老板的成果，返工和翻车的成本远高于模型差价，这类任务直接上旗舰。内部草稿、头脑风暴、批量初筛，错了重跑就是了，性价比模型完全够用。",
@@ -414,7 +414,7 @@ const POSTS=[
    en:["First check: the cost of being wrong. Work headed to a client or your boss costs far more to redo than the price gap between models — send those to flagships. Internal drafts, brainstorms and bulk first passes can simply be re-run, so value models are plenty.",
     "Second: difficulty. Long-document understanding, multi-step reasoning and tricky spreadsheet rules are where weaker models quietly drift mid-task; summaries, rewrites and formatting barely differ between models. Third: batch size — at 100 copies, a small per-run gap becomes a real bill, so test on a sample before committing.",
     "Fourth: deadlines. When time matters, pick the fast model that clears the quality bar. And when you can't decide, that's exactly what Smart Pick automates — it weighs these four dimensions for you; just audit the cost footnote under each reply."]}},
- {id:"a3",cat:"tips",feat:1,date:"2026-11-12",img:"assets/blog-sheet.jpg",tags:{zh:["表格","数据"],en:["Sheets","Data"]},
+ {id:"a3",cat:"tips",feat:1,date:"2026-11-12",img:"assets/blog-sheet.webp",tags:{zh:["表格","数据"],en:["Sheets","Data"]},
   title:{zh:"让表格分析少返工：交代口径的三个说法",en:"Fewer spreadsheet re-runs: three ways to state your rules up front"},
   ex:{zh:"同比怎么算、空值怎么办、按什么汇总——口径说在前面，分析就不用推倒重来。三个句式直接套用。",en:"How growth is calculated, what happens to blanks, how rows roll up — state the rules first and the analysis won't need a redo. Three copy-ready phrasings."},
   body:{zh:["表格分析最常见的返工不是算错，而是口径没对齐：你以为的同比是和去年同月比，它按环比算了；你想把空值当 0，它把整行排除了。算法本身都没错，错在没人事先说清。",
@@ -423,7 +423,7 @@ const POSTS=[
    en:["Spreadsheet rework rarely comes from wrong math — it comes from unaligned rules. You meant year-over-year against the same month last year; it computed month-over-month. You treat blanks as zero; it dropped the rows. Nobody was wrong; nobody said the rules out loud.",
     "Three phrasings you can copy. One: “Year-over-year means same month last year, month-over-month means last month — give me both.” Two: “Treat blanks as 0, but report how many blanks there were.” Three: “Roll up by region first, then rank stores inside each region.” Pin those down and the pivot comes out right the first time.",
     "One more habit: ask Poko to state the rules it applied in its reply. A one-line note you can eyeball beats downloading the file and auditing it cell by cell — and if a rule is off, you re-run with a corrected one immediately."]}},
- {id:"a4",cat:"product",date:"2026-11-18",img:"assets/blog-update.jpg",tags:{zh:["更新"],en:["Changelog"]},
+ {id:"a4",cat:"product",date:"2026-11-18",img:"assets/blog-update.webp",tags:{zh:["更新"],en:["Changelog"]},
   title:{zh:"Poko 更新日志：模型选择器与模板入口上线",en:"Poko changelog: model picker and template shortcuts are live"},
   ex:{zh:"对话页顶栏可以直接指定模型，欢迎区有示例胶囊，侧边栏多了常用模板——点一下，提示词和模式都帮你备好。",en:"Pick a model right in the chat header, start from example chips on the welcome screen, and reuse templates from the sidebar — prompt and mode included."},
   body:{zh:["这轮更新解决的是「知道能做，但不知道怎么开口」。对话页欢迎区新增了示例胶囊，覆盖做 PPT、分析表格、做海报、写网页四类高频任务，点一下就把示例需求填进输入框，改两个字就能发。",
@@ -432,7 +432,7 @@ const POSTS=[
    en:["This round tackles “I know it can do this, I just don't know how to ask.” The chat welcome screen now has example chips for the four most common jobs — decks, sheet analysis, posters, web pages. Tap one and the sample ask lands in the composer, ready to tweak and send.",
     "The header's model label is now a real picker: Smart Pick by default, or pin a model family — the cost footnote under each reply then names the model, so it's always clear whose tokens you spent. The sidebar gained template shortcuts, turning your team's repeated asks into one-tap starters.",
     "Next up: custom and shareable templates, plus full-text search across history. Tell us what you'd use most — the roadmap listens."]}},
- {id:"a5",cat:"stories",date:"2026-11-10",img:"assets/blog-review.jpg",tags:{zh:["复盘","PPT"],en:["Reviews","Decks"]},
+ {id:"a5",cat:"stories",date:"2026-11-10",img:"assets/blog-review.webp",tags:{zh:["复盘","PPT"],en:["Reviews","Decks"]},
   title:{zh:"把季度复盘会前一晚的活，压缩到一杯咖啡",en:"Compressing the night-before-the-review workload into one coffee"},
   ex:{zh:"数据在三个表里、结论还没想好、PPT 一个字没写——这是很多人复盘前夜的实景。我们拆解一次完整的补救流程。",en:"Data in three spreadsheets, conclusions unwritten, deck at zero slides — the night before a quarterly review, for many people. Here's the full rescue workflow, taken apart."},
   body:{zh:["先把三个表一股脑拖进对话，让 Poko 先合并、去重、按区域和月份对齐，并回你一句它理解的数据结构。这一步别跳过：口径在这时对齐，后面全程省心。接着要一份结论摘要——先看文字结论，确认故事线对，再让它落成 PPT。",
@@ -441,7 +441,7 @@ const POSTS=[
    en:["Start by dropping all three spreadsheets into the chat and having Poko merge, de-duplicate and align them by region and month — and report back the structure it understood. Don't skip this: rules aligned here save you everywhere later. Then ask for a written summary first. Read the story line before any slides exist.",
     "Once the story checks out, one sentence generates the 12-slide review deck: cover, overview, regional breakdown, highlights, problems, next-quarter plan. Charts are drawn from the merged data — no separate trip back to Excel. Read it through and rephrase a couple of slides into your own voice; judgment and tone are the part that stays human.",
     "Total time: roughly one coffee. What you save isn't effort, it's the night — data wrangling and slide layout were never the best use of the hours before a review."]}},
- {id:"a6",cat:"guide",date:"2026-11-08",img:"assets/blog-poster.jpg",tags:{zh:["海报","图像"],en:["Posters","Images"]},
+ {id:"a6",cat:"guide",date:"2026-11-08",img:"assets/blog-poster.webp",tags:{zh:["海报","图像"],en:["Posters","Images"]},
   title:{zh:"海报上的文字总出错？把文案写进需求里",en:"Text on posters keeps coming out wrong? Put the copy in the request"},
   ex:{zh:"图像模型最怕含糊的文字要求。把标题、时间、地点原文写进需求句，出图返工率立刻降下来。",en:"Image models struggle most with vague text requests. Write the headline, date and venue verbatim into your ask, and poster rework drops fast."},
   body:{zh:["很多人做海报只说「做一张咖啡店开业海报」，然后对着生成图上的错别字叹气。图像模型对画面很在行，但图上的文字需要你给原文：标题写什么、副标题写什么、时间地点电话，一个字都别让它猜。",
@@ -450,7 +450,7 @@ const POSTS=[
    en:["Most poster prompts sound like “make an opening poster for a coffee shop” — followed by a sigh at the garbled text in the result. Image models are great at pictures, but words on the picture need to come from you, verbatim: headline, subhead, date, venue, phone. Don't let it guess a single character.",
     "Structure the ask like this: “Vertical opening poster for a coffee shop. Headline: ‘Hillside Coffee’. Subhead: ‘Opening Nov 25 — second cup half price’. Footer: ‘18 Yunqi Road’. Japanese minimal style, cream background, terracotta type.” Copy, layout, style — with all three present, posters usually land in one shot.",
     "Still glitching? Shrink the text load: keep only the headline in-image, add the rest later in a layout tool, or ask for a text-free background and handle type yourself. Less text, fewer errors — currently the most reliable play."]}},
- {id:"a7",cat:"observe",date:"2026-11-05",img:"assets/blog-deliver.jpg",tags:{zh:["产品观"],en:["Product thinking"]},
+ {id:"a7",cat:"observe",date:"2026-11-05",img:"assets/blog-deliver.webp",tags:{zh:["产品观"],en:["Product thinking"]},
   title:{zh:"交付物思维：为什么我们只认文件，不认聊天记录",en:"Deliverable thinking: why we count files, not chat logs"},
   ex:{zh:"聊天记录再长，也进不了会议室。Poko 从第一天就把「交付一个能打开的文件」当作完成的唯一标准。",en:"A long chat log still can't walk into a meeting room. From day one, Poko has treated “a file you can open” as the only definition of done."},
   body:{zh:["对话式 AI 最容易给人一种错觉：聊了很多，等于做了很多。但工作成果的验收从来不在聊天框里——在会议室的大屏上、在客户打开的附件里、在能被转发和归档的文件里。聊得再热闹，不能落成文件，就只是聊过。",
@@ -459,7 +459,7 @@ const POSTS=[
    en:["Conversational AI makes it easy to feel productive: a long chat feels like a lot of work. But work is never accepted inside a chat box — it's accepted on the meeting-room screen, in the attachment a client opens, in a file that can be forwarded and archived. If it never becomes a file, it was only ever a conversation.",
     "That's why every Poko job ends in a file: .pptx for decks, .xlsx for sheets, .html for pages. The process can be a chat; the conclusion must be a deliverable. The constraint shapes the product back: steps are visible because you should see how it was made; costs are transparent because deliverables carry budgets; files stay editable because the story continues after delivery.",
     "There's a simple test for whether an AI tool is actually working for you: close the chat window, and see what's left in your hands. If it's a usable file, it counts."]}},
- {id:"a8",cat:"tips",date:"2026-11-02",img:"assets/blog-patterns.jpg",tags:{zh:["句式","效率"],en:["Patterns","Efficiency"]},
+ {id:"a8",cat:"tips",date:"2026-11-02",img:"assets/blog-patterns.webp",tags:{zh:["句式","效率"],en:["Patterns","Efficiency"]},
   title:{zh:"五个让产出更稳的句式，复制就能用",en:"Five sentence patterns for steadier results — copy and use"},
   ex:{zh:"「先给大纲」「按这个口径」「照这张图的风格」……五句加在需求末尾的话，分别解决结构、口径、风格、篇幅和验收。",en:"“Outline first.” “Use these rules.” “Match this image's style.” Five add-on sentences that fix structure, rules, style, length and acceptance — one each."},
   body:{zh:["句式一，「先给我大纲，我确认后再做」——解决结构返工。句式二，「口径按 X 算，结果里注明你用的口径」——解决数据对不齐。句式三，「风格照着这张图」并附上一张参考图——解决审美靠猜。这三句是使用频率最高的，建议背下来。",
@@ -468,7 +468,7 @@ const POSTS=[
    en:["Pattern one: “Give me an outline first; I'll confirm before you build.” — kills structural rework. Pattern two: “Use rule X, and state the rules you applied in the result.” — kills data misalignment. Pattern three: “Match the style of this image,” with a reference attached — kills aesthetic guesswork. These three earn their keep daily; memorize them.",
     "Pattern four: “Keep it under X slides / X words — cut examples before conclusions.” — fixes length, and states your priorities in the same breath. Pattern five: “Before delivering, self-check: numbers consistent throughout, headlines within one line.” — adds an acceptance pass that visibly cuts silly errors.",
     "What all five share: they say out loud what you'd otherwise keep in your head. AI doesn't mind more requirements — it minds requirements that only appear at review time. Writing your acceptance criteria into the ask is the highest-leverage sentence you'll type."]}},
- {id:"a9",cat:"models",date:"2026-10-29",img:"assets/blog-image.jpg",tags:{zh:["图像模型"],en:["Image models"]},
+ {id:"a9",cat:"models",date:"2026-10-29",img:"assets/blog-image.webp",tags:{zh:["图像模型"],en:["Image models"]},
   title:{zh:"图像模型怎么选：海报、产品图、插画各有最优解",en:"Choosing an image model: posters, product shots and illustrations each have a best fit"},
   ex:{zh:"有的模型字写得稳，有的光影真实，有的风格化强。按产出类型对号入座，比认品牌管用。",en:"Some models typeset reliably, some do photoreal light, some are style machines. Match by output type, not by brand."},
   body:{zh:["带文字的图——海报、封面、请柬——优先选文字渲染稳的模型，并把文案原文写进需求（这条我们单独写过一篇）。这类型任务里，构图和配色反而是次要的，字对了就是胜利。",
@@ -477,7 +477,7 @@ const POSTS=[
    en:["For images containing text — posters, covers, invitations — prioritize models with reliable text rendering, and put the copy verbatim in your ask (we wrote a whole post on that). In this category, correct characters beat clever composition every time.",
     "For product shots and realistic scenes, choose models strong on light and texture, and feed them material and lighting words: “matte ceramic”, “late-afternoon side light”. For illustration and stylized work, pick the style-strong models and name an actual movement or reference — never just “pretty”.",
     "When in doubt, use Smart Pick and request two versions to compare. Image iterations are cheap; the minutes are better spent clarifying the ask than agonizing over the model — true for every category."]}},
- {id:"a10",cat:"stories",date:"2026-10-26",img:"assets/blog-weekend.jpg",tags:{zh:["生活","创意"],en:["Life","Creative"]},
+ {id:"a10",cat:"stories",date:"2026-10-26",img:"assets/blog-weekend.webp",tags:{zh:["生活","创意"],en:["Life","Creative"]},
   title:{zh:"婚礼请柬、绘本和播客封面：三个周末小项目",en:"A wedding invitation, a picture book and a podcast cover: three weekend projects"},
   ex:{zh:"不写一行代码、不会设计软件，也能把脑子里的小项目做出来。三个真实感满满的周末玩法拆解。",en:"No code, no design software — still ship the small projects living in your head. Three weekend builds, taken apart."},
   body:{zh:["婚礼请柬的难点在文字和分寸：把新人姓名、日期、地点原文写好，风格给「植物线稿、米白底」，一次能出三版供挑。选定后让 Poko 把同一套视觉延展到迎宾牌和桌卡，一整套物料风格统一，这是自己拼图拼不出来的效果。",
@@ -486,7 +486,7 @@ const POSTS=[
    en:["A wedding invitation lives or dies on text and restraint: write the names, date and venue verbatim, set the style to “botanical line art on cream”, and you'll get three versions to choose from. Then extend the same look to the welcome sign and table cards — a matched set is exactly what DIY collage can't give you.",
     "The picture book started as a bedtime story: have Poko write an eight-page tale, illustrate it page by page, and bind it into one printable file. The trick is repeating the hero's descriptor verbatim on every page — “a little fox in a red scarf” — so the character stays the same fox throughout.",
     "The podcast cover was the easiest: one sentence for the show's name and mood, pick a winner, then have it spin up an episode-cover template too. All three projects had existed as ideas for ages — the only missing piece was the last step from idea to file."]}},
- {id:"a11",cat:"guide",date:"2026-10-22",img:"assets/blog-web.jpg",tags:{zh:["网页","部署"],en:["Web","Deploy"]},
+ {id:"a11",cat:"guide",date:"2026-10-22",img:"assets/blog-web.webp",tags:{zh:["网页","部署"],en:["Web","Deploy"]},
   title:{zh:"网页生成入门：一句话做一个能部署的活动页",en:"Web generation 101: one sentence to a deployable event page"},
   ex:{zh:"交付的是单个 .html 文件，双击能开、传到任何静态托管就能上线。活动页、报名页、介绍页都适用。",en:"You get a single .html file — double-click to open, upload to any static host to publish. Works for event pages, signups and intros."},
   body:{zh:["先说清页面要包含什么：活动名、时间地点、亮点、报名方式，一句一条列出来比写一大段更稳。风格给个方向——「科技发布会风，深色」「手作市集风，暖色」——Poko 会把配色、字体和版式一起定下来。",
@@ -495,7 +495,7 @@ const POSTS=[
    en:["Start by listing what the page must contain: event name, time and place, highlights, how to sign up — one item per line beats one long paragraph. Give a style direction — “dark, tech-keynote feel” or “warm, craft-market feel” — and Poko sets colors, type and layout to match.",
     "The output is a single .html with all styles and scripts inline and zero dependencies. Double-click to preview; to publish, upload it to any static host (GitHub Pages, Cloudflare Pages…) — a few minutes, tops.",
     "Revisions are plain speech: “make the signup button bigger”, “add a speakers section”. Poko edits the same file. Polish the file first and deploy once — it's the workflow we recommend to everyone."]}},
- {id:"a12",cat:"product",date:"2026-10-19",img:"assets/blog-pricing.jpg",tags:{zh:["定价"],en:["Pricing"]},
+ {id:"a12",cat:"product",date:"2026-10-19",img:"assets/blog-pricing.webp",tags:{zh:["定价"],en:["Pricing"]},
   title:{zh:"为什么 Poko 按量付费，而不是订阅",en:"Why Poko is pay-as-you-go instead of a subscription"},
   ex:{zh:"订阅逼着你「用回本」，按量只在你真做出东西时才花钱。这篇讲清我们的定价逻辑和每条回复下的花费注脚。",en:"Subscriptions push you to “get your money's worth”; usage pricing only charges when you actually make something. Our logic, and the cost footnote under every reply."},
   body:{zh:["订阅制的隐性成本是心理压力：付了月费，不用就觉得亏，于是为了用而用。更别提忙起来整月没打开，钱照扣。我们希望你打开 Poko 的唯一理由是手头有活，而不是账单日快到了。",
