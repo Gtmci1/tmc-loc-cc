@@ -8,9 +8,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Poko 模型广场 — 已接入的对话、图像与视频模型">
 <meta property="og:description" content="首期已接入的对话、图像与视频模型清单，含上下文、能力标签与示意价格。">
-<meta property="og:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<meta property="og:image" content="https://tmc.loc.cc/assets/scenery.webp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.webp">
 <link rel="canonical" href="https://tmc.loc.cc/models.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z' fill='%233C9A5F'/%3E%3Ccircle cx='24' cy='26' r='19' fill='%23FF5C1A'/%3E%3Ccircle cx='17.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Ccircle cx='30.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Cpath d='M20 30.5q4 3.2 8 0' stroke='%237A2A08' stroke-width='2.1' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
@@ -414,9 +414,9 @@ const MODELS=[
  {n:"GPT-5.6",v:"OpenAI",id:"openai/gpt-5.6",cat:"chat",ctx:"400K",out:"128K",pin:2.50,pout:10.00,caps:["vision","func","reason","cache","search"],d:"2026-11-10"},
  {n:"GPT-5.4 Mini",v:"OpenAI",id:"openai/gpt-5.4-mini",cat:"chat",ctx:"400K",out:"128K",pin:0.30,pout:1.20,caps:["vision","func","cache"],d:"2026-09-18"},
  {n:"GPT-5.3 Codex",v:"OpenAI",id:"openai/gpt-5.3-codex",cat:"chat",ctx:"400K",out:"128K",pin:2.50,pout:10.00,caps:["func","reason","code"],d:"2026-11-14",nw:1},
- {n:"Claude Sonnet 5",v:"Anthropic",id:"anthropic/claude-sonnet-5",cat:"chat",ctx:"1M",out:"64K",pin:3.00,pout:15.00,caps:["vision","func","reason","cache","code"],d:"2026-10-28"},
- {n:"Claude Opus 5",v:"Anthropic",id:"anthropic/claude-opus-5",cat:"chat",ctx:"1M",out:"64K",pin:15.00,pout:75.00,caps:["vision","func","reason","cache"],d:"2026-11-16",nw:1},
- {n:"Claude Haiku 5",v:"Anthropic",id:"anthropic/claude-haiku-5-5",cat:"chat",ctx:"200K",out:"64K",pin:1.00,pout:5.00,caps:["vision","func","cache"],d:"2026-10-15"},
+ {n:"Claude Sonnet 5.5",v:"Anthropic",id:"anthropic/claude-sonnet-5-5",cat:"chat",ctx:"1M",out:"64K",pin:3.00,pout:15.00,caps:["vision","func","reason","cache","code"],d:"2026-11-22",nw:1},
+ {n:"Claude Opus 5.5",v:"Anthropic",id:"anthropic/claude-opus-5-5",cat:"chat",ctx:"1M",out:"64K",pin:15.00,pout:75.00,caps:["vision","func","reason","cache"],d:"2026-11-22",nw:1},
+ {n:"Claude Haiku 5.5",v:"Anthropic",id:"anthropic/claude-haiku-5-5",cat:"chat",ctx:"200K",out:"64K",pin:1.00,pout:5.00,caps:["vision","func","cache"],d:"2026-10-15"},
  {n:"Gemini 3 Pro",v:"Google",id:"google/gemini-3-pro-preview",cat:"chat",ctx:"1M",out:"64K",pin:2.00,pout:12.00,caps:["vision","func","reason","cache","search","audio"],d:"2026-11-05"},
  {n:"Gemini 3.1 Pro",v:"Google",id:"google/gemini-3.1-pro-preview",cat:"chat",ctx:"1M",out:"64K",pin:2.50,pout:15.00,caps:["vision","func","reason","cache","search","audio"],d:"2026-11-19"},
  {n:"Gemini 3.8 Flash",v:"Google",id:"google/gemini-3.8-flash",cat:"chat",ctx:"1M",out:"64K",pin:0.50,pout:3.00,caps:["vision","func","cache","audio"],d:"2026-11-05"},
@@ -438,7 +438,6 @@ const MODELS=[
  {n:"Nano Banana Pro",v:"Google",id:"google/nano-banana-pro",cat:"image",ctx:"—",out:"—",pimg:0.060,caps:["vision"],d:"2026-11-15",nw:1},
  {n:"Seedream 5",v:"ByteDance",id:"bytedance/doubao-seedream-5",cat:"image",ctx:"—",out:"—",pimg:0.030,caps:["vision"],d:"2026-10-19"},
  {n:"Flux 2 Max",v:"Black Forest Labs",id:"bfl/flux.2-max",cat:"image",ctx:"—",out:"—",pimg:0.055,caps:[],d:"2026-09-14"},
- {n:"Qwen-Image 2.1 Pro",v:"Alibaba",id:"alibaba/qwen-image-2.1-pro",cat:"image",ctx:"—",out:"—",pimg:0.030,caps:["vision"],d:"2026-10-25"},
  {n:"Ideogram 4",v:"Ideogram",id:"ideogram/ideogram-4",cat:"image",ctx:"—",out:"—",pimg:0.045,caps:[],d:"2026-09-22"},
  {n:"Seedance 2.5",v:"ByteDance",id:"bytedance/doubao-seedance-2.5",cat:"video",ctx:"—",out:"—",pvid:0.080,caps:["vision","audio"],d:"2026-10-12"},
  {n:"Wan 3.0 Video",v:"Alibaba",id:"alibaba/wan3.0-video",cat:"video",ctx:"—",out:"—",pvid:0.055,caps:["vision","audio"],d:"2026-09-26"},

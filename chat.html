@@ -8,9 +8,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Poko Chat — 一句话，做出拿得出手的成果">
 <meta property="og:description" content="Poko 对话：一句话生成 PPT、报告、表格、海报、网页和代码，智能优选模型，按量付费。">
-<meta property="og:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<meta property="og:image" content="https://tmc.loc.cc/assets/scenery.webp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.jpg">
+<meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.webp">
 <link rel="canonical" href="https://tmc.loc.cc/chat.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z' fill='%233C9A5F'/%3E%3Ccircle cx='24' cy='26' r='19' fill='%23FF5C1A'/%3E%3Ccircle cx='17.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Ccircle cx='30.5' cy='24' r='2.7' fill='%2326221e'/%3E%3Cpath d='M20 30.5q4 3.2 8 0' stroke='%237A2A08' stroke-width='2.1' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
@@ -240,7 +240,7 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
 
 <main>
   <div class="topbar">
-    <label class="modelpick">✦ <select id="modelSel" aria-label="Model"><option value="" data-i18n="model_smart">智能优选</option><option value="deepseek-v4.1-flash">DeepSeek V4.1 Flash</option><option value="deepseek-v4-pro">DeepSeek V4 Pro</option><option value="claude-sonnet-5">Claude Sonnet 5</option><option value="gpt-5.6">GPT-5.6</option><option value="grok-4.7">Grok 4.7</option><option value="glm-5.3">GLM 5.3</option><option value="gemini-3-pro-preview">Gemini 3 Pro</option><option value="gemini-3.8-flash">Gemini 3.8 Flash</option><option value="qwen4-max">Qwen4 Max</option><option value="kimi-k3">Kimi K3</option><option value="minimax-m2.7">MiniMax M2.7</option><option value="hy4">腾讯混元 HY4</option></select></label>
+    <label class="modelpick">✦ <select id="modelSel" aria-label="Model"><option value="" data-i18n="model_smart">智能优选</option><option value="deepseek-v4.1-flash">DeepSeek V4.1 Flash</option><option value="deepseek-v4-pro">DeepSeek V4 Pro</option><option value="claude-sonnet-5-5">Claude Sonnet 5.5</option><option value="gpt-5.6">GPT-5.6</option><option value="grok-4.7">Grok 4.7</option><option value="glm-5.3">GLM 5.3</option><option value="gemini-3-pro-preview">Gemini 3 Pro</option><option value="gemini-3.8-flash">Gemini 3.8 Flash</option><option value="qwen4-max">Qwen4 Max</option><option value="kimi-k3">Kimi K3</option><option value="minimax-m2.7">MiniMax M2.7</option><option value="hy4">腾讯混元 HY4</option></select></label>
     <span class="demobadge" id="modeBadge" data-i18n="demo_badge">演示模式</span>
     <span class="note" id="modeNote" data-i18n="demo_note">接入真实模型后自动切换</span>
   </div>
@@ -433,7 +433,7 @@ let busy = false;
 const MODELS = {
   "deepseek-v4.1-flash":"DeepSeek V4.1 Flash",
   "deepseek-v4-pro":"DeepSeek V4 Pro",
-  "claude-sonnet-5":"Claude Sonnet 5",
+  "claude-sonnet-5-5":"Claude Sonnet 5.5",
   "gpt-5.6":"GPT-5.6",
   "grok-4.7":"Grok 4.7",
   "glm-5.3":"GLM 5.3",
@@ -459,7 +459,7 @@ let pendingImages = [];
    sheet/text 的 text 是已解析并截断后的正文，发送时并入该条 user 消息；unparsed 为 SheetJS 缺失/解析失败的回退 */
 let pendingDocs = [];
 let lastUsedModelId = null;
-const VISION_MODELS = new Set(["gemini-3-pro-preview","gemini-3.8-flash","gpt-5.6","claude-sonnet-5","qwen4-max","kimi-k3","nano-banana-pro"]);
+const VISION_MODELS = new Set(["gemini-3-pro-preview","gemini-3.8-flash","gpt-5.6","claude-sonnet-5-5","qwen4-max","kimi-k3","nano-banana-pro"]);
 
 function applyLang(){
   document.documentElement.lang = {zh:"zh-CN", en:"en", ja:"ja", ko:"ko", es:"es"}[lang];
