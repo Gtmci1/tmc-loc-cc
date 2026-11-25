@@ -207,6 +207,21 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
 .dlbtn:hover{border-color:var(--brand);color:var(--brand)}
 .codeout{margin-top:10px;max-width:640px;background:#17130c;color:#e8e2d4;border-radius:12px;padding:12px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word;max-height:260px;overflow:auto}
 </style>
+<style id="r18">
+/* ===== 第十八轮：登录墙 / 侧栏账号区 ===== */
+.loginwall{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 20px;overflow-y:auto}
+.loginwall[hidden]{display:none}
+.wallcard{text-align:center;max-width:460px;border:1px solid var(--line);border-radius:24px;padding:40px 36px;background:#fff;box-shadow:var(--shadow)}
+.wallcard h2{font-size:24px;font-weight:850;letter-spacing:-.02em}
+.wallcard p{color:var(--sub);font-size:15px;line-height:1.7;margin-top:12px}
+.wallcard .wallmsg{color:#b3261e;font-weight:600}
+.wallbtn{display:inline-flex;margin-top:22px;background:var(--brand-grad);color:#fff;font-weight:700;font-size:15.5px;border-radius:999px;padding:12px 28px;box-shadow:var(--shadow-brand)}
+.wallbtn:hover{filter:brightness(1.05)}
+.side-user{min-width:0;flex:1}
+.side-user b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logoutbtn{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--sub);cursor:pointer}
+.logoutbtn:hover{border-color:var(--brand);color:var(--brand)}
+</style>
 </head>
 <body>
 <aside>
@@ -233,8 +248,9 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
     </select>
   </div>
   <div class="side-foot">
-    <div class="avatar">访</div>
-    <div><b data-i18n="guest" id="guestName">演示访客</b><span data-i18n="guest_sub">免费试用中</span></div>
+    <div class="avatar" id="userAvatar">P</div>
+    <div class="side-user"><b id="userEmail">—</b><span data-i18n="account">已登录</span></div>
+    <button type="button" class="logoutbtn" id="logoutBtn" data-i18n="logout">退出登录</button>
   </div>
 </aside>
 
@@ -243,6 +259,14 @@ aside{background:linear-gradient(180deg,#faf9f5,#f3f1ea)}
     <label class="modelpick">✦ <select id="modelSel" aria-label="Model"><option value="" data-i18n="model_smart">智能优选</option><option value="deepseek-v4.1-flash">DeepSeek V4.1 Flash</option><option value="deepseek-v4-pro">DeepSeek V4 Pro</option><option value="claude-sonnet-5-5">Claude Sonnet 5.5</option><option value="gpt-5.6">GPT-5.6</option><option value="grok-4.7">Grok 4.7</option><option value="glm-5.3">GLM 5.3</option><option value="gemini-3-pro-preview">Gemini 3 Pro</option><option value="gemini-3.8-flash">Gemini 3.8 Flash</option><option value="qwen4-max">Qwen4 Max</option><option value="kimi-k3">Kimi K3</option><option value="minimax-m2.7">MiniMax M2.7</option><option value="hy4">腾讯混元 HY4</option></select></label>
     <span class="demobadge" id="modeBadge" data-i18n="demo_badge">演示模式</span>
     <span class="note" id="modeNote" data-i18n="demo_note">接入真实模型后自动切换</span>
+  </div>
+  <div class="loginwall" id="loginWall" hidden>
+    <div class="wallcard">
+      <h2 data-i18n="wall_title">登录后即可使用 Poko</h2>
+      <p data-i18n="wall_sub">Poko 已取消访客试用。登录或注册一个账号，即可一句话做 PPT、表格、海报、网页、代码和视频。</p>
+      <p class="wallmsg" id="wallMsg" hidden></p>
+      <a class="wallbtn" href="auth.html" data-i18n="wall_btn">登录 / 注册</a>
+    </div>
   </div>
   <div class="msgs" id="msgs">
     <div class="col" id="msgCol">
@@ -289,57 +313,57 @@ const POKO_API_BASE = "https://poko-api.gtmc.workers.dev";
 /* ================= i18n（五语） ================= */
 const I18N = {
 zh:{new_chat:"新对话",history:"历史对话",hist1:"季度销售复盘 PPT",hist2:"课程问卷数据分析",hist3:"桂花乌龙上市海报",
- guest:"演示访客",guest_real:"访客",guest_sub:"免费试用中",model_smart:"智能优选",demo_badge:"演示模式",demo_note:"接入真实模型后自动切换",mode_badge_real:"真实模式",mode_note_real:"已接入真实模型",hint_real:"已接入真实模型，回复由所选模型实时生成。",cost_note_real:"本次由真实模型生成 · {model}",
+ account:"已登录",logout:"退出登录",wall_title:"登录后即可使用 Poko",wall_sub:"Poko 已取消访客试用。登录或注册一个账号，即可一句话做 PPT、表格、海报、网页、代码和视频。",wall_btn:"登录 / 注册",sess_expired:"登录已过期，请重新登录",model_smart:"智能优选",demo_badge:"演示模式",demo_note:"接入真实模型后自动切换",mode_badge_real:"真实模式",mode_note_real:"已接入真实模型",hint_real:"已接入真实模型，回复由所选模型实时生成。",cost_note_real:"本次由真实模型生成 · {model}",
  welcome_title:"想做点什么？说一句话就行",welcome_sub:"PPT、报告、表格、海报、网页、代码——描述清楚要什么，Poko 把成品文件交给你。",
  input_ph:"描述你要做的事，例如：把这份销售数据做成 10 页汇报 PPT",
  hint:"演示模式下不会调用真实模型，产出文件为示例内容。",
  steps_done:"完成 3 个步骤",cost_note:"本次约 $0.00 · 演示模式，未调用真实模型",dl:"下载",preview:"预览",
  img_tag:"演示占位图",thinking:"Poko 正在处理",img_generating:"正在生成图片…真实出图大约需要半分钟到一分半，请稍等，不要走开。",
- modes:[["免费试用","free"],["写报告","report"],["分析表格","sheet"],["做PPT","ppt"],["生成视频","video"],["图像生成","image"],["跑代码","code"]],
+ modes:[["自由对话","free"],["写报告","report"],["分析表格","sheet"],["做PPT","ppt"],["生成视频","video"],["图像生成","image"],["跑代码","code"]],
  try_label:"试试这些",tpl_label:"常用模板",
  examples:[["把季度销售数据做成 12 页复盘 PPT","ppt"],["分析这份问卷数据，给我一张统计表","sheet"],["给新品桂花乌龙做一张上市海报","image"],["给我的咖啡馆做一个菜单网页","free"]],
  templates:[["季度复盘 PPT","帮我做一份季度业务复盘 PPT，包含核心指标、增长亮点、主要问题和下季度计划，共 12 页","ppt"],["销售数据分析","分析这份销售数据，按区域和月份汇总销售额，找出增长最快和掉队的品类，给我一张汇总表","sheet"],["新品上市海报","给一款新品做一张上市海报，风格简洁高级，中间留产品特写位置，底部放一句卖点文案","image"],["活动落地页","给一场线下活动做一个落地页，要有活动介绍、时间地点、报名入口和常见问题","free"]]},
 en:{new_chat:"New chat",history:"History",hist1:"Quarterly sales review deck",hist2:"Course survey analysis",hist3:"Osmanthus oolong launch poster",
- guest:"Demo guest",guest_real:"Guest",guest_sub:"Free trial",model_smart:"Smart pick",demo_badge:"Demo mode",demo_note:"Switches automatically once a real model is connected",mode_badge_real:"Live mode",mode_note_real:"Connected to a real model",hint_real:"A real model is connected — replies are generated live by the model you pick.",cost_note_real:"Generated by a real model · {model}",
+ account:"Signed in",logout:"Log out",wall_title:"Log in to use Poko",wall_sub:"Guest trial is gone. Log in or create an account to make decks, sheets, posters, pages, code and videos with one sentence.",wall_btn:"Log in / Sign up",sess_expired:"Your session has expired — please log in again",model_smart:"Smart pick",demo_badge:"Demo mode",demo_note:"Switches automatically once a real model is connected",mode_badge_real:"Live mode",mode_note_real:"Connected to a real model",hint_real:"A real model is connected — replies are generated live by the model you pick.",cost_note_real:"Generated by a real model · {model}",
  welcome_title:"What shall we make? Just say it",welcome_sub:"Decks, reports, spreadsheets, posters, web pages, code — describe what you need and Poko hands you the finished file.",
  input_ph:"Describe what you want to make, e.g. Turn this sales data into a 10-slide report deck",
  hint:"Demo mode never calls a real model; generated files contain sample content.",
  steps_done:"3 steps completed",cost_note:"This reply: ~$0.00 · Demo mode, no real model was called",dl:"Download",preview:"Preview",
  img_tag:"Demo placeholder",thinking:"Poko is working",img_generating:"Generating your image… Real generation takes about 30–90 seconds — hang tight.",
- modes:[["Free trial","free"],["Write a report","report"],["Analyze sheets","sheet"],["Make a deck","ppt"],["Make a video","video"],["Generate images","image"],["Run code","code"]],
+ modes:[["Free chat","free"],["Write a report","report"],["Analyze sheets","sheet"],["Make a deck","ppt"],["Make a video","video"],["Generate images","image"],["Run code","code"]],
  try_label:"Try one of these",tpl_label:"Templates",
  examples:[["Turn quarterly sales data into a 12-slide review deck","ppt"],["Analyze this survey data and give me a statistics table","sheet"],["Make a launch poster for a new osmanthus oolong tea","image"],["Build a menu web page for my café","free"]],
  templates:[["Quarterly review deck","Make a 12-slide quarterly business review deck: key metrics, growth highlights, main problems and next-quarter plans","ppt"],["Sales data analysis","Analyze this sales data — total revenue by region and month, flag the fastest-growing and slipping categories, and give me a summary table","sheet"],["Product launch poster","Make a launch poster for a new product: clean, premium style, space in the middle for a product close-up and one line of copy at the bottom","image"],["Event landing page","Build a landing page for an offline event: intro, time and venue, a sign-up entry and an FAQ section","free"]]},
 ja:{new_chat:"新しいチャット",history:"履歴",hist1:"四半期売上レビューのスライド",hist2:"授業アンケートのデータ分析",hist3:"キンモクセイ烏龍茶の発売ポスター",
- guest:"デモゲスト",guest_real:"ゲスト",guest_sub:"無料トライアル中",model_smart:"スマート選択",demo_badge:"デモモード",demo_note:"実モデル接続後は自動で切り替わります",mode_badge_real:"実モデルモード",mode_note_real:"実モデルに接続済み",hint_real:"実モデルに接続済みです。返信は選択したモデルがリアルタイムに生成します。",cost_note_real:"実モデルが生成 · {model}",
+ account:"ログイン中",logout:"ログアウト",wall_title:"ログインすると Poko を使えます",wall_sub:"ゲスト試用は終了しました。ログインまたはアカウント登録で、スライド・表・ポスター・Webページ・コード・動画が一言で作れます。",wall_btn:"ログイン / 登録",sess_expired:"ログインの有効期限が切れました。もう一度ログインしてください",model_smart:"スマート選択",demo_badge:"デモモード",demo_note:"実モデル接続後は自動で切り替わります",mode_badge_real:"実モデルモード",mode_note_real:"実モデルに接続済み",hint_real:"実モデルに接続済みです。返信は選択したモデルがリアルタイムに生成します。",cost_note_real:"実モデルが生成 · {model}",
  welcome_title:"何を作りますか？一言でOK",welcome_sub:"スライド、レポート、表、ポスター、Webページ、コード——作りたいものを伝えれば、完成したファイルをお渡しします。",
  input_ph:"作りたいものを入力してください。例：この売上データを10ページの報告スライドにして",
  hint:"デモモードでは実モデルを呼び出さず、生成ファイルはサンプル内容です。",
  steps_done:"3ステップ完了",cost_note:"今回 約 $0.00 · デモモード（実モデル未使用）",dl:"ダウンロード",preview:"プレビュー",
  img_tag:"デモ用プレースホルダー",thinking:"Poko が処理中",img_generating:"画像を生成中です…実際の生成には30〜90秒ほどかかります。そのままお待ちください。",
- modes:[["無料で試す","free"],["レポート作成","report"],["表を分析","sheet"],["スライド作成","ppt"],["動画生成","video"],["画像生成","image"],["コード実行","code"]],
+ modes:[["自由チャット","free"],["レポート作成","report"],["表を分析","sheet"],["スライド作成","ppt"],["動画生成","video"],["画像生成","image"],["コード実行","code"]],
  try_label:"まずはこれを試して",tpl_label:"よく使うテンプレート",
  examples:[["四半期の売上データを12ページの振り返りスライドにして","ppt"],["このアンケートデータを分析して統計表を作って","sheet"],["新商品のキンモクセイ烏龍茶の発売ポスターを作って","image"],["私のカフェのメニューページを作って","free"]],
  templates:[["四半期レビュー","四半期の業務レビュー用スライドを12ページで作ってください。主要指標、成長のハイライト、課題、来期の計画を含めてください","ppt"],["売上データ分析","この売上データを分析して、地域別・月別に集計し、伸びたカテゴリと落ちたカテゴリを挙げて、集計表を作ってください","sheet"],["新商品ポスター","新商品の発売ポスターを作ってください。シンプルで上質な雰囲気で、中央に商品の特写スペース、下部にキャッチコピーを一行入れてください","image"],["イベントページ","オフラインイベントのランディングページを作ってください。イベント紹介、日時と場所、申し込み導線、よくある質問を含めてください","free"]]},
 ko:{new_chat:"새 대화",history:"기록",hist1:"분기 매출 회고 PPT",hist2:"수업 설문 데이터 분석",hist3:"계화 우롱차 출시 포스터",
- guest:"데모 게스트",guest_real:"게스트",guest_sub:"무료 체험 중",model_smart:"스마트 선택",demo_badge:"데모 모드",demo_note:"실제 모델 연결 후 자동으로 전환됩니다",mode_badge_real:"실제 모델 모드",mode_note_real:"실제 모델에 연결됨",hint_real:"실제 모델에 연결되어 있습니다. 답변은 선택한 모델이 실시간으로 생성합니다.",cost_note_real:"실제 모델이 생성 · {model}",
+ account:"로그인됨",logout:"로그아웃",wall_title:"로그인하면 Poko를 사용할 수 있습니다",wall_sub:"게스트 체험은 종료되었습니다. 로그인하거나 계정을 만들면 한 문장으로 PPT, 표, 포스터, 웹페이지, 코드, 동영상을 만들 수 있습니다.",wall_btn:"로그인 / 가입",sess_expired:"로그인이 만료되었습니다. 다시 로그인해 주세요",model_smart:"스마트 선택",demo_badge:"데모 모드",demo_note:"실제 모델 연결 후 자동으로 전환됩니다",mode_badge_real:"실제 모델 모드",mode_note_real:"실제 모델에 연결됨",hint_real:"실제 모델에 연결되어 있습니다. 답변은 선택한 모델이 실시간으로 생성합니다.",cost_note_real:"실제 모델이 생성 · {model}",
  welcome_title:"무엇을 만들까요? 한 문장이면 됩니다",welcome_sub:"PPT, 보고서, 표, 포스터, 웹페이지, 코드 — 원하는 것을 말하면 완성된 파일을 드립니다.",
  input_ph:"만들고 싶은 것을 적어 주세요. 예: 이 매출 데이터를 10페이지 보고 PPT로 만들어 줘",
  hint:"데모 모드에서는 실제 모델을 호출하지 않으며, 생성 파일은 예시 내용입니다.",
  steps_done:"3단계 완료",cost_note:"이번 비용 약 $0.00 · 데모 모드, 실제 모델 미호출",dl:"다운로드",preview:"미리보기",
  img_tag:"데모용 자리 표시 이미지",thinking:"Poko가 처리 중",img_generating:"이미지를 생성 중입니다… 실제 생성에는 30~90초 정도 걸리니 잠시만 기다려 주세요.",
- modes:[["무료 체험","free"],["보고서 작성","report"],["표 분석","sheet"],["PPT 만들기","ppt"],["동영상 생성","video"],["이미지 생성","image"],["코드 실행","code"]],
+ modes:[["자유 대화","free"],["보고서 작성","report"],["표 분석","sheet"],["PPT 만들기","ppt"],["동영상 생성","video"],["이미지 생성","image"],["코드 실행","code"]],
  try_label:"이렇게 시작해 보세요",tpl_label:"자주 쓰는 템플릿",
  examples:[["분기 매출 데이터를 12페이지 회고 PPT로 만들어 줘","ppt"],["이 설문 데이터를 분석해서 통계표를 만들어 줘","sheet"],["신제품 계화 우롱차 출시 포스터를 만들어 줘","image"],["우리 카페 메뉴 웹페이지를 만들어 줘","free"]],
  templates:[["분기 회고 PPT","분기 업무 회고 PPT를 12페이지로 만들어 줘. 핵심 지표, 성장 포인트, 주요 문제, 다음 분기 계획을 포함해 줘","ppt"],["매출 데이터 분석","이 매출 데이터를 분석해서 지역별·월별로 합산하고, 가장 빠르게 성장한 카테고리와 부진한 카테고리를 찾아 요약표를 만들어 줘","sheet"],["신제품 출시 포스터","신제품 출시 포스터를 만들어 줘. 깔끔하고 고급스러운 스타일로, 가운데에 제품 클로즈업 자리를 비우고 아래에 한 줄 카피를 넣어 줘","image"],["행사 랜딩 페이지","오프라인 행사 랜딩 페이지를 만들어 줘. 행사 소개, 시간과 장소, 신청 버튼, 자주 묻는 질문을 넣어 줘","free"]]},
 es:{new_chat:"Nuevo chat",history:"Historial",hist1:"Presentación de revisión de ventas",hist2:"Análisis de encuesta del curso",hist3:"Póster de lanzamiento de té oolong",
- guest:"Invitado demo",guest_real:"Invitado",guest_sub:"Prueba gratuita",model_smart:"Elección inteligente",demo_badge:"Modo demo",demo_note:"Cambia automáticamente al conectar un modelo real",mode_badge_real:"Modo real",mode_note_real:"Conectado a un modelo real",hint_real:"Hay un modelo real conectado: las respuestas las genera en directo el modelo que elijas.",cost_note_real:"Generado por un modelo real · {model}",
+ account:"Sesión iniciada",logout:"Cerrar sesión",wall_title:"Inicia sesión para usar Poko",wall_sub:"La prueba de invitado ha terminado. Inicia sesión o crea una cuenta para crear presentaciones, hojas, pósteres, páginas, código y vídeos con una frase.",wall_btn:"Iniciar sesión / Registrarse",sess_expired:"Tu sesión ha caducado. Inicia sesión de nuevo",model_smart:"Elección inteligente",demo_badge:"Modo demo",demo_note:"Cambia automáticamente al conectar un modelo real",mode_badge_real:"Modo real",mode_note_real:"Conectado a un modelo real",hint_real:"Hay un modelo real conectado: las respuestas las genera en directo el modelo que elijas.",cost_note_real:"Generado por un modelo real · {model}",
  welcome_title:"¿Qué creamos? Dilo en una frase",welcome_sub:"Presentaciones, informes, hojas de cálculo, pósteres, páginas web, código: describe lo que necesitas y Poko te entrega el archivo terminado.",
  input_ph:"Describe lo que quieres crear, ej.: Convierte estos datos de ventas en una presentación de 10 diapositivas",
  hint:"En modo demo no se llama a ningún modelo real; los archivos generados contienen contenido de ejemplo.",
  steps_done:"3 pasos completados",cost_note:"Esta respuesta: ~$0.00 · Modo demo, sin modelo real",dl:"Descargar",preview:"Vista previa",
  img_tag:"Imagen de demostración",thinking:"Poko está trabajando",img_generating:"Generando tu imagen… La generación real tarda entre 30 y 90 segundos, un momento.",
- modes:[["Prueba gratis","free"],["Escribir informe","report"],["Analizar hojas","sheet"],["Crear presentación","ppt"],["Crear vídeo","video"],["Generar imágenes","image"],["Ejecutar código","code"]],
+ modes:[["Chat libre","free"],["Escribir informe","report"],["Analizar hojas","sheet"],["Crear presentación","ppt"],["Crear vídeo","video"],["Generar imágenes","image"],["Ejecutar código","code"]],
  try_label:"Prueba con esto",tpl_label:"Plantillas frecuentes",
  examples:[["Convierte los datos de ventas del trimestre en una presentación de 12 diapositivas","ppt"],["Analiza los datos de esta encuesta y dame una tabla de estadísticas","sheet"],["Haz un póster de lanzamiento para un nuevo té oolong de osmanthus","image"],["Crea una página de menú para mi cafetería","free"]],
  templates:[["Revisión trimestral","Haz una presentación de revisión trimestral de 12 diapositivas: indicadores clave, logros de crecimiento, problemas principales y planes del próximo trimestre","ppt"],["Análisis de ventas","Analiza estos datos de ventas: suma por región y mes, encuentra las categorías que más crecen y las que caen, y dame una tabla resumen","sheet"],["Póster de lanzamiento","Haz un póster de lanzamiento para un producto nuevo: estilo limpio y premium, espacio en el centro para un primer plano del producto y una línea de texto abajo","image"],["Página de evento","Crea una página de aterrizaje para un evento presencial: presentación, fecha y lugar, botón de inscripción y preguntas frecuentes","free"]]}
@@ -472,8 +496,8 @@ function applyLang(){
     if(b){ b.textContent = t("mode_badge_real"); b.classList.add("real"); }
     if(n) n.textContent = t("mode_note_real");
     if(h) h.textContent = t("hint_real");
-    const g = $("#guestName"); if(g) g.textContent = t("guest_real");
   }
+  if(typeof refreshWallMsg === "function") refreshWallMsg();
   renderModes(); renderTry(); renderTpl();
 }
 function renderModes(){
@@ -615,7 +639,11 @@ function addReplyImage(wrap, src, dlName, alt){
   const card = document.createElement("div");
   card.className = "genimg";
   const img = document.createElement("img");
-  img.src = src; img.alt = alt || "";
+  img.alt = alt || "";
+  // 经 /api/img 代理的图在门禁后需 Bearer 才能取（<img> 带不了头）：走 fetch→blob 显示；
+  // data URI 与 https 直链不受影响，照旧直接显示。下载链接同理在取到 blob 后回填。
+  const needsAuth = src.indexOf(API_BASE + "/api/img") === 0;
+  if(!needsAuth) img.src = src;
   card.appendChild(img);
   if(alt){
     const cap = document.createElement("div");
@@ -625,6 +653,7 @@ function addReplyImage(wrap, src, dlName, alt){
   const a = document.createElement("a");
   a.href = src; a.download = dlName || "poko-image.png"; a.className = "dl"; a.textContent = t("dl");
   card.appendChild(a);
+  if(needsAuth) loadProtectedImage(img, src, a);
   wrap.appendChild(card);
 }
 // 从模型回复文本里提取图片，四种形式：
@@ -1133,9 +1162,16 @@ async function runAPI(text, opts){
   try{
     const res = await fetch(POKO_API_BASE.replace(/\/+$/,"") + "/api/chat", {
       method: "POST",
-      headers: {"Content-Type":"application/json"},
+      headers: authHeaders({"Content-Type":"application/json"}),
       body: JSON.stringify(apiPayload(model, extraSys))
     });
+    if(res.status === 401){
+      // 会话失效：不回退演示，清 token 回登录墙重新登录
+      historyMsgs.pop();
+      wrap.remove();
+      sessionExpired();
+      return;
+    }
     if(!res.ok || !res.body) throw new Error("bad response");
     wrap.innerHTML = ""; wrap.appendChild(body);
     const reader = res.body.getReader();
@@ -1206,9 +1242,10 @@ async function runImageGen(text){
   try{
     const res = await fetch(POKO_API_BASE.replace(/\/+$/,"") + "/api/image", {
       method: "POST",
-      headers: {"Content-Type":"application/json"},
+      headers: authHeaders({"Content-Type":"application/json"}),
       body: JSON.stringify({prompt: text})
     });
+    if(res.status === 401){ wrap.remove(); sessionExpired(); return; }
     if(!res.ok) throw new Error("image request failed");
     const j = await res.json();
     const src = j && (j.data_url || j.url);
@@ -1257,9 +1294,10 @@ async function runVideoGen(text, hasImages){
     const base = POKO_API_BASE.replace(/\/+$/, "");
     const res = await fetch(base + "/api/video", {
       method: "POST",
-      headers: {"Content-Type":"application/json"},
+      headers: authHeaders({"Content-Type":"application/json"}),
       body: JSON.stringify({prompt: text})
     });
+    if(res.status === 401){ clearInterval(timer); wrap.remove(); sessionExpired(); return; }
     if(!res.ok) throw new Error("video create failed");
     const cj = await res.json();
     const taskId = cj && cj.task_id;
@@ -1267,7 +1305,8 @@ async function runVideoGen(text, hasImages){
     let videoUrl = null;
     while(Date.now() - started < 7 * 60 * 1000){
       await wait(15000);
-      const sr = await fetch(base + "/api/video?id=" + encodeURIComponent(taskId));
+      const sr = await fetch(base + "/api/video?id=" + encodeURIComponent(taskId), {headers: authHeaders()});
+      if(sr.status === 401){ clearInterval(timer); wrap.remove(); sessionExpired(); return; }
       if(!sr.ok) continue; // 单次轮询失败不中断，继续等到总超时
       const sj = await sr.json().catch(() => null);
       if(!sj || !sj.ok) continue;
@@ -1279,15 +1318,20 @@ async function runVideoGen(text, hasImages){
     if(!videoUrl) throw new Error("video timeout");
     clearInterval(timer);
     lastUsedModelId = "doubao-seedance-2.5";
+    // /api/video/content 在门禁后需 Bearer，<video> 标签带不了头：先 fetch 整段为 blob 再播放/下载
+    const cr = await fetch(base + videoUrl, {headers: authHeaders()});
+    if(cr.status === 401){ wrap.remove(); sessionExpired(); return; }
+    if(!cr.ok) throw new Error("video content failed");
+    const blobUrl = URL.createObjectURL(await cr.blob());
     ph.remove();
     const card = document.createElement("div");
     card.className = "genimg";
     const v = document.createElement("video");
     v.controls = true; v.playsInline = true;
-    v.src = base + videoUrl;
+    v.src = blobUrl;
     card.appendChild(v);
     const a = document.createElement("a");
-    a.href = base + videoUrl; a.download = "poko-video.mp4";
+    a.href = blobUrl; a.download = "poko-video.mp4";
     a.className = "dl"; a.textContent = t("vid_dl");
     card.appendChild(a);
     wrap.appendChild(card);
@@ -1305,6 +1349,7 @@ async function runVideoGen(text, hasImages){
 /* ================= 发送流程 ================= */
 async function send(){
   if(busy) return;
+  if(!authed) return; // 登录墙状态下不发出任何请求
   const input = $("#input");
   const text = input.value.trim();
   if(!text) return;
@@ -1404,6 +1449,79 @@ $("#fileInput").addEventListener("change", async e => {
   e.target.value = ""; // 清空以便同一文件可再次选择
 });
 
+/* ================= 第十八轮：登录门禁 =================
+   页面加载先验会话：无 token 或 /api/auth/me 返回 401 → 登录墙
+   （隐藏消息区与输入区、禁用输入与发送），不发出任何业务请求。
+   所有业务 fetch 经 authHeaders 带 Bearer；任一请求中途 401 →
+   清 token 并回登录墙，提示重新登录（不回退演示）。 */
+const API_BASE = POKO_API_BASE.replace(/\/+$/, "");
+let authToken = ""; try{ authToken = localStorage.getItem("poko_token") || ""; }catch(_){}
+let authEmail = ""; try{ authEmail = localStorage.getItem("poko_email") || ""; }catch(_){}
+let authed = false;
+var wallExpiredShown = false;
+let autoSendArmed = false; // URL 带 ?q= 时，等验会话通过后再自动发送
+function authHeaders(extra){
+  const h = Object.assign({}, extra || {});
+  if(authToken) h["Authorization"] = "Bearer " + authToken;
+  return h;
+}
+function refreshWallMsg(){
+  const wm = $("#wallMsg");
+  if(wm){ wm.hidden = !wallExpiredShown; if(wallExpiredShown) wm.textContent = t("sess_expired"); }
+}
+function setWall(on, expired){
+  authed = !on;
+  wallExpiredShown = !!(on && expired);
+  const wall = $("#loginWall"); if(wall) wall.hidden = !on;
+  const msgs = $("#msgs"); if(msgs) msgs.style.display = on ? "none" : "";
+  const iz = document.querySelector(".inputzone"); if(iz) iz.style.display = on ? "none" : "";
+  const inp = $("#input"); if(inp) inp.disabled = on;
+  const sb = $("#sendBtn"); if(sb) sb.disabled = on;
+  refreshWallMsg();
+  if(!on){
+    const em = $("#userEmail"); if(em) em.textContent = authEmail;
+    const av = $("#userAvatar"); if(av) av.textContent = (authEmail.trim().charAt(0) || "P").toUpperCase();
+  }
+}
+function clearSession(expired){
+  try{ localStorage.removeItem("poko_token"); localStorage.removeItem("poko_email"); }catch(_){}
+  authToken = ""; authEmail = "";
+  setWall(true, expired);
+}
+function sessionExpired(){ clearSession(true); }
+async function checkAuth(){
+  if(!authToken){ setWall(true, false); return; }
+  try{
+    const res = await fetch(API_BASE + "/api/auth/me", {headers: authHeaders()});
+    if(res.status === 401){ sessionExpired(); return; }
+    if(!res.ok) throw new Error("me check failed");
+    const j = await res.json().catch(() => null);
+    if(j && j.email){ authEmail = j.email; try{ localStorage.setItem("poko_email", authEmail); }catch(_){} }
+    setWall(false);
+    if(autoSendArmed){ autoSendArmed = false; send(); }
+  }catch(e){
+    // 网络异常时保守处理：显示登录墙，不发出任何业务请求
+    setWall(true, false);
+  }
+}
+/* 受门禁保护的图片加载：/api/img 代理需 Bearer，<img> 标签带不了头，
+   改走 fetch 取 blob 后以 object URL 显示，并回填下载链接；
+   data URI / https 直链图不走代理、不经此函数。 */
+async function loadProtectedImage(imgEl, url, linkEl){
+  try{
+    const res = await fetch(url, {headers: authHeaders()});
+    if(res.status === 401){ sessionExpired(); return; }
+    if(!res.ok) return;
+    const blobUrl = URL.createObjectURL(await res.blob());
+    imgEl.src = blobUrl;
+    if(linkEl) linkEl.href = blobUrl;
+  }catch(e){ /* 加载失败保持空白，不回退到未授权直链 */ }
+}
+$("#logoutBtn").addEventListener("click", async ()=>{
+  try{ await fetch(API_BASE + "/api/auth/logout", {method: "POST", headers: authHeaders()}); }catch(_){}
+  clearSession(false);
+});
+
 /* ================= 初始化：语言 + URL 参数 ================= */
 applyLang();
 (function initFromURL(){
@@ -1413,9 +1531,10 @@ applyLang();
   const q = p.get("q");
   if(q){
     $("#input").value = q;
-    setTimeout(send, 450);
+    autoSendArmed = true; // 验会话通过后由 checkAuth 触发发送；未登录则只停在登录墙
   }
 })();
+checkAuth();
 </script>
 
 <script>

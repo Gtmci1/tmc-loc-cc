@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>登录 Poko — 演示环境</title>
-<meta name="description" content="登录或注册 Poko（当前为演示环境，不会真正创建账号，提交后以访客身份进入演示对话）。">
+<title>登录 Poko</title>
+<meta name="description" content="登录或注册 Poko：用邮箱与密码创建账号，登录后即可使用 Poko 对话，一句话生成 PPT、表格、海报、网页与代码。">
 <link rel="canonical" href="https://tmc.loc.cc/auth.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="登录 Poko — 演示环境">
-<meta property="og:description" content="登录 Poko：演示环境，提交后以访客身份进入演示对话。">
+<meta property="og:title" content="登录 Poko">
+<meta property="og:description" content="登录 Poko：注册账号并登录后，即可使用一句话生成 PPT、表格、海报、网页与代码。">
 <meta property="og:image" content="https://tmc.loc.cc/assets/scenery.webp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://tmc.loc.cc/assets/scenery.webp">
@@ -202,7 +202,6 @@ aside.side a{transition:all .15s}
 .auth-mascot{display:flex;justify-content:center;position:relative}
 .authcard h1{font-size:25px;font-weight:850;letter-spacing:-.02em;margin-top:12px;position:relative}
 .auth-sub{color:var(--sub);font-size:14.5px;margin-top:6px;position:relative}
-.auth-demo{position:relative;margin:18px 0 4px;background:var(--brand-soft);border:1px solid #ffdcc4;border-radius:12px;padding:10px 14px;font-size:13px;line-height:1.65;color:#6b3a1e;text-align:left}
 .authtabs{display:flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:4px;margin:18px 0 20px;position:relative}
 .authtabs button{flex:1;border:none;background:none;font-family:inherit;font-size:15px;font-weight:600;padding:9px 0;border-radius:999px;color:var(--sub);cursor:pointer}
 .authtabs button.on{background:#fff;color:var(--ink);box-shadow:var(--shadow-sm)}
@@ -224,22 +223,16 @@ aside.side a{transition:all .15s}
 .socials{display:flex;gap:10px}
 .soc{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 4px;font-size:14.5px;font-weight:600;font-family:inherit;color:var(--ink);cursor:pointer;transition:.18s var(--ease)}
 .soc:hover{border-color:var(--line2);box-shadow:var(--shadow-sm);transform:translateY(-1px)}
-.auth-guest{display:inline-block;margin-top:18px;font-size:14.5px;font-weight:600;color:var(--brand-dark)}
-.auth-guest:hover{text-decoration:underline}
 .auth-agree{margin-top:14px;font-size:12.5px;color:var(--sub);line-height:1.6}
 .auth-agree a{color:var(--brand-dark);text-decoration:underline}
-.coderow{display:flex;gap:10px}
-.coderow input{flex:1;min-width:0}
-#sendCode{flex:none;white-space:nowrap;border-radius:12px;padding:0 18px;font-size:14.5px;min-height:47px}
-#sendCode:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
-.sentnote{display:none;color:#2f9e63;font-size:13px;margin-top:6px;line-height:1.55}
-.sentnote.show{display:block}
-.auth-codenote{font-size:12px;color:var(--sub);line-height:1.65;margin-top:8px}
+.auth-formerr{display:none;margin:0 0 14px;background:#fdeceb;border:1px solid #f3c1bd;border-radius:12px;padding:10px 14px;font-size:13.5px;line-height:1.6;color:#8c2b26;text-align:left;position:relative}
+.auth-formerr.show{display:block}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:1px solid var(--line2);background:#fff;border-radius:12px;padding:12px 14px;font-size:15px;font-weight:600;color:var(--ink);margin:0 0 18px;transition:.18s var(--ease);position:relative}
+.gbtn:hover{border-color:#c9c2b2;box-shadow:var(--shadow-sm);transform:translateY(-1px)}
 .auth-remember{margin:2px 0 12px}
 .auth-remember .rem{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#33322e;cursor:pointer;user-select:none}
 .auth-remember input{width:16px;height:16px;accent-color:var(--brand);cursor:pointer}
 @media(max-width:480px){
-  #sendCode{padding:0 12px;font-size:13.5px}
   .authcard{padding:30px 20px 24px}
 }
 </style>
@@ -282,17 +275,12 @@ aside.side a{transition:all .15s}
       <div class="auth-mascot"><span class="mascot"><svg width="52" height="52" viewBox="0 0 48 48" aria-hidden="true"><path d="M25 6c1-3.4 4.4-4.8 7.6-3.8C31.6 5.6 29.4 7.6 26 7.8z" fill="#3C9A5F"/><circle cx="24" cy="26" r="19" fill="#FF5C1A"/><circle cx="17.5" cy="24" r="2.7" fill="#26221e"/><circle cx="30.5" cy="24" r="2.7" fill="#26221e"/><circle cx="18.4" cy="23" r=".9" fill="#fff"/><circle cx="31.4" cy="23" r=".9" fill="#fff"/><ellipse cx="13.8" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><ellipse cx="34.2" cy="30" rx="3.4" ry="2.1" fill="#FFB59E"/><path d="M20 30.5q4 3.2 8 0" stroke="#7A2A08" stroke-width="2.1" fill="none" stroke-linecap="round"/></svg></span></div>
       <h1 id="auTitle"></h1>
       <p class="auth-sub" id="auSub"></p>
-      <div class="auth-demo" data-i18n="au_demo"></div>
       <div class="authtabs" role="tablist">
         <button type="button" id="tabLogin" role="tab"></button>
         <button type="button" id="tabSignup" role="tab"></button>
       </div>
+      <a class="gbtn" href="https://poko-api.gtmc.workers.dev/api/auth/google/start"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C36.9 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"/></svg><span data-i18n="au_google"></span></a>
       <form id="auForm" novalidate>
-        <div class="field" id="nameField" hidden>
-          <label for="auName" data-i18n="au_name"></label>
-          <input id="auName" type="text" autocomplete="nickname" data-i18n-ph="au_name_ph">
-          <p class="ferr" id="errName"></p>
-        </div>
         <div class="field">
           <label for="auEmail" data-i18n="au_email"></label>
           <input id="auEmail" type="email" autocomplete="email" placeholder="you@example.com">
@@ -306,28 +294,24 @@ aside.side a{transition:all .15s}
           </div>
           <p class="ferr" id="errPwd"></p>
         </div>
-        <div class="field" id="codeField" hidden>
-          <label for="auCode" data-i18n="au_code"></label>
-          <div class="coderow">
-            <input id="auCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" data-i18n-ph="au_code_ph">
-            <button type="button" class="btn btn-ghost" id="sendCode"></button>
+        <div class="field" id="pwd2Field" hidden>
+          <label for="auPwd2" data-i18n="au_pwd2"></label>
+          <div class="pwdwrap">
+            <input id="auPwd2" type="password" autocomplete="new-password" data-i18n-ph="au_pwd2_ph">
           </div>
-          <p class="sentnote" id="codeSent"></p>
-          <p class="ferr" id="errCode"></p>
-          <p class="auth-codenote" data-i18n="au_code_demo"></p>
+          <p class="ferr" id="errPwd2"></p>
         </div>
         <div class="auth-remember" id="rememberRow">
           <label class="rem"><input type="checkbox" id="auRemember"><span data-i18n="au_remember"></span></label>
         </div>
+        <div class="auth-formerr" id="formErr" role="alert"></div>
         <button class="btn btn-primary auth-submit" type="submit" id="auSubmit"></button>
       </form>
       <div class="auth-or"><span data-i18n="au_or"></span></div>
       <div class="socials">
-        <button type="button" class="soc" data-soc="Google"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C36.9 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"/></svg><span>Google</span></button>
         <button type="button" class="soc" data-soc="GitHub"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.6 0 0 3.6 0 8c0 3.5 2.3 6.5 5.5 7.6.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1.1-2.7-1.1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.7-.9-3.7-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.4 7.4 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3.1-1.9 3.8-3.7 4 .3.3.6.8.6 1.5V15c0 .2.1.5.5.4A8 8 0 0 0 16 8c0-4.4-3.6-8-8-8z"/></svg><span>GitHub</span></button>
         <button type="button" class="soc" data-soc="Apple"><svg width="18" height="18" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg><span>Apple</span></button>
       </div>
-      <a class="auth-guest" href="chat.html" data-i18n="au_guest"></a>
       <p class="auth-agree" id="auAgree"></p>
     </div>
   </div>
@@ -381,11 +365,11 @@ aside.side a{transition:all .15s}
 
 
 <script>
-const I18N={zh:{"nav_features": "功能", "nav_pricing": "价格", "nav_cases": "案例", "nav_models": "模型广场", "nav_docs": "文档", "nav_blog": "博客", "nav_biz": "企业", "nav_login": "登录", "nav_start": "开始使用", "foot_tag": "一句话，做出拿得出手的成果。", "foot_c1": "产品", "foot_c2": "热门模型", "foot_c3": "模型厂商", "foot_c4": "资源", "foot_chat": "AI 对话", "foot_ppt": "PPT 生成", "foot_price": "定价", "vendor_qwen": "阿里通义", "vendor_moon": "月之暗面", "foot_guide": "使用指南", "foot_tpl": "模板库", "foot_help": "帮助中心", "foot_about": "关于我们", "foot_contact": "联系我们", "foot_status": "演示站点", "foot_terms": "服务条款", "foot_privacy": "隐私政策", "pg_home": "首页", "cookie_txt": "Poko 只在你的浏览器本地保存语言偏好，不用追踪型 Cookie。", "cookie_ok": "知道了", "au_t_login": "欢迎回来", "au_t_signup": "创建你的 Poko 账号", "au_sub_login": "登录后，继续你的一句话之旅。", "au_sub_signup": "注册只要一分钟，第一份成果马上就能做。", "au_login": "登录", "au_signup": "注册", "au_demo": "当前为演示环境：不会真正创建账号，也不会发送任何数据。提交后将以访客身份进入演示对话。", "au_name": "昵称", "au_name_ph": "怎么称呼你", "au_email": "邮箱", "au_pwd": "密码", "au_pwd_ph": "至少 6 位", "au_btn_login": "登录并进入演示 →", "au_btn_signup": "注册并进入演示 →", "au_or": "或", "au_guest": "不登录，以访客身份直接进入 →", "au_err_email": "请输入有效的邮箱地址", "au_err_pwd": "密码至少 6 位", "au_err_name": "先给自己起个昵称吧", "au_agree": "提交即代表你同意《服务条款》与《隐私政策》。", "au_code": "邮箱验证码", "au_code_ph": "6 位数字验证码", "au_code_send": "发送验证码", "au_code_resend": "重新发送", "au_code_sent": "验证码已发送至 {email}，请查收", "au_code_demo": "演示模式：验证码流程仅为界面演示，不会真的发送邮件，输入任意 6 位数字即可通过；正式版将向你的邮箱真实发送验证码。", "au_err_code": "请输入 6 位数字验证码", "au_remember": "记住我"},
-en:{"nav_features": "Features", "nav_pricing": "Pricing", "nav_cases": "Cases", "nav_models": "Models", "nav_docs": "Docs", "nav_blog": "Blog", "nav_biz": "Business", "nav_login": "Log in", "nav_start": "Get started", "foot_tag": "One sentence. Results worth showing.", "foot_c1": "Product", "foot_c2": "Popular models", "foot_c3": "Providers", "foot_c4": "Resources", "foot_chat": "AI Chat", "foot_ppt": "Deck generation", "foot_price": "Pricing", "vendor_qwen": "Alibaba Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "User guide", "foot_tpl": "Templates", "foot_help": "Help center", "foot_about": "About us", "foot_contact": "Contact", "foot_status": "Demo site", "foot_terms": "Terms of Service", "foot_privacy": "Privacy Policy", "pg_home": "Home", "cookie_txt": "Poko only stores your language preference locally in your browser — no tracking cookies.", "cookie_ok": "Got it", "au_t_login": "Welcome back", "au_t_signup": "Create your Poko account", "au_sub_login": "Log in to continue where you left off.", "au_sub_signup": "Signing up takes a minute — your first result comes right after.", "au_login": "Log in", "au_signup": "Sign up", "au_demo": "This is a demo environment: no account is actually created and nothing is sent anywhere. Submitting takes you into the demo chat as a guest.", "au_name": "Name", "au_name_ph": "What should we call you", "au_email": "Email", "au_pwd": "Password", "au_pwd_ph": "At least 6 characters", "au_btn_login": "Log in & enter the demo →", "au_btn_signup": "Sign up & enter the demo →", "au_or": "or", "au_guest": "Continue as a guest →", "au_err_email": "Please enter a valid email address", "au_err_pwd": "Password needs at least 6 characters", "au_err_name": "Give yourself a name first", "au_agree": "By continuing you agree to our Terms of Service and Privacy Policy.", "au_code": "Email verification code", "au_code_ph": "6-digit code", "au_code_send": "Send code", "au_code_resend": "Resend", "au_code_sent": "Code sent to {email} — please check your inbox", "au_code_demo": "Demo mode: the verification step is a UI walkthrough only. No email is actually sent, and any 6-digit code will pass. The official version will email you a real code.", "au_err_code": "Enter the 6-digit code", "au_remember": "Remember me"}};
-I18N.ja={"nav_features": "機能", "nav_pricing": "料金", "nav_cases": "事例", "nav_models": "モデル一覧", "nav_docs": "ドキュメント", "nav_blog": "ブログ", "nav_biz": "法人向け", "nav_login": "ログイン", "nav_start": "使ってみる", "foot_tag": "一言で、見せられる成果を。", "foot_c1": "製品", "foot_c2": "人気モデル", "foot_c3": "モデル提供元", "foot_c4": "リソース", "foot_chat": "AIチャット", "foot_ppt": "スライド生成", "foot_price": "料金", "vendor_qwen": "Alibaba Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "使い方ガイド", "foot_tpl": "テンプレート", "foot_help": "ヘルプセンター", "foot_about": "私たちについて", "foot_contact": "お問い合わせ", "foot_status": "デモサイト", "foot_terms": "利用規約", "foot_privacy": "プライバシーポリシー", "pg_home": "ホーム", "cookie_txt": "Poko は言語設定をブラウザに保存するだけで、追跡 Cookie は使いません。", "cookie_ok": "了解", "au_t_login": "おかえりなさい", "au_t_signup": "Poko アカウントを作成", "au_sub_login": "ログインして続きを始めましょう。", "au_sub_signup": "登録は1分ほど。すぐに最初の成果が作れます。", "au_login": "ログイン", "au_signup": "登録", "au_demo": "現在はデモ環境です：アカウントは実際には作成されず、データも送信されません。送信するとゲストとしてデモチャットに入ります。", "au_name": "ニックネーム", "au_name_ph": "お名前・ニックネーム", "au_email": "メールアドレス", "au_pwd": "パスワード", "au_pwd_ph": "6文字以上", "au_btn_login": "ログインしてデモへ →", "au_btn_signup": "登録してデモへ →", "au_or": "または", "au_guest": "ログインせず、ゲストとして入る →", "au_err_email": "有効なメールアドレスを入力してください", "au_err_pwd": "パスワードは6文字以上にしてください", "au_err_name": "まずニックネームを入力してください", "au_agree": "続行すると、利用規約とプライバシーポリシーに同意したことになります。", "au_code": "メール認証コード", "au_code_ph": "6桁のコード", "au_code_send": "コードを送信", "au_code_resend": "再送信", "au_code_sent": "認証コードを {email} に送信しました。受信箱をご確認ください", "au_code_demo": "デモモード：認証コードの流れは画面上のデモです。メールは実際には送信されず、任意の6桁の数字で通過できます。正式版ではメールで実際のコードをお送りします。", "au_err_code": "6桁の数字コードを入力してください", "au_remember": "ログイン状態を保持"};
-I18N.ko={"nav_features": "기능", "nav_pricing": "요금", "nav_cases": "사례", "nav_models": "모델 광장", "nav_docs": "문서", "nav_blog": "블로그", "nav_biz": "기업용", "nav_login": "로그인", "nav_start": "시작하기", "foot_tag": "한 문장으로, 자신 있게 내놓을 수 있는 결과물을.", "foot_c1": "제품", "foot_c2": "인기 모델", "foot_c3": "모델 제공사", "foot_c4": "리소스", "foot_chat": "AI 대화", "foot_ppt": "PPT 생성", "foot_price": "요금", "vendor_qwen": "알리바바 Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "사용 가이드", "foot_tpl": "템플릿", "foot_help": "도움말 센터", "foot_about": "회사 소개", "foot_contact": "문의하기", "foot_status": "데모 사이트", "foot_terms": "서비스 약관", "foot_privacy": "개인정보 처리방침", "pg_home": "홈", "cookie_txt": "Poko는 언어 설정을 브라우저에 저장할 뿐, 추적 쿠키를 쓰지 않습니다.", "cookie_ok": "확인", "au_t_login": "다시 오신 것을 환영합니다", "au_t_signup": "Poko 계정 만들기", "au_sub_login": "로그인하고 이어서 시작하세요.", "au_sub_signup": "가입은 1분이면 됩니다. 바로 첫 결과물을 만들 수 있습니다.", "au_login": "로그인", "au_signup": "가입하기", "au_demo": "현재 데모 환경입니다: 계정이 실제로 만들어지지 않고 어떤 데이터도 전송되지 않습니다. 제출하면 게스트로 데모 대화에 들어갑니다.", "au_name": "닉네임", "au_name_ph": "어떻게 불러드릴까요", "au_email": "이메일", "au_pwd": "비밀번호", "au_pwd_ph": "6자 이상", "au_btn_login": "로그인하고 데모로 →", "au_btn_signup": "가입하고 데모로 →", "au_or": "또는", "au_guest": "로그인 없이 게스트로 들어가기 →", "au_err_email": "올바른 이메일 주소를 입력하세요", "au_err_pwd": "비밀번호는 6자 이상이어야 합니다", "au_err_name": "먼저 닉네임을 입력하세요", "au_agree": "계속하면 서비스 약관과 개인정보 처리방침에 동의하는 것으로 간주됩니다.", "au_code": "이메일 인증 코드", "au_code_ph": "6자리 숫자 코드", "au_code_send": "인증 코드 받기", "au_code_resend": "다시 받기", "au_code_sent": "인증 코드를 {email}(으)로 보냈습니다. 받은편지함을 확인하세요", "au_code_demo": "데모 모드: 인증 코드 절차는 화면 시연용입니다. 실제로 메일이 발송되지 않으며, 임의의 6자리 숫자를 입력하면 통과합니다. 정식 버전에서는 이메일로 실제 코드를 보냅니다.", "au_err_code": "6자리 숫자 코드를 입력하세요", "au_remember": "로그인 상태 유지"};
-I18N.es={"nav_features": "Funciones", "nav_pricing": "Precios", "nav_cases": "Casos", "nav_models": "Modelos", "nav_docs": "Documentos", "nav_blog": "Blog", "nav_biz": "Empresas", "nav_login": "Iniciar sesión", "nav_start": "Empezar", "foot_tag": "Una frase. Resultados de los que presumir.", "foot_c1": "Producto", "foot_c2": "Modelos populares", "foot_c3": "Proveedores", "foot_c4": "Recursos", "foot_chat": "Chat con IA", "foot_ppt": "Generación de presentaciones", "foot_price": "Precios", "vendor_qwen": "Alibaba Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "Guía de uso", "foot_tpl": "Plantillas", "foot_help": "Centro de ayuda", "foot_about": "Nosotros", "foot_contact": "Contacto", "foot_status": "Sitio de demostración", "foot_terms": "Términos del servicio", "foot_privacy": "Política de privacidad", "pg_home": "Inicio", "cookie_txt": "Poko solo guarda tu idioma en tu navegador, sin cookies de rastreo.", "cookie_ok": "Entendido", "au_t_login": "Bienvenido de nuevo", "au_t_signup": "Crea tu cuenta de Poko", "au_sub_login": "Inicia sesión para continuar donde lo dejaste.", "au_sub_signup": "Registrarse lleva un minuto: tu primer resultado viene justo después.", "au_login": "Iniciar sesión", "au_signup": "Registrarse", "au_demo": "Esto es un entorno de demostración: no se crea ninguna cuenta real ni se envía dato alguno. Al enviar entrarás al chat de demostración como invitado.", "au_name": "Nombre", "au_name_ph": "¿Cómo te llamamos?", "au_email": "Correo electrónico", "au_pwd": "Contraseña", "au_pwd_ph": "Al menos 6 caracteres", "au_btn_login": "Entrar a la demo →", "au_btn_signup": "Registrarse y entrar →", "au_or": "o", "au_guest": "Entrar como invitado →", "au_err_email": "Introduce un correo válido", "au_err_pwd": "La contraseña necesita al menos 6 caracteres", "au_err_name": "Primero escribe un nombre", "au_agree": "Al continuar aceptas nuestros Términos del servicio y la Política de privacidad.", "au_code": "Código de verificación por correo", "au_code_ph": "Código de 6 dígitos", "au_code_send": "Enviar código", "au_code_resend": "Reenviar", "au_code_sent": "Código enviado a {email}: revisa tu bandeja de entrada", "au_code_demo": "Modo demo: el paso de verificación es solo una demostración de la interfaz; no se envía ningún correo y cualquier código de 6 dígitos sirve. La versión oficial enviará un código real a tu correo.", "au_err_code": "Introduce el código de 6 dígitos", "au_remember": "Recuérdame"};
+const I18N={zh:{"nav_features": "功能", "nav_pricing": "价格", "nav_cases": "案例", "nav_models": "模型广场", "nav_docs": "文档", "nav_blog": "博客", "nav_biz": "企业", "nav_login": "登录", "nav_start": "开始使用", "foot_tag": "一句话，做出拿得出手的成果。", "foot_c1": "产品", "foot_c2": "热门模型", "foot_c3": "模型厂商", "foot_c4": "资源", "foot_chat": "AI 对话", "foot_ppt": "PPT 生成", "foot_price": "定价", "vendor_qwen": "阿里通义", "vendor_moon": "月之暗面", "foot_guide": "使用指南", "foot_tpl": "模板库", "foot_help": "帮助中心", "foot_about": "关于我们", "foot_contact": "联系我们", "foot_status": "演示站点", "foot_terms": "服务条款", "foot_privacy": "隐私政策", "pg_home": "首页", "cookie_txt": "Poko 只在你的浏览器本地保存语言偏好，不用追踪型 Cookie。", "cookie_ok": "知道了", "au_t_login": "欢迎回来", "au_t_signup": "创建你的 Poko 账号", "au_sub_login": "登录后，继续你的一句话之旅。", "au_sub_signup": "注册只要一分钟，第一份成果马上就能做。", "au_login": "登录", "au_signup": "注册", "au_email": "邮箱", "au_pwd": "密码", "au_pwd_ph": "至少 8 位", "au_btn_login": "登录 →", "au_btn_signup": "注册 →", "au_or": "或", "au_err_email": "请输入有效的邮箱地址", "au_err_pwd": "密码至少 8 位", "au_agree": "提交即代表你同意《服务条款》与《隐私政策》。", "au_remember": "记住我", "au_pwd2": "确认密码", "au_pwd2_ph": "再输入一次密码", "au_err_pwd2": "两次输入的密码不一致", "au_err_net": "网络异常，请稍后再试", "au_soc_note": "GitHub / Apple 登录暂未开放，请用邮箱注册 / 登录", "au_google": "使用 Google 登录", "au_err_google": "Google 登录失败，请重试或用邮箱登录"},
+en:{"nav_features": "Features", "nav_pricing": "Pricing", "nav_cases": "Cases", "nav_models": "Models", "nav_docs": "Docs", "nav_blog": "Blog", "nav_biz": "Business", "nav_login": "Log in", "nav_start": "Get started", "foot_tag": "One sentence. Results worth showing.", "foot_c1": "Product", "foot_c2": "Popular models", "foot_c3": "Providers", "foot_c4": "Resources", "foot_chat": "AI Chat", "foot_ppt": "Deck generation", "foot_price": "Pricing", "vendor_qwen": "Alibaba Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "User guide", "foot_tpl": "Templates", "foot_help": "Help center", "foot_about": "About us", "foot_contact": "Contact", "foot_status": "Demo site", "foot_terms": "Terms of Service", "foot_privacy": "Privacy Policy", "pg_home": "Home", "cookie_txt": "Poko only stores your language preference locally in your browser — no tracking cookies.", "cookie_ok": "Got it", "au_t_login": "Welcome back", "au_t_signup": "Create your Poko account", "au_sub_login": "Log in to continue where you left off.", "au_sub_signup": "Signing up takes a minute — your first result comes right after.", "au_login": "Log in", "au_signup": "Sign up", "au_email": "Email", "au_pwd": "Password", "au_pwd_ph": "At least 8 characters", "au_btn_login": "Log in →", "au_btn_signup": "Sign up →", "au_or": "or", "au_err_email": "Please enter a valid email address", "au_err_pwd": "Password needs at least 8 characters", "au_agree": "By continuing you agree to our Terms of Service and Privacy Policy.", "au_remember": "Remember me", "au_pwd2": "Confirm password", "au_pwd2_ph": "Enter your password again", "au_err_pwd2": "Passwords do not match", "au_err_net": "Network error — please try again", "au_soc_note": "GitHub / Apple sign-in isn't available yet — please use email", "au_google": "Continue with Google", "au_err_google": "Google sign-in failed — please try again or use email"}};
+I18N.ja={"nav_features": "機能", "nav_pricing": "料金", "nav_cases": "事例", "nav_models": "モデル一覧", "nav_docs": "ドキュメント", "nav_blog": "ブログ", "nav_biz": "法人向け", "nav_login": "ログイン", "nav_start": "使ってみる", "foot_tag": "一言で、見せられる成果を。", "foot_c1": "製品", "foot_c2": "人気モデル", "foot_c3": "モデル提供元", "foot_c4": "リソース", "foot_chat": "AIチャット", "foot_ppt": "スライド生成", "foot_price": "料金", "vendor_qwen": "Alibaba Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "使い方ガイド", "foot_tpl": "テンプレート", "foot_help": "ヘルプセンター", "foot_about": "私たちについて", "foot_contact": "お問い合わせ", "foot_status": "デモサイト", "foot_terms": "利用規約", "foot_privacy": "プライバシーポリシー", "pg_home": "ホーム", "cookie_txt": "Poko は言語設定をブラウザに保存するだけで、追跡 Cookie は使いません。", "cookie_ok": "了解", "au_t_login": "おかえりなさい", "au_t_signup": "Poko アカウントを作成", "au_sub_login": "ログインして続きを始めましょう。", "au_sub_signup": "登録は1分ほど。すぐに最初の成果が作れます。", "au_login": "ログイン", "au_signup": "登録", "au_email": "メールアドレス", "au_pwd": "パスワード", "au_pwd_ph": "8文字以上", "au_btn_login": "ログイン →", "au_btn_signup": "登録 →", "au_or": "または", "au_err_email": "有効なメールアドレスを入力してください", "au_err_pwd": "パスワードは8文字以上にしてください", "au_agree": "続行すると、利用規約とプライバシーポリシーに同意したことになります。", "au_remember": "ログイン状態を保持", "au_pwd2": "パスワード（確認）", "au_pwd2_ph": "もう一度入力してください", "au_err_pwd2": "パスワードが一致しません", "au_err_net": "通信エラーが発生しました。しばらくしてからお試しください", "au_soc_note": "GitHub / Apple でのログインはまだ開放されていません。メールで登録 / ログインしてください", "au_google": "Google でログイン", "au_err_google": "Google ログインに失敗しました。もう一度お試しいただくか、メールでログインしてください"};
+I18N.ko={"nav_features": "기능", "nav_pricing": "요금", "nav_cases": "사례", "nav_models": "모델 광장", "nav_docs": "문서", "nav_blog": "블로그", "nav_biz": "기업용", "nav_login": "로그인", "nav_start": "시작하기", "foot_tag": "한 문장으로, 자신 있게 내놓을 수 있는 결과물을.", "foot_c1": "제품", "foot_c2": "인기 모델", "foot_c3": "모델 제공사", "foot_c4": "리소스", "foot_chat": "AI 대화", "foot_ppt": "PPT 생성", "foot_price": "요금", "vendor_qwen": "알리바바 Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "사용 가이드", "foot_tpl": "템플릿", "foot_help": "도움말 센터", "foot_about": "회사 소개", "foot_contact": "문의하기", "foot_status": "데모 사이트", "foot_terms": "서비스 약관", "foot_privacy": "개인정보 처리방침", "pg_home": "홈", "cookie_txt": "Poko는 언어 설정을 브라우저에 저장할 뿐, 추적 쿠키를 쓰지 않습니다.", "cookie_ok": "확인", "au_t_login": "다시 오신 것을 환영합니다", "au_t_signup": "Poko 계정 만들기", "au_sub_login": "로그인하고 이어서 시작하세요.", "au_sub_signup": "가입은 1분이면 됩니다. 바로 첫 결과물을 만들 수 있습니다.", "au_login": "로그인", "au_signup": "가입하기", "au_email": "이메일", "au_pwd": "비밀번호", "au_pwd_ph": "8자 이상", "au_btn_login": "로그인 →", "au_btn_signup": "가입하기 →", "au_or": "또는", "au_err_email": "올바른 이메일 주소를 입력하세요", "au_err_pwd": "비밀번호는 8자 이상이어야 합니다", "au_agree": "계속하면 서비스 약관과 개인정보 처리방침에 동의하는 것으로 간주됩니다.", "au_remember": "로그인 상태 유지", "au_pwd2": "비밀번호 확인", "au_pwd2_ph": "비밀번호를 한 번 더 입력하세요", "au_err_pwd2": "비밀번호가 일치하지 않습니다", "au_err_net": "네트워크 오류가 발생했습니다. 잠시 후 다시 시도하세요", "au_soc_note": "GitHub / Apple 로그인은 아직 열리지 않았습니다. 이메일로 가입 / 로그인해 주세요", "au_google": "Google로 로그인", "au_err_google": "Google 로그인에 실패했습니다. 다시 시도하거나 이메일로 로그인해 주세요"};
+I18N.es={"nav_features": "Funciones", "nav_pricing": "Precios", "nav_cases": "Casos", "nav_models": "Modelos", "nav_docs": "Documentos", "nav_blog": "Blog", "nav_biz": "Empresas", "nav_login": "Iniciar sesión", "nav_start": "Empezar", "foot_tag": "Una frase. Resultados de los que presumir.", "foot_c1": "Producto", "foot_c2": "Modelos populares", "foot_c3": "Proveedores", "foot_c4": "Recursos", "foot_chat": "Chat con IA", "foot_ppt": "Generación de presentaciones", "foot_price": "Precios", "vendor_qwen": "Alibaba Tongyi", "vendor_moon": "Moonshot AI", "foot_guide": "Guía de uso", "foot_tpl": "Plantillas", "foot_help": "Centro de ayuda", "foot_about": "Nosotros", "foot_contact": "Contacto", "foot_status": "Sitio de demostración", "foot_terms": "Términos del servicio", "foot_privacy": "Política de privacidad", "pg_home": "Inicio", "cookie_txt": "Poko solo guarda tu idioma en tu navegador, sin cookies de rastreo.", "cookie_ok": "Entendido", "au_t_login": "Bienvenido de nuevo", "au_t_signup": "Crea tu cuenta de Poko", "au_sub_login": "Inicia sesión para continuar donde lo dejaste.", "au_sub_signup": "Registrarse lleva un minuto: tu primer resultado viene justo después.", "au_login": "Iniciar sesión", "au_signup": "Registrarse", "au_email": "Correo electrónico", "au_pwd": "Contraseña", "au_pwd_ph": "Al menos 8 caracteres", "au_btn_login": "Iniciar sesión →", "au_btn_signup": "Registrarse →", "au_or": "o", "au_err_email": "Introduce un correo válido", "au_err_pwd": "La contraseña necesita al menos 8 caracteres", "au_agree": "Al continuar aceptas nuestros Términos del servicio y la Política de privacidad.", "au_remember": "Recuérdame", "au_pwd2": "Confirmar contraseña", "au_pwd2_ph": "Repite tu contraseña", "au_err_pwd2": "Las contraseñas no coinciden", "au_err_net": "Error de red. Inténtalo de nuevo más tarde", "au_soc_note": "El inicio de sesión con GitHub / Apple aún no está disponible: usa tu correo", "au_google": "Continuar con Google", "au_err_google": "El inicio de sesión con Google falló. Inténtalo de nuevo o usa tu correo"};
 
 let lang = localStorage.getItem("poko_lang") || "zh";
 if(!I18N[lang]) lang = "zh";
@@ -413,10 +397,10 @@ function renderAuth(){
   $("#tabSignup").textContent = t("au_signup");
   $("#tabLogin").classList.toggle("on", login);
   $("#tabSignup").classList.toggle("on", !login);
-  $("#nameField").hidden = login;
-  $("#codeField").hidden = login;
+  $("#pwd2Field").hidden = login;
   $("#rememberRow").hidden = !login;
-  renderSendBtn(); renderSentNote(); refreshErrs();
+  showFormErr("");
+  refreshErrs();
   $("#auPwd").setAttribute("autocomplete", login ? "current-password" : "new-password");
   $("#auSubmit").textContent = t(login ? "au_btn_login" : "au_btn_signup");
   const ag = t("au_agree");
@@ -431,53 +415,77 @@ function setMode(m){ auMode = m; renderAuth(); }
 $("#tabLogin").addEventListener("click", ()=>setMode("login"));
 $("#tabSignup").addEventListener("click", ()=>setMode("signup"));
 $("#pwdEye").addEventListener("click", ()=>{ const p=$("#auPwd"); p.type = p.type==="password" ? "text" : "password"; });
-let codeLeft = 0, codeTimer = null, codeSentTo = "";
-function renderSendBtn(){
-  const b = $("#sendCode"); if(!b) return;
-  if(codeLeft > 0){ b.disabled = true; b.textContent = t("au_code_resend") + " (" + codeLeft + "s)"; }
-  else { b.disabled = false; b.textContent = t(codeSentTo ? "au_code_resend" : "au_code_send"); }
+/* 第十八轮：真实后端账号（与 chat.html 同一 POKO_API_BASE） */
+const AU_API_BASE = "https://poko-api.gtmc.workers.dev";
+function showFormErr(msg){
+  const el = $("#formErr");
+  el.textContent = msg || "";
+  el.classList.toggle("show", !!msg);
 }
-function renderSentNote(){
-  const n = $("#codeSent"); if(!n) return;
-  if(codeSentTo){ n.textContent = t("au_code_sent").replace("{email}", codeSentTo); n.classList.add("show"); }
-  else n.classList.remove("show");
-}
-$("#sendCode").addEventListener("click", ()=>{
-  const email = $("#auEmail").value.trim();
-  if(!fieldErrK($("#auEmail"), $("#errEmail"), /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? "" : "au_err_email")){ $("#auEmail").focus(); return; }
-  codeSentTo = email; renderSentNote();
-  if(codeTimer) clearInterval(codeTimer);
-  codeLeft = 60; renderSendBtn();
-  codeTimer = setInterval(()=>{ codeLeft--; if(codeLeft <= 0){ clearInterval(codeTimer); codeTimer = null; codeLeft = 0; } renderSendBtn(); }, 1000);
-});
-$("#auCode").addEventListener("input", e=>{ const v = e.target.value.replace(/\D/g, "").slice(0, 6); if(v !== e.target.value) e.target.value = v; });
 try{ const rem = localStorage.getItem("poko_remember_email"); if(rem){ $("#auEmail").value = rem; $("#auRemember").checked = true; } }catch(_){}
 function fieldErr(input, errEl, msg){ errEl.textContent = msg || ""; errEl.classList.toggle("show", !!msg); input.classList.toggle("bad", !!msg); return !msg; }
 function fieldErrK(input, errEl, key){ errEl.dataset.k = key || ""; return fieldErr(input, errEl, key ? t(key) : ""); }
 function refreshErrs(){ $$(".ferr").forEach(el=>{ if(el.dataset.k) el.textContent = t(el.dataset.k); }); }
-$("#auForm").addEventListener("submit", e=>{
+$("#auForm").addEventListener("submit", async e=>{
   e.preventDefault();
+  showFormErr("");
+  const email = $("#auEmail").value.trim();
+  const pwd = $("#auPwd").value;
   let ok = true;
-  if(auMode === "signup") ok = fieldErrK($("#auName"), $("#errName"), $("#auName").value.trim() ? "" : "au_err_name") && ok;
-  ok = fieldErrK($("#auEmail"), $("#errEmail"), /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($("#auEmail").value.trim()) ? "" : "au_err_email") && ok;
-  ok = fieldErrK($("#auPwd"), $("#errPwd"), $("#auPwd").value.length >= 6 ? "" : "au_err_pwd") && ok;
-  if(auMode === "signup") ok = fieldErrK($("#auCode"), $("#errCode"), /^\d{6}$/.test($("#auCode").value.trim()) ? "" : "au_err_code") && ok;
+  ok = fieldErrK($("#auEmail"), $("#errEmail"), /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? "" : "au_err_email") && ok;
+  ok = fieldErrK($("#auPwd"), $("#errPwd"), pwd.length >= 8 ? "" : "au_err_pwd") && ok;
+  if(auMode === "signup") ok = fieldErrK($("#auPwd2"), $("#errPwd2"), $("#auPwd2").value === pwd ? "" : "au_err_pwd2") && ok;
   if(!ok) return;
   const btn = $("#auSubmit");
+  const btnText = btn.textContent;
   btn.classList.add("loading"); btn.textContent = "···";
   try{
-    localStorage.setItem("poko_demo_user", $("#auEmail").value.trim());
-    if(auMode === "login"){ if($("#auRemember").checked) localStorage.setItem("poko_remember_email", $("#auEmail").value.trim()); else localStorage.removeItem("poko_remember_email"); }
-  }catch(_){}
-  setTimeout(()=>{ location.href = "chat.html"; }, 650);
+    const res = await fetch(AU_API_BASE + (auMode === "signup" ? "/api/auth/register" : "/api/auth/login"), {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email, password: pwd})
+    });
+    const j = await res.json().catch(() => null);
+    if(!res.ok || !j || !j.token){
+      showFormErr(j && j.error ? j.error : t("au_err_net"));
+      btn.classList.remove("loading"); btn.textContent = btnText;
+      return;
+    }
+    try{
+      localStorage.setItem("poko_token", j.token);
+      localStorage.setItem("poko_email", j.email || email);
+      if(auMode === "login"){ if($("#auRemember").checked) localStorage.setItem("poko_remember_email", email); else localStorage.removeItem("poko_remember_email"); }
+    }catch(_){}
+    location.href = "chat.html";
+  }catch(err){
+    btn.classList.remove("loading"); btn.textContent = btnText;
+    showFormErr(t("au_err_net"));
+  }
 });
-$$(".soc").forEach(b=>b.addEventListener("click", ()=>{
-  b.classList.add("loading");
-  try{ localStorage.setItem("poko_demo_user", b.dataset.soc); }catch(_){}
-  setTimeout(()=>{ location.href = "chat.html"; }, 500);
-}));
+$$(".soc").forEach(b=>b.addEventListener("click", ()=>{ showFormErr(t("au_soc_note")); }));
 
+/* Google 登录回跳处理：成功时 Worker 302 回 auth.html#gtoken=<token>&email=<email>，
+   存会话、清 hash 后进 chat；失败时带 ?err=google，在表单上方显示失败提示。
+   必须在首次 applyLang() 之后执行（renderAuth 会清空报错区）。 */
 applyLang();
+(function handleGoogleReturn(){
+  if(location.hash && location.hash.indexOf("gtoken=") !== -1){
+    const hp = new URLSearchParams(location.hash.slice(1));
+    const gt = hp.get("gtoken"), ge = hp.get("email");
+    if(gt){
+      try{
+        localStorage.setItem("poko_token", gt);
+        if(ge) localStorage.setItem("poko_email", ge);
+      }catch(_){}
+      history.replaceState(null, "", location.pathname + location.search);
+      location.href = "chat.html";
+      return;
+    }
+  }
+  if(new URLSearchParams(location.search).get("err") === "google"){
+    showFormErr(t("au_err_google"));
+  }
+})();
 </script>
 <script>
 /* 滚动渐入（Design System v2）：无 IntersectionObserver / 减少动态时内容直接可见 */
